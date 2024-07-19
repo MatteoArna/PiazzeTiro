@@ -1,23 +1,20 @@
 const express = require('express');
-const router = express.Router();
 const userController = require('../controllers/userController');
+const createBaseRouter = require('./baseRoute');
 const { authenticate } = require('../middleware/authMiddleware');
 
-// Rotte GET
-router.get('/', authenticate, userController.getAllUsers);
-router.get('/role/:roleId', authenticate, userController.getUserByRole);
-router.get('/:email', authenticate, userController.getUserById);
-router.get('/status/:status', authenticate, userController.getUserByStatus);
+const router = createBaseRouter(userController);
 
-// Rotte POST
-router.post('/', authenticate, userController.createUser);
+// Rotte GET aggiuntive
+router.get('/role/:roleId', authenticate, (req, res) => userController.getUserByRole(req, res));
+router.get('/:email', authenticate, (req, res) => userController.getUserById(req, res));
+router.get('/status/:status', authenticate, (req, res) => userController.getUserByStatus(req, res));
 
-// Rotte PUT
-router.put('/:email', authenticate, userController.updateUser);
-router.put('/:email/activate', authenticate, userController.activateUser);
-router.put('/:email/deactivate', authenticate, userController.deactivateUser);
+// Rotte PUT aggiuntive
+router.put('/:email/activate', authenticate, (req, res) => userController.activateUser(req, res));
+router.put('/:email/deactivate', authenticate, (req, res) => userController.deactivateUser(req, res));
 
-// Rotta DELETE
-router.delete('/:email', authenticate, userController.deleteUser);
+// Applica il middleware di autenticazione a tutte le route
+router.use(authenticate);
 
 module.exports = router;
