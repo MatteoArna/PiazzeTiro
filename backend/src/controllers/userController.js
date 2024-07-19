@@ -2,7 +2,7 @@ const BaseController = require('./baseController');
 const User = require('../models/user');
 const UserRole = require('../models/userRole');
 
-class userController extends BaseController {
+class UserController extends BaseController {
     constructor() {
         super(User);
     }
@@ -61,3 +61,5 @@ class userController extends BaseController {
         }
     }
 }
+
+module.exports = new UserController();
