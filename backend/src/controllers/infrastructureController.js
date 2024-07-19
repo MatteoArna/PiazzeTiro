@@ -1,6 +1,6 @@
 const baseController = require('./baseController');
 const Infrastructure = require('../models/infrastructure');
-const InfrastructureStatus = require('../models/infrtastructureStatus');
+const InfrastructureStatus = require('../models/infrastructureStatus');
 const HeadQuarter = require('../models/headQuarter');
 
 class InfrastructureController extends baseController {
