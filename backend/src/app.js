@@ -1,7 +1,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');  // Importa il pacchetto CORS
 
 const app = express();
+
+// Configura CORS
+app.use(cors({
+  origin: 'http://localhost:3001', // URL del frontend
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true, // Se necessario
+}));
 
 // Body parser middleware
 app.use(bodyParser.json());
