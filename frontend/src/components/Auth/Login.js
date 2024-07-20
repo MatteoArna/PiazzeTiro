@@ -9,7 +9,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const { setAuth } = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,9 +20,8 @@ const Login = () => {
         email,
         password,
       });
-      localStorage.setItem('token', response.data.token);
-      setAuth({ token: response.data.token });
-      navigate('/dashboard');
+      login(response.data.token, email);
+      navigate('/homepage');
     } catch (err) {
       setError('Credenziali non valide');
     }
