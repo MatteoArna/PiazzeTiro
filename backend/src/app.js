@@ -12,10 +12,12 @@ const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/user');
 const infrastructureRoutes = require('./routes/infrastructure');
 const estimateRoutes = require('./routes/estimate');
+const pageRoutes = require('./routes/page');
 
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
 app.use('/infrastructure', infrastructureRoutes);
 app.use('/estimates', estimateRoutes);
+app.use('/pages', pageRoutes);
 
 module.exports = app;
