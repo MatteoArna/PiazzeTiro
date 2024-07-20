@@ -1,28 +1,27 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Login.css'; // Per lo styling del componente
+import axios from 'axios';
+import { AuthContext } from '../../context/AuthContext';
+import './Login.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { setAuth } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
     try {
-        console.log("Email: " + email);
-        console.log("Password: " + password);
       const response = await axios.post(`${process.env.REACT_APP_API_URL}/auth/login`, {
         email,
-        password
+        password,
       });
-      // Salva il token JWT localmente (ad esempio nel localStorage)
       localStorage.setItem('token', response.data.token);
-      // Reindirizza l'utente alla pagina principale (o a qualsiasi altra pagina)
+      setAuth({ token: response.data.token });
       navigate('/dashboard');
     } catch (err) {
       setError('Credenziali non valide');
