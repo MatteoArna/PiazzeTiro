@@ -20,7 +20,7 @@ const Register = () => {
         email,
         firstName,
         lastName,
-        roleId: 1, // Set roleId to 1 arbitrarily
+        roleId: 0, // Set roleId to 1 arbitrarily
         society: '', // Set society to an empty string
         status: false, // Set status to false
         password,
