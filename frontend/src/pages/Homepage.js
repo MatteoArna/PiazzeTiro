@@ -6,6 +6,7 @@ import SearchBar from '../components/SearchBar';
 import Calendar from '../components/Calendar';
 import HomePageContent from '../components/HomePageContent';
 import Admindashboard from '../pages/Admindashboard';
+import CreateNewsModal from '../components/CreateNewsModal';
 import '../styles/Homepage.css';
 
 const Homepage = () => {
@@ -13,6 +14,8 @@ const Homepage = () => {
   const [userData, setUserData] = useState(null);
   const [pages, setPages] = useState([]);
   const [selected, setSelected] = useState('home');
+  const [showModal, setShowModal] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -48,6 +51,18 @@ const Homepage = () => {
     }
   }, [auth.email, auth.token]);
 
+  const handleShowModal = () => {
+    setShowModal(true);
+    setIsClosing(false);
+  };
+
+  const handleCloseModal = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setShowModal(false);
+    }, 500); // Durata dell'animazione in ms
+  };
+
   if (!userData) {
     return <p>Loading...</p>;
   }
@@ -64,7 +79,11 @@ const Homepage = () => {
       />
       <div className="main-content">
         <SearchBar />
+        {userData.roleId === 1 && (
+          <button className="add-news-button" onClick={handleShowModal}>+</button>
+        )}
         {selected === 'admin' ? <Admindashboard /> : <HomePageContent pages={pages} />}
+        {showModal && <CreateNewsModal onClose={handleCloseModal} isClosing={isClosing} />}
       </div>
       <Calendar />
     </div>

@@ -1,0 +1,79 @@
+/* Modal.css */
+
+/* Stili per l'overlay del modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  animation: fadeIn 0.5s forwards;
+}
+
+.modal-overlay.fadeOut {
+  animation: fadeOut 0.5s forwards;
+}
+
+/* Stili per il contenuto del modal */
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 800px;
+  height: 300px; /* Aumenta l'altezza del modal */
+  transform: scale(0.5);
+  animation: scaleIn 0.5s forwards;
+  position: relative; /* Posiziona relativamente per contenere il pulsante di chiusura */
+}
+
+.modal-content.scaleOut {
+  animation: scaleOut 0.5s forwards;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 30px; /* Rendi il pulsante più grande */
+  cursor: pointer;
+  z-index: 1000; /* Assicurati che il pulsante di chiusura sia sopra il contenuto del modal */
+  padding: 0; /* Rimuove il padding */
+  line-height: 1; /* Linea di altezza per centrare verticalmente il testo */
+  color: #000; /* Colore del testo */
+}
+
+.close-button:hover {
+  color: red; /* Cambia il colore del testo a rosso quando si passa sopra */
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes scaleIn {
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes scaleOut {
+  to {
+    transform: scale(0.5);
+  }
+}
