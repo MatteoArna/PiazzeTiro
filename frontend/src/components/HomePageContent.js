@@ -41,7 +41,7 @@ const HomePageContent = ({ pages }) => {
           </div>
           <div className="card-content">
             <h3>{getType(page.typeId)}</h3>
-            <p>{page.content}</p>
+            <p>{page.summary}</p>
             <a href="#">Più informazioni</a>
           </div>
         </div>

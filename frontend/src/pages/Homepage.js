@@ -16,6 +16,7 @@ const Homepage = () => {
   const [selected, setSelected] = useState('home');
   const [showModal, setShowModal] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+  const [pageTypes, setPageTypes] = useState([]);
   const modalRef = useRef(null);
 
   useEffect(() => {
@@ -46,9 +47,23 @@ const Homepage = () => {
       }
     };
 
+    const fetchPageTypes = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/pageTypes`, {
+          headers: {
+            Authorization: `Bearer ${auth.token}`
+          }
+        });
+        setPageTypes(response.data);
+      } catch (error) {
+        console.error('Error fetching page types:', error);
+      }
+    };
+
     if (auth.email) {
       fetchUserData();
       fetchPages();
+      fetchPageTypes();
     }
   }, [auth.email, auth.token]);
 
@@ -80,11 +95,18 @@ const Homepage = () => {
       />
       <div className="main-content">
         <SearchBar />
-        {userData.roleId === 1 && selected === 'home' && (
+        {userData.roleId === 1 && (
           <button className="add-news-button" onClick={handleShowModal}>+</button>
         )}
         {selected === 'admin' ? <Admindashboard /> : <HomePageContent pages={pages} />}
-        {showModal && <CreateNewsModal ref={modalRef} onClose={handleCloseModal} isClosing={isClosing} />}
+        {showModal && (
+          <CreateNewsModal 
+            ref={modalRef} 
+            onClose={handleCloseModal} 
+            isClosing={isClosing} 
+            pageTypes={pageTypes} 
+          />
+        )}
       </div>
       <Calendar />
     </div>
