@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { useAuth } from '../hooks/useAuth';
 import NavBar from '../components/NavBar';
@@ -16,6 +16,7 @@ const Homepage = () => {
   const [selected, setSelected] = useState('home');
   const [showModal, setShowModal] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+  const modalRef = useRef(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -79,11 +80,11 @@ const Homepage = () => {
       />
       <div className="main-content">
         <SearchBar />
-        {userData.roleId === 1 && (
+        {userData.roleId === 1 && selected === 'home' && (
           <button className="add-news-button" onClick={handleShowModal}>+</button>
         )}
         {selected === 'admin' ? <Admindashboard /> : <HomePageContent pages={pages} />}
-        {showModal && <CreateNewsModal onClose={handleCloseModal} isClosing={isClosing} />}
+        {showModal && <CreateNewsModal ref={modalRef} onClose={handleCloseModal} isClosing={isClosing} />}
       </div>
       <Calendar />
     </div>
