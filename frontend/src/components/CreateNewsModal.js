@@ -2,6 +2,8 @@ import React, { forwardRef, useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../hooks/useAuth';
 import Swal from 'sweetalert2';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'; // Importa lo stile di React Quill
 import '../styles/CreateNewsModal.css';
 
 const CreateNewsModal = forwardRef(({ onClose, isClosing, pageTypes }, ref) => {
@@ -74,13 +76,21 @@ const CreateNewsModal = forwardRef(({ onClose, isClosing, pageTypes }, ref) => {
           </div>
           <div className="form-group">
             <label htmlFor="content">Content</label>
-            <textarea
-              id="content"
-              name="content"
+            <ReactQuill
               value={content}
-              onChange={(e) => setContent(e.target.value)}
-              required
-            ></textarea>
+              onChange={setContent}
+              theme="snow"
+              modules={{
+                toolbar: [
+                  [{ 'header': '1'}, {'header': '2'}, { 'font': [] }],
+                  [{size: []}],
+                  ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                  [{'list': 'ordered'}, {'list': 'bullet'}, 
+                   {'indent': '-1'}, {'indent': '+1'}],
+                  ['clean']
+                ],
+              }}
+            />
           </div>
           <div className="form-group">
             <label htmlFor="file">File</label>

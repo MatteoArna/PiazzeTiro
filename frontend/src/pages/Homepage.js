@@ -79,6 +79,10 @@ const Homepage = () => {
     }, 500); // Durata dell'animazione in ms
   };
 
+  const handlePageDelete = (id) => {
+    setPages((prevPages) => prevPages.filter((page) => page.id !== id));
+  };
+
   if (!userData) {
     return <p>Loading...</p>;
   }
@@ -98,7 +102,7 @@ const Homepage = () => {
         {userData.roleId === 1 && (
           <button className="add-news-button" onClick={handleShowModal}>+</button>
         )}
-        {selected === 'admin' ? <Admindashboard /> : <HomePageContent pages={pages} />}
+        {selected === 'admin' ? <Admindashboard /> : <HomePageContent pages={pages} onPageDelete={handlePageDelete} isAdmin={userData.roleId === 1} />}
         {showModal && (
           <CreateNewsModal 
             ref={modalRef} 

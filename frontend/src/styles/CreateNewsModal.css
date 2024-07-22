@@ -27,7 +27,7 @@
   position: relative; /* Per posizionare la X */
   overflow-y: auto; /* Aggiungi scroll verticale se il contenuto è troppo grande */
   max-height: 90vh; /* Limita l'altezza massima per evitare che esca dallo schermo */
-  height: 400px; /* Aumenta l'altezza del modal */
+  height: 500px; /* Aumenta l'altezza del modal */
 }
 
 .modal-content.scaleOut {
@@ -91,6 +91,10 @@
   box-sizing: border-box;
   border-radius: 5px;
   border: 1px solid #ddd;
+}
+
+.form-group .ql-container {
+  height: 200px; /* Altezza dell'editor */
 }
 
 button[type="submit"] {

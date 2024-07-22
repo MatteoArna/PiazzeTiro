@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useAuth } from '../hooks/useAuth';
 import '../styles/HomePageContent.css';
 import manutenzioneIcon from '../assets/maintenance.png';
 import documentiIcon from '../assets/info.png';
 import sicurezzaIcon from '../assets/warning.png';
+import PageDetailsModal from './PageDetailsModal';
 
-const HomePageContent = ({ pages }) => {
+const HomePageContent = ({ pages, onPageDelete, isAdmin }) => {
+  const { auth } = useAuth();
+  const [selectedPage, setSelectedPage] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   const getIcon = (type) => {
     switch (type) {
@@ -30,7 +36,31 @@ const HomePageContent = ({ pages }) => {
       default:
         return null;
     }
-  }
+  };
+
+  const handleShowModal = (page) => {
+    setSelectedPage(page);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedPage(null);
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`${process.env.REACT_APP_API_URL}/pages/${id}`, {
+        headers: {
+          Authorization: `Bearer ${auth.token}`
+        }
+      });
+      onPageDelete(id);
+      handleCloseModal();
+    } catch (error) {
+      console.error('Error deleting page:', error);
+    }
+  };
 
   return (
     <div className="homepage-content">
@@ -42,10 +72,18 @@ const HomePageContent = ({ pages }) => {
           <div className="card-content">
             <h3>{getType(page.typeId)}</h3>
             <p>{page.summary}</p>
-            <a href="#">Più informazioni</a>
+            <a href="#" onClick={() => handleShowModal(page)}>Più informazioni</a>
           </div>
         </div>
       ))}
+      {showModal && selectedPage && (
+        <PageDetailsModal
+          page={selectedPage}
+          onClose={handleCloseModal}
+          onDelete={handleDelete}
+          isAdmin={isAdmin}
+        />
+      )}
     </div>
   );
 };
