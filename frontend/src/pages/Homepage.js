@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../hooks/useAuth';
-import Navbar from '../components/NavBar';
+import NavBar from '../components/NavBar';
 import SearchBar from '../components/SearchBar';
 import Calendar from '../components/Calendar';
 import HomePageContent from '../components/HomePageContent';
+import Admindashboard from '../pages/Admindashboard';
 import '../styles/Homepage.css';
 
 const Homepage = () => {
   const { auth, logout } = useAuth();
   const [userData, setUserData] = useState(null);
   const [pages, setPages] = useState([]);
+  const [selected, setSelected] = useState('home');
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -52,10 +54,17 @@ const Homepage = () => {
 
   return (
     <div className="homepage">
-      <Navbar username={`${userData.firstName} ${userData.lastName}`} onLogout={logout} />
+      <NavBar 
+        username={`${userData.firstName} ${userData.lastName}`} 
+        roleId={userData.roleId}
+        handleLogout={logout}
+        onHomePageClick={() => setSelected('home')}
+        onAdminDashboardClick={() => setSelected('admin')}
+        selected={selected}
+      />
       <div className="main-content">
         <SearchBar />
-        <HomePageContent pages={pages} />
+        {selected === 'admin' ? <Admindashboard /> : <HomePageContent pages={pages} />}
       </div>
       <Calendar />
     </div>

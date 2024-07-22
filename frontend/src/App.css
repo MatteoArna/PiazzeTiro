@@ -1,3 +1,4 @@
+/* App.css */
 .App {
   text-align: center;
 }
@@ -41,4 +42,22 @@ html, body, #root {
   height: 100%;
   margin: 0;
   padding: 0;
+}
+
+@media (max-width: 1000px) {
+  .content {
+    display: none;
+  }
+
+  .warning {
+    display: block;
+  }
+}
+
+.warning {
+  display: none;
+  color: red;
+  font-size: 20px;
+  text-align: center;
+  margin-top: 50px;
 }

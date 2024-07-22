@@ -3,7 +3,7 @@ import '../styles/Navbar.css';
 import LanguageSelector from './LanguageSelector';
 import userIcon from '../assets/user.png';
 
-const Navbar = ({ username, onLogout }) => {
+const NavBar = ({ username, roleId, handleLogout, onHomePageClick, onAdminDashboardClick, selected }) => {
   return (
     <div className="navbar">
       <div className="user-info">
@@ -12,13 +12,13 @@ const Navbar = ({ username, onLogout }) => {
       </div>
       <nav>
         <ul>
-          <li>Home Page</li>
-          <li>Profilo</li>
-          <li>Impostazioni</li>
-          <li>Admin Dashboard</li>
-          <li className="logout">
-            <button onClick={onLogout} className="logout-button">Logout</button>
-          </li>
+          <li className={selected === 'home' ? 'selected' : ''} onClick={onHomePageClick}>Home Page</li>
+          <li className={selected === 'profile' ? 'selected' : ''}>Profilo</li>
+          <li className={selected === 'settings' ? 'selected' : ''}>Impostazioni</li>
+          {roleId === 1 && (
+            <li className={selected === 'admin' ? 'selected' : ''} onClick={onAdminDashboardClick}>Admin Dashboard</li>
+          )}
+          <li><button onClick={handleLogout} className="logout-button">Logout</button></li>
         </ul>
       </nav>
       <div className="language-selector">
@@ -28,4 +28,4 @@ const Navbar = ({ username, onLogout }) => {
   );
 };
 
-export default Navbar;
+export default NavBar;
