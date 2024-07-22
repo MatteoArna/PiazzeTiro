@@ -13,3 +13,4 @@ router.put('/:email/activate', (req, res) => userController.activateUser(req, re
 router.put('/:email/deactivate', (req, res) => userController.deactivateUser(req, res));
 
 module.exports = router;
+

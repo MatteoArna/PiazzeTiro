@@ -1,8 +1,8 @@
-const baseController = require('./baseController');
+const BaseController = require('./baseController');
 const Page = require('../models/page');
 const PageType = require('../models/pageType');
 
-class PageController extends baseController {
+class PageController extends BaseController {
     constructor() {
         super(Page);
     }
@@ -20,3 +20,5 @@ class PageController extends baseController {
         }
     }
 };
+
+module.exports = new PageController();

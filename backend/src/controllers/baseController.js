@@ -1,3 +1,5 @@
+const { Op } = require('sequelize');
+
 class BaseController {
     constructor(model) {
       this.model = model;

@@ -1,0 +1,16 @@
+.calendar {
+    width: 300px;
+    background-color: #fff;
+    border-left: 1px solid #ddd;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .calendar h2 {
+    margin-bottom: 20px;
+  }
+  
+  .calendar-content {
+    /* Contenuto del calendario */
+  }
+  
