@@ -6,7 +6,7 @@
 }
 
 .card {
-  width: 40%; /* Assicurati che le card siano più strette */
+  width: 45%; /* Assicurati che le card siano più strette */
   background-color: #f8f9fa; /* Colore di sfondo chiaro */
   border: 1px solid #ddd; /* Bordo sottile */
   border-radius: 10px; /* Bordo arrotondato */
@@ -18,7 +18,7 @@
 }
 
 .card-icon {
-  width: 50%; /* L'icona occupa metà della card */
+  width: 30%; /* L'icona occupa il 30% della card */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -26,12 +26,13 @@
 }
 
 .card-icon img {
-  width: 100px; /* Dimensione fissa per l'icona */
-  height: 100px; /* Dimensione fissa per l'icona */
+  max-width: 100%; /* L'icona non supera la larghezza del contenitore */
+  height: auto; /* Mantiene le proporzioni */
+  object-fit: contain; /* Adatta l'immagine senza ritagliarla */
 }
 
 .card-content {
-  width: 50%; /* Il contenuto occupa metà della card */
+  width: 70%; /* Il contenuto occupa il 70% della card */
   padding: 20px;
   display: flex;
   flex-direction: column;

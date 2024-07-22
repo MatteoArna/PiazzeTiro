@@ -1,10 +1,26 @@
 .homepage {
-    display: flex;
-  }
-  
-  .main-content {
-    flex-grow: 1;
-    padding: 20px;
-    box-sizing: border-box;
-  }
-  
+  display: flex;
+  height: 100vh; /* Altezza totale della viewport */
+}
+
+.navbar {
+  flex: 0 0 250px; /* Altezza fissa per la navbar */
+  height: 100%;
+  background-color: #f4f4f4;
+}
+
+.main-content {
+  flex: 1; /* Occupa tutto lo spazio rimanente */
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  overflow: auto;
+}
+
+.search-bar {
+  margin-bottom: 20px;
+}
+
+.calendar {
+  margin-top: 20px;
+}

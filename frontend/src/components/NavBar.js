@@ -12,7 +12,7 @@ const Navbar = ({ username, onLogout }) => {
       </div>
       <nav>
         <ul>
-          <li><b>Home Page</b></li>
+          <li>Home Page</li>
           <li>Profilo</li>
           <li>Impostazioni</li>
           <li>Admin Dashboard</li>
