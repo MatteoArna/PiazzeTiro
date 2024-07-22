@@ -19,6 +19,8 @@ class PageController extends BaseController {
             res.status(500).json({ message: 'Errore nel recuperare le pagine', error });
         }
     }
+
+
 };
 
 module.exports = new PageController();

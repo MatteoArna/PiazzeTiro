@@ -22,6 +22,7 @@ const infrastructureRoutes = require('./routes/infrastructure');
 const estimateRoutes = require('./routes/estimate');
 const pageRoutes = require('./routes/page');
 const bookingRoutes = require('./routes/booking');
+const pageTypeRoutes = require('./routes/pageType');
 
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
@@ -29,5 +30,6 @@ app.use('/infrastructure', infrastructureRoutes);
 app.use('/estimates', estimateRoutes);
 app.use('/pages', pageRoutes);
 app.use('/bookings', bookingRoutes);
+app.use('/pageTypes', pageTypeRoutes);
 
 module.exports = app;
