@@ -7,7 +7,7 @@ import Calendar from '../components/Calendar';
 import HomePageContent from '../components/HomePageContent';
 import Admindashboard from '../pages/Admindashboard';
 import CreateNewsModal from '../components/CreateNewsModal';
-import PageDetailsModal from '../components/PageDetailsModal';
+import ProfilePage from './ProfilePage';
 import '../styles/Homepage.css';
 
 const Homepage = () => {
@@ -29,6 +29,7 @@ const Homepage = () => {
             Authorization: `Bearer ${auth.token}`,
           },
         });
+        console.log('User data:', response.data);
         setUserData(response.data);
       } catch (error) {
         console.error('Error fetching user data:', error);
@@ -107,11 +108,13 @@ const Homepage = () => {
   return (
     <div className="homepage">
       <NavBar 
-        username={`${userData.firstName} ${userData.lastName}`} 
-        roleId={userData.roleId}
+        userData={userData}
+        //username={`${userData.firstName} ${userData.lastName}`} 
+        //roleId={userData.roleId}
         handleLogout={logout}
         onHomePageClick={() => setSelected('home')}
         onAdminDashboardClick={() => setSelected('admin')}
+        onProfilePageClick={() => setSelected('profile')}
         selected={selected}
       />
       <div className="main-content">
@@ -119,7 +122,7 @@ const Homepage = () => {
         {userData.roleId === 1 && (
           <button className="add-news-button" onClick={handleShowModal}>+</button>
         )}
-        {selected === 'admin' ? <Admindashboard /> : <HomePageContent pages={pages} onEditPage={handleEditPage} onDeletePage={handleDeletePage} isAdmin={userData.roleId === 1} />}
+        {selected === 'admin' ? <Admindashboard /> : (selected === 'profile' ? <ProfilePage userData={userData} /> : <HomePageContent pages={pages} onEditPage={handleEditPage} onDeletePage={handleDeletePage} isAdmin={userData.roleId === 1} />)}
         {showModal && (
           <CreateNewsModal 
             ref={modalRef} 

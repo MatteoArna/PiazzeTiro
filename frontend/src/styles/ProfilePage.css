@@ -1,0 +1,68 @@
+.profile-container {
+    justify-content: center; /* Centra il contenuto orizzontalmente */
+    align-items: center; /* Centra il contenuto verticalmente */
+    min-height: 100vh; /* Altezza minima per coprire l'intera altezza della finestra */
+  }
+  
+  .profile-content {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #fff; /* Sfondo bianco per il contenuto del profilo */
+    border-radius: 10px; /* Angoli arrotondati */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ombra leggera */
+  }
+  
+  .profile-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .profile-picture img {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+  }
+  
+  .profile-info {
+    margin-left: 20px;
+    text-align: left; /* Allinea il testo a sinistra */
+  }
+  
+  .profile-info h2 {
+    margin: 0;
+  }
+  
+  .status {
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+  }
+  
+  .status-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 5px;
+  }
+  
+  .status-indicator.red {
+    background-color: red;
+  }
+
+  .status-indicator.green {
+    background-color: green;
+  }
+  
+  .profile-details {
+    background-color: #f1f1f1; /* Sfondo sotto le informazioni dell'utente */
+    padding: 15px;
+    border-radius: 10px; /* Angoli arrotondati */
+  }
+  
+  .profile-details p {
+    margin: 10px 0;
+    text-align: left; /* Allinea il testo a sinistra */
+  }
+  
