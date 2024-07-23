@@ -44,25 +44,6 @@
   color: red; /* Cambia il colore del testo a rosso */
 }
 
-.delete-button {
-  position: center;
-  bottom: 10px; /* Posiziona il bottone in fondo */
-  right: 10px;
-  background: none;
-  border: none;
-  color: red;
-  cursor: pointer;
-  font-size: 16px; /* Riduci la dimensione del font */
-  padding: 5px 10px; /* Aggiungi padding */
-  margin-right: 10px; /* Aggiungi margine a destra */
-  margin-left: 10px; /* Aggiungi margine a sinistra */
-  transition: background-color 0.3s, color 0.3s; /* Aggiungi transizione per il background */
-}
-
-.delete-button:hover {
-  background-color: red; /* Cambia lo sfondo a rosso */
-  color: white; /* Cambia il colore del testo a bianco */
-}
 
 .modal-summary {
   text-align: center;

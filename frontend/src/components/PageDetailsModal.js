@@ -5,7 +5,7 @@ import manutenzioneIcon from '../assets/maintenance.png';
 import documentiIcon from '../assets/info.png';
 import sicurezzaIcon from '../assets/warning.png';
 
-const PageDetailsModal = ({ page, onClose, isAdmin, onDelete }) => {
+const PageDetailsModal = ({ page, onClose}) => {
   const getIcon = (type) => {
     switch (type) {
       case 0:
@@ -46,11 +46,6 @@ const PageDetailsModal = ({ page, onClose, isAdmin, onDelete }) => {
         <div className="modal-content-text">
           <Markdown>{page.content}</Markdown>
         </div>
-        {isAdmin && (
-          <button className="delete-button" onClick={() => onDelete(page.id)}>
-            <p className="fas fa-trash-alt">DELETE</p>
-          </button>
-        )}
       </div>
     </div>
   );

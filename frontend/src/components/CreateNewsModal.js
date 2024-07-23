@@ -1,16 +1,24 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef, useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../hooks/useAuth';
-import Swal from 'sweetalert2';
+import { showAlert } from '../components/Alert'; // Importa il nuovo componente Alert
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // Importa lo stile di React Quill
 import '../styles/CreateNewsModal.css';
 
-const CreateNewsModal = forwardRef(({ onClose, isClosing, pageTypes }, ref) => {
+const CreateNewsModal = forwardRef(({ onClose, isClosing, pageTypes, editPage }, ref) => {
   const [summary, setSummary] = useState('');
   const [content, setContent] = useState('');
   const [typeId, setTypeId] = useState('');
   const { auth } = useAuth();
+
+  useEffect(() => {
+    if (editPage) {
+      setSummary(editPage.summary);
+      setContent(editPage.content);
+      setTypeId(editPage.typeId);
+    }
+  }, [editPage]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -23,37 +31,29 @@ const CreateNewsModal = forwardRef(({ onClose, isClosing, pageTypes }, ref) => {
     };
 
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/pages`, newsData, {
+      const url = editPage 
+        ? `${process.env.REACT_APP_API_URL}/pages/${editPage.id}`
+        : `${process.env.REACT_APP_API_URL}/pages`;
+      const method = editPage ? 'put' : 'post';
+
+      const response = await axios[method](url, newsData, {
         headers: {
           Authorization: `Bearer ${auth.token}`,
         },
       });
 
-      if (response.status === 201) {
-        Swal.fire({
-          icon: 'success',
-          title: 'Pagina creata con successo!',
-          showConfirmButton: false,
-          timer: 2000, // Durata di 2 secondi
-        });
+      if (response.status === 201 || response.status === 200) {
+        showAlert('success', editPage ? 'Pagina modificata con successo!' : 'Pagina creata con successo!');
         onClose();
         setTimeout(() => {
           window.location.reload(); // Ricarica la pagina per mostrare la nuova news
         }, 2000); // Attendere 2 secondi prima di ricaricare
       } else {
-        Swal.fire({
-          icon: 'error',
-          title: 'Errore nella creazione della pagina',
-          text: 'Si è verificato un problema, riprova più tardi.',
-        });
+        showAlert('error', 'Errore nella creazione della pagina', 'Si è verificato un problema, riprova più tardi.');
       }
     } catch (error) {
       console.error('Error creating news:', error);
-      Swal.fire({
-        icon: 'error',
-        title: 'Errore nella creazione della pagina',
-        text: error.response ? error.response.data.message : 'Si è verificato un problema, riprova più tardi.',
-      });
+      showAlert('error', 'Errore nella creazione della pagina', error.response ? error.response.data.message : 'Si è verificato un problema, riprova più tardi.');
     }
   };
 
@@ -61,7 +61,7 @@ const CreateNewsModal = forwardRef(({ onClose, isClosing, pageTypes }, ref) => {
     <div className={`modal-overlay ${isClosing ? 'fadeOut' : ''}`}>
       <div className={`modal-content ${isClosing ? 'scaleOut' : ''}`} ref={ref}>
         <button className="close-button" onClick={onClose}>&times;</button>
-        <h2>Modal per creare una news</h2>
+        <h2>{editPage ? 'Modifica News' : 'Crea News'}</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="summary">Summary</label>
@@ -93,10 +93,6 @@ const CreateNewsModal = forwardRef(({ onClose, isClosing, pageTypes }, ref) => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="file">File</label>
-            <input type="file" id="file" name="file" />
-          </div>
-          <div className="form-group">
             <label htmlFor="type">Type</label>
             <select
               id="type"
@@ -113,7 +109,7 @@ const CreateNewsModal = forwardRef(({ onClose, isClosing, pageTypes }, ref) => {
               ))}
             </select>
           </div>
-          <button type="submit">Create News</button>
+          <button type="submit">{editPage ? 'Modifica News' : 'Crea News'}</button>
         </form>
       </div>
     </div>

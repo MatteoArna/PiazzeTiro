@@ -7,6 +7,7 @@ import Calendar from '../components/Calendar';
 import HomePageContent from '../components/HomePageContent';
 import Admindashboard from '../pages/Admindashboard';
 import CreateNewsModal from '../components/CreateNewsModal';
+import PageDetailsModal from '../components/PageDetailsModal';
 import '../styles/Homepage.css';
 
 const Homepage = () => {
@@ -17,6 +18,7 @@ const Homepage = () => {
   const [showModal, setShowModal] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [pageTypes, setPageTypes] = useState([]);
+  const [currentEditPage, setCurrentEditPage] = useState(null);
   const modalRef = useRef(null);
 
   useEffect(() => {
@@ -40,7 +42,6 @@ const Homepage = () => {
             Authorization: `Bearer ${auth.token}`
           }
         });
-        console.log("response==>", response);
         setPages(response.data);
       } catch (error) {
         console.error('Error fetching pages:', error);
@@ -68,6 +69,7 @@ const Homepage = () => {
   }, [auth.email, auth.token]);
 
   const handleShowModal = () => {
+    setCurrentEditPage(null);
     setShowModal(true);
     setIsClosing(false);
   };
@@ -79,8 +81,23 @@ const Homepage = () => {
     }, 500); // Durata dell'animazione in ms
   };
 
-  const handlePageDelete = (id) => {
-    setPages((prevPages) => prevPages.filter((page) => page.id !== id));
+  const handleEditPage = (page) => {
+    setCurrentEditPage(page);
+    setShowModal(true);
+    setIsClosing(false);
+  };
+
+  const handleDeletePage = async (pageId) => {
+    try {
+      await axios.delete(`${process.env.REACT_APP_API_URL}/pages/${pageId}`, {
+        headers: {
+          Authorization: `Bearer ${auth.token}`,
+        },
+      });
+      setPages(pages.filter(page => page.id !== pageId));
+    } catch (error) {
+      console.error('Error deleting page:', error);
+    }
   };
 
   if (!userData) {
@@ -102,13 +119,14 @@ const Homepage = () => {
         {userData.roleId === 1 && (
           <button className="add-news-button" onClick={handleShowModal}>+</button>
         )}
-        {selected === 'admin' ? <Admindashboard /> : <HomePageContent pages={pages} onPageDelete={handlePageDelete} isAdmin={userData.roleId === 1} />}
+        {selected === 'admin' ? <Admindashboard /> : <HomePageContent pages={pages} onEditPage={handleEditPage} onDeletePage={handleDeletePage} isAdmin={userData.roleId === 1} />}
         {showModal && (
           <CreateNewsModal 
             ref={modalRef} 
             onClose={handleCloseModal} 
             isClosing={isClosing} 
             pageTypes={pageTypes} 
+            editPage={currentEditPage}
           />
         )}
       </div>

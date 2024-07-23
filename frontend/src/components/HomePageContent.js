@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../hooks/useAuth';
+import { showAlert } from '../components/Alert'; // Importa il nuovo componente Alert
 import '../styles/HomePageContent.css';
 import manutenzioneIcon from '../assets/maintenance.png';
 import documentiIcon from '../assets/info.png';
 import sicurezzaIcon from '../assets/warning.png';
 import PageDetailsModal from './PageDetailsModal';
 
-const HomePageContent = ({ pages, onPageDelete, isAdmin }) => {
+const HomePageContent = ({ pages, onEditPage, onDeletePage, isAdmin }) => {
   const { auth } = useAuth();
   const [selectedPage, setSelectedPage] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -55,10 +56,17 @@ const HomePageContent = ({ pages, onPageDelete, isAdmin }) => {
           Authorization: `Bearer ${auth.token}`
         }
       });
-      onPageDelete(id);
+
+      showAlert('success', 'Pagina eliminata con successo!');
+
+      setTimeout(() => {
+        window.location.reload(); // Ricarica la pagina per mostrare la modifica
+      }, 2000); // Attendere 2 secondi prima di ricaricare
+
       handleCloseModal();
     } catch (error) {
       console.error('Error deleting page:', error);
+      showAlert('error', 'Errore nella eliminazione della pagina', error.response ? error.response.data.message : 'Si è verificato un problema, riprova più tardi.');
     }
   };
 
@@ -73,6 +81,12 @@ const HomePageContent = ({ pages, onPageDelete, isAdmin }) => {
             <h3>{getType(page.typeId)}</h3>
             <p>{page.summary}</p>
             <a href="#" onClick={() => handleShowModal(page)}>Più informazioni</a>
+            {isAdmin && (
+              <>
+                <button className="edit-button" onClick={() => onEditPage(page)}>Modifica</button>
+                <button className="delete-button" onClick={() => handleDelete(page.id)}>Elimina</button>
+              </>
+            )}
           </div>
         </div>
       ))}

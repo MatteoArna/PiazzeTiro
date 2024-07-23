@@ -58,3 +58,18 @@
   color: #007bff; /* Colore blu per il link */
   font-weight: bold;
 }
+
+
+.delete-button {
+  background: none;
+  border: none;
+  color: red;
+  cursor: pointer;
+  font-size: 16px; /* Riduci la dimensione del font */
+  transition: background-color 0.3s, color 0.3s; /* Aggiungi transizione per il background */
+}
+
+.delete-button:hover {
+  background-color: red; /* Cambia lo sfondo a rosso */
+  color: white; /* Cambia il colore del testo a bianco */
+}
