@@ -1,13 +1,28 @@
 import React from 'react';
 import '../styles/ProfilePage.css';
+import civilianIcon from '../assets/profilepics/civilian.webp';
+import adminIcon from '../assets/profilepics/admin.webp';
+
 
 const ProfilePage = ({ userData }) => {
+
+    const getIcon = (type) => {
+        switch (type) {
+            case 0:
+                return civilianIcon;
+            case 1:
+                return adminIcon;
+            default:
+                return null;
+        }
+    }
+
   return (
     <div className="profile-container">
       <div className="profile-content">
         <div className="profile-header">
           <div className="profile-picture">
-            <img src="https://via.placeholder.com/100" alt={userData.firstName + ' ' + userData.lastName} />
+            <img src={getIcon(userData.roleId)} alt={userData.firstName + ' ' + userData.lastName} />
           </div>
           <div className="profile-info">
             <h2>{userData.firstName + ' ' + userData.lastName}</h2>
