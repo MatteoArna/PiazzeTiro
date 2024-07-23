@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const cors = require('cors');  // Importa il pacchetto CORS
+const cors = require('cors');
+const path = require('path'); // Aggiungi questo
 
 const app = express();
 
@@ -14,6 +15,9 @@ app.use(cors({
 // Body parser middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Configura il percorso statico per la directory uploads
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); // Aggiungi questo
 
 // Import routes
 const authRoutes = require('./routes/auth');

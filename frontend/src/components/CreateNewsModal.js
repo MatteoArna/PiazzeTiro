@@ -9,6 +9,8 @@ import '../styles/CreateNewsModal.css';
 const CreateNewsModal = forwardRef(({ onClose, isClosing, pageTypes, editPage }, ref) => {
   const [summary, setSummary] = useState('');
   const [content, setContent] = useState('');
+  const [file, setFile] = useState(null);
+  const [filePreview, setFilePreview] = useState(null);
   const [typeId, setTypeId] = useState('');
   const { auth } = useAuth();
 
@@ -17,18 +19,37 @@ const CreateNewsModal = forwardRef(({ onClose, isClosing, pageTypes, editPage },
       setSummary(editPage.summary);
       setContent(editPage.content);
       setTypeId(editPage.typeId);
+      if (editPage.file) {
+        setFile(editPage.file);
+        setFilePreview(`${process.env.REACT_APP_API_URL}/${editPage.file}`);
+      }
     }
   }, [editPage]);
+
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
+    if (selectedFile && selectedFile.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFilePreview(reader.result);
+      };
+      reader.readAsDataURL(selectedFile);
+    } else {
+      setFilePreview(null);
+    }
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const newsData = {
-      summary,
-      content,
-      file: '', // Lascia il file come stringa vuota per ora
-      typeId
-    };
+    const formData = new FormData();
+    formData.append('summary', summary);
+    formData.append('content', content);
+    formData.append('typeId', typeId);
+    if (file) {
+      formData.append('file', file);
+    }
 
     try {
       const url = editPage 
@@ -36,9 +57,10 @@ const CreateNewsModal = forwardRef(({ onClose, isClosing, pageTypes, editPage },
         : `${process.env.REACT_APP_API_URL}/pages`;
       const method = editPage ? 'put' : 'post';
 
-      const response = await axios[method](url, newsData, {
+      const response = await axios[method](url, formData, {
         headers: {
           Authorization: `Bearer ${auth.token}`,
+          'Content-Type': 'multipart/form-data',
         },
       });
 
@@ -108,6 +130,17 @@ const CreateNewsModal = forwardRef(({ onClose, isClosing, pageTypes, editPage },
                 </option>
               ))}
             </select>
+          </div>
+          <div className="form-group">
+            <label htmlFor="file">File</label>
+            <input type="file" id="file" name="file" onChange={handleFileChange} />
+            {filePreview && (
+              file.type.startsWith('image/') ? (
+                <img src={filePreview} alt="Preview" className="file-preview" />
+              ) : (
+                <a href={filePreview} download={file.name} className="file-download">Download File</a>
+              )
+            )}
           </div>
           <button type="submit">{editPage ? 'Modifica News' : 'Crea News'}</button>
         </form>
