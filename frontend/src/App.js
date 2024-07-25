@@ -3,12 +3,12 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
-import Homepage from './pages/Homepage';
 import AdminDashboard from './pages/Admindashboard';
 import Unauthorized from './pages/Unauthorized';
 import PrivateRoute from './components/PrivateRoute';
 import { AuthProvider } from './context/AuthContext';
 import './App.css';
+import BasePage from './pages/BasePage';
 
 const App = () => {
   return (
@@ -22,7 +22,7 @@ const App = () => {
               path="/homepage"
               element={
                 <PrivateRoute>
-                  <Homepage />
+                  <BasePage />
                 </PrivateRoute>
               }
             />

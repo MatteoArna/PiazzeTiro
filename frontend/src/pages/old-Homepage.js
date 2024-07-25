@@ -2,11 +2,11 @@ import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { useAuth } from '../hooks/useAuth';
 import NavBar from '../components/NavBar';
-import SearchBar from '../components/SearchBar';
-import Calendar from '../components/Calendar';
-import HomePageContent from '../components/HomePageContent';
+import SearchBar from '../components/SearchBar/SearchBar';
+import Calendar from '../components/Calendar/Calendar';
+import NewsSummary from '../components/News/NewsSummary/NewsSummary';
 import Admindashboard from '../pages/Admindashboard';
-import CreateNewsModal from '../components/CreateNewsModal';
+import CreateNewsModal from '../components/News/CreateNewsModal';
 import ProfilePage from './ProfilePage';
 import '../styles/Homepage.css';
 
@@ -109,8 +109,8 @@ const Homepage = () => {
     <div className="homepage">
       <NavBar 
         userData={userData}
-        //username={`${userData.firstName} ${userData.lastName}`} 
-        //roleId={userData.roleId}
+        username={`${userData.firstName} ${userData.lastName}`} 
+        roleId={userData.roleId}
         handleLogout={logout}
         onHomePageClick={() => setSelected('home')}
         onAdminDashboardClick={() => setSelected('admin')}
@@ -122,14 +122,27 @@ const Homepage = () => {
         {userData.roleId === 1 && (
           <button className="add-news-button" onClick={handleShowModal}>+</button>
         )}
-        {selected === 'admin' ? <Admindashboard /> : (selected === 'profile' ? <ProfilePage userData={userData} /> : <HomePageContent pages={pages} onEditPage={handleEditPage} onDeletePage={handleDeletePage} isAdmin={userData.roleId === 1} />)}
+        {selected === 'admin' ? (
+          <Admindashboard />
+        ) : selected === 'profile' ? (
+          <ProfilePage userData={userData} />
+        ) : (
+          pages.map((page) => (
+            <NewsSummary
+              key={page.id}
+              page={page}
+              onEditPage={handleEditPage}
+              onDeletePage={handleDeletePage}
+              isAdmin={userData.roleId === 1}
+            />
+          ))
+        )}
         {showModal && (
           <CreateNewsModal 
             ref={modalRef} 
             onClose={handleCloseModal} 
-            isClosing={isClosing} 
-            pageTypes={pageTypes} 
-            editPage={currentEditPage}
+            onCreate={handleShowModal} // Funzione da chiamare dopo il salvataggio
+            
           />
         )}
       </div>

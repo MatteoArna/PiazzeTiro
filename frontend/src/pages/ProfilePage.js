@@ -39,6 +39,7 @@ const ProfilePage = ({ userData }) => {
           <p><strong>Indirizzo:</strong> {userData.address}</p>
         </div>
       </div>
+
     </div>
   );
 };

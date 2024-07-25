@@ -1,22 +1,22 @@
 import React, { createContext, useState } from 'react';
+import { login as loginService, logout as logoutService, getAuthToken, getUserEmail } from '../services/authService';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({
-    token: localStorage.getItem('token') || null,
-    email: localStorage.getItem('email') || null,
+    token: getAuthToken() || null,
+    email: getUserEmail() || null,
+    
   });
 
   const login = (token, email) => {
-    localStorage.setItem('token', token);
-    localStorage.setItem('email', email);
+    loginService(token, email);
     setAuth({ token, email });
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('email');
+    logoutService();
     setAuth({ token: null, email: null });
   };
 

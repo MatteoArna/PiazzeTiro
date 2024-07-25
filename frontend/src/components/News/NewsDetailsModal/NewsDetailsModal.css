@@ -1,0 +1,42 @@
+
+  
+  .modal-header img {
+    width: 20px; /* Regola la dimensione dell'icona */
+    height: 20px; /* Regola la dimensione dell'icona */
+    margin-right: 10px; /* Spazio tra l'icona e il titolo */
+  }
+  
+  .modal-summary {
+    text-align: left; /* Allinea il testo a sinistra */
+    font-weight: bold;
+    margin-top: 20px;
+  }
+  
+  .modal-content-text {
+    text-align: justify;
+    margin-top: 20px;
+  }
+  
+  .modal-file-preview {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .file-preview {
+    max-width: 100%;
+    max-height: 300px;
+  }
+  
+  .file-download {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+  }
+  
+  .file-download:hover {
+    background-color: #0056b3;
+  }
+  

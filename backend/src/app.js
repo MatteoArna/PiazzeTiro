@@ -1,7 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const path = require('path'); // Aggiungi questo
+const sequelize = require('./config/database'); // Importa la configurazione di Sequelize
+const path = require('path'); // Importa il modulo path
+const { authenticate } = require('./middleware/authMiddleware'); // Importa il middleware di autenticazione
 
 const app = express();
 
@@ -16,8 +18,8 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Configura il percorso statico per la directory uploads
-app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); // Aggiungi questo
+// Configura il percorso statico per la directory uploads con autenticazione
+app.use('/uploads', authenticate, express.static(path.join(__dirname, 'uploads')));
 
 // Import routes
 const authRoutes = require('./routes/auth');
@@ -35,5 +37,14 @@ app.use('/estimates', estimateRoutes);
 app.use('/pages', pageRoutes);
 app.use('/bookings', bookingRoutes);
 app.use('/pageTypes', pageTypeRoutes);
+
+// Sincronizza il database
+sequelize.sync({ alter: true }) // Usa { alter: true } per aggiornare il database senza cancellare i dati
+  .then(() => {
+    console.log('Database synchronized');
+  })
+  .catch((error) => {
+    console.error('Error synchronizing the database:', error);
+  });
 
 module.exports = app;
