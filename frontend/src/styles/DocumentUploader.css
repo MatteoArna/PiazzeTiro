@@ -1,51 +1,78 @@
 .document-uploader {
-    padding: 20px;
-    border: 2px dashed #d3b8f8;
-  }
-  
-  .document-uploader h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  .document-boxes {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .document-box {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-  }
-  
-  .document-box input[type="file"] {
-    display: none;
-  }
-  
-  .document-box label {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-  }
-  
-  .document-box .status-icon {
-    font-size: 24px;
-  }
-  
-  .green {
-    border: 2px solid green;
-  }
-  
-  .orange {
-    border: 2px solid orange;
-  }
-  
-  .red {
-    border: 2px solid red;
-  }
-  
+  padding: 20px;
+}
+
+.document-uploader h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.document-boxes {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Adds space between the elements */
+}
+
+.document-box-container {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Adds space between the box and delete button */
+}
+
+.document-box {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  border: 2px solid gray; /* Default border color */
+}
+
+.document-box.blue {
+  border: 2px solid blue; /* Blue border when file is uploaded */
+}
+
+.document-box.orange {
+  border: 2px solid orange; /* Orange border when in approval */
+}
+
+.document-box.red {
+  border: 2px solid red; /* Red border for admin response */
+}
+
+.document-box input[type="file"] {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.document-box-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.document-box .status-icon {
+  font-size: 24px;
+}
+
+.submit-button {
+  margin-top: 15px;
+}
+
+.submit-button:disabled {
+  background-color: gray; /* Optional: to visually indicate that the button is disabled */
+  cursor: not-allowed; /* Optional: to change the cursor when hovering over a disabled button */
+}
+
+.delete-button {
+  flex-shrink: 0;
+}

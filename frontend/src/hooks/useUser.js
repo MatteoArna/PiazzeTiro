@@ -1,5 +1,6 @@
+// useUser.js
 import { useState, useEffect } from 'react';
-import { fetchUserData } from '../services/userService';
+import { fetchUserData, updateUserStatus } from '../services/userService';
 
 const useUser = (email) => {
   const [userData, setUserData] = useState(null);
@@ -21,7 +22,16 @@ const useUser = (email) => {
     loadUserData();
   }, [email]);
 
-  return { userData, loading, error };
+  const updateUser = async (data) => {
+    try {
+      const response = await updateUserStatus(email, data);
+      setUserData(response.data);
+    } catch (err) {
+      setError(err);
+    }
+  };
+
+  return { userData, loading, error, updateUser };
 };
 
 export default useUser;

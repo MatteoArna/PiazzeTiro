@@ -22,7 +22,6 @@ const Register = () => {
         lastName,
         roleId: 0, // Set roleId to 1 arbitrarily
         society: '', // Set society to an empty string
-        status: false, // Set status to false
         password,
       });
       navigate('/login');

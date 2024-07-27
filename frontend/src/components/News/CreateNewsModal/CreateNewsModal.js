@@ -1,11 +1,11 @@
 import React, { forwardRef, useState, useEffect } from 'react';
-import { showAlert } from '../Alert';
+import { showAlert } from '../../Alert';
 
 // Components
-import Modal from '../Modal/Modal';
+import Modal from '../../Modal/Modal';
 
 // Hooks
-import usePages from '../../hooks/usePages';
+import usePages from '../../../hooks/usePages';
 
 // Styles
 import 'react-quill/dist/quill.snow.css';
@@ -100,6 +100,7 @@ const CreateNewsModal = forwardRef(({ onClose, onSubmit, page }, ref) => {
               value={typeId}
               onChange={(e) => setTypeId(e.target.value)}
               required
+              className="custom-select"
             >
               <option value="">Select Type</option>
               {pageTypes.map((type) => (
@@ -114,7 +115,7 @@ const CreateNewsModal = forwardRef(({ onClose, onSubmit, page }, ref) => {
         </div>
         <div className="form-group">
           <label htmlFor="file">File</label>
-          <input type="file" id="file" name="file" onChange={handleFileChange} />
+          <input type="file" id="file" name="file" onChange={handleFileChange} className="custom-file-input" />
         </div>
         <button type="submit">{page ? 'Modifica News' : 'Crea News'}</button>
       </form>

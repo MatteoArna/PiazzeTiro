@@ -1,5 +1,11 @@
-.news-page {
+.news-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+  }
+
+.add-news-button {
+    justify-content: flex-end;
+    margin-bottom: 20px;
+    width: 95%;
   }
   

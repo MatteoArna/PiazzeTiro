@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { showAlert } from '../../../components/Alert'; // Importa il nuovo componente Alert
 
 // Components
 import NewsDetailsModal from '../NewsDetailsModal/NewsDetailsModal';

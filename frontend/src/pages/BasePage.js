@@ -1,31 +1,28 @@
-import React, { createElement, useRef, useState } from 'react';
-import axios from 'axios';
-import NavBar from '../components/NavBar';
-import SearchBar from '../components/SearchBar/SearchBar';
-import Calendar from '../components/Calendar/Calendar';
-import Admindashboard from '../pages/Admindashboard';
-import CreateNewsModal from '../components/News/CreateNewsModal';
-import ProfilePage from './ProfilePage';
-import '../styles/Homepage.css';
+import React, { useRef, useState } from 'react';
 
 // Components
-import NewsPage from '../components/News/NewsPage';
+import Calendar from '../components/Calendar/Calendar';
+import DocumentUploader from '../components/DocumentUploader';
+import NavBar from '../components/NavBar/NavBar';
 
 // Hooks
 import { useAuth } from '../hooks/useAuth';
 import useUser from '../hooks/useUser';
-import usePages from '../hooks/usePages';
-import { createPage } from '../services/pageService';
+
+//Pages
+import NewsPage from '../components/News/NewsPage';
+import Admindashboard from '../pages/Admindashboard';
+import ProfilePage from './ProfilePage';
+
+//Style
+import './BasePage.css';
+
 
 const BasePage = () => {
   const { auth, logout } = useAuth();
   const { userData, loading, error } = useUser(auth.email);
 
-  const [selected, setSelected] = useState('home');
-  const [showModal, setShowModal] = useState(false);
-  const [isClosing, setIsClosing] = useState(false);
-  const [currentEditPage, setCurrentEditPage] = useState(null);
-  const modalRef = useRef(null);
+  const [selected, setSelected] = useState('profile');
 
   if (loading) {
     return <div className="base-page">Loading...</div>;
@@ -41,33 +38,23 @@ const BasePage = () => {
       <NavBar 
         userData={userData}
         handleLogout={logout}
-        onHomePageClick={() => setSelected('home')}
+        onNewsPageClick={() => setSelected('news')}
         onAdminDashboardClick={() => setSelected('admin')}
         onProfilePageClick={() => setSelected('profile')}
         selected={selected}
       />
 
       <div className="main-content">
-        <SearchBar />
-
-        {userData.roleId === 1 && (
-          <button className="add-news-button" onClick={() => setShowModal(true)}>+</button>
-        )}
-
-
-        {selected === 'home' && <NewsPage userData={userData}/>}
+        {selected === 'news' && <NewsPage userData={userData}/>}
         {selected === 'admin' && <Admindashboard />}
         {selected === 'profile' && <ProfilePage userData={userData} />}
       </div>
-      <Calendar />
-    
-      {showModal && (
-        <CreateNewsModal 
-          ref={modalRef} 
-          onClose={() => setShowModal(false)} 
-          onSubmit={(page) => createPage(auth.token, page)}
-        />
-      )}
+
+      <div>
+        {selected === 'news' && <Calendar />}
+        {selected === 'profile' && userData.roleId !== 1 && <DocumentUploader userData={userData}/>}
+      </div>
+  
     </div>
   );
 };

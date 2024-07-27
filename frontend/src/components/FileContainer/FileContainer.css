@@ -1,0 +1,59 @@
+.file-container {
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 10px;
+  }
+  
+  .file-info {
+    flex-grow: 1;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .file-container.toLoad {
+    border: 2px solid #ccc;
+  }
+  
+  .file-container.preview {
+    border: 2px solid blue;
+  }
+  
+  .file-container.waiting {
+    border: 2px solid orange;
+  }
+  
+  .file-container.accepted {
+    border: 2px solid green;
+  }
+  
+  .file-action {
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 15%;
+    margin-left: 10px;
+    padding: 5px;
+    text-align: center;
+  }
+  
+  .upload-action {
+    background-color: #008CBA;
+    color: white;
+  }
+  
+  .download-action {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .delete-action {
+    background-color: white;
+    color: white;
+  }
+  
+  .file-action:hover {
+    opacity: 0.8;
+  }
+  
