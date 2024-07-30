@@ -1,0 +1,65 @@
+.user-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f9f9f9;
+  padding: 15px 20px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+
+.user-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.user-info {
+  display: flex;
+  align-items: center; /* Align items horizontally */
+  flex-grow: 1;
+  margin-right: 20px;
+}
+
+.user-company {
+  font-weight: bold;
+  font-size: 18px;
+  color: #333;
+}
+
+.user-name {
+  font-style: italic; /* Italic style for society */
+  color: #777;
+  font-size: 14px;
+  margin-left: 10px; /* Space between name and society */
+}
+
+.user-status {
+  font-size: 14px;
+  padding: 3px 8px;
+  border-radius: 5px;
+  flex-shrink: 0; /* Prevent shrinking */
+}
+
+.user-status.pending {
+  color: #ffa500; /* Color for "Da approvare" */
+  background-color: #fff3e0;
+}
+
+.user-status.available {
+  color: #28a745; /* Green color for available */
+  background-color: #e6f4ea;
+}
+
+.user-arrow {
+  font-size: 24px;
+  color: #555;
+  transition: transform 0.3s;
+  flex-shrink: 0; /* Prevent shrinking */
+}
+
+.user-box:hover .user-arrow {
+  transform: translateX(5px);
+}

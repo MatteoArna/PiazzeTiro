@@ -1,8 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 
 // Components
 import Calendar from '../components/Calendar/Calendar';
-import DocumentUploader from '../components/DocumentUploader';
+import DocumentUploader from '../components/DocumentUploader/DocumentUploader';
 import NavBar from '../components/NavBar/NavBar';
 
 // Hooks
@@ -11,7 +11,7 @@ import useUser from '../hooks/useUser';
 
 //Pages
 import NewsPage from '../components/News/NewsPage';
-import Admindashboard from '../pages/Admindashboard';
+import AdminDashboardPage from './AdminDashboard/AdminDashboardPage';
 import ProfilePage from './ProfilePage';
 
 //Style
@@ -21,8 +21,9 @@ import './BasePage.css';
 const BasePage = () => {
   const { auth, logout } = useAuth();
   const { userData, loading, error } = useUser(auth.email);
-
   const [selected, setSelected] = useState('profile');
+
+
 
   if (loading) {
     return <div className="base-page">Loading...</div>;
@@ -46,7 +47,7 @@ const BasePage = () => {
 
       <div className="main-content">
         {selected === 'news' && <NewsPage userData={userData}/>}
-        {selected === 'admin' && <Admindashboard />}
+        {selected === 'admin' && <AdminDashboardPage/>}
         {selected === 'profile' && <ProfilePage userData={userData} />}
       </div>
 

@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 
 // Hooks
-import { useAuth } from '../hooks/useAuth';
-import useDocument from '../hooks/useDocument';
-import useUser from '../hooks/useUser';
+import { useAuth } from '../../hooks/useAuth';
+import useDocument from '../../hooks/useDocument';
+import useUser from '../../hooks/useUser';
 
 
 // Styles
-import '../styles/DocumentUploader.css';
+import './DocumentUploader.css';
 
 // Components
-import FileContainer from './FileContainer/FileContainer';
-import { showAlert } from './Alert'
+import FileContainer from '../FileContainer/FileContainer';
+import { showAlert } from '../Alert'
 
 
 const DocumentUploader = ({ userData, adminFile }) => {
