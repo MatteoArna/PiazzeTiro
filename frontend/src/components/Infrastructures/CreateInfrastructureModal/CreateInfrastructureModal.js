@@ -9,6 +9,7 @@ import { useAuth } from '../../../hooks/useAuth';
 
 // Styles
 import 'react-quill/dist/quill.snow.css';
+import './CreateInfrastructureModal.css';
 
 // Other
 import ReactQuill from "react-quill";
@@ -100,7 +101,7 @@ const CreateInfrastructureModal = ({ onClose, onSubmit, infrastructure }) => {
                         <option value="0">Disponibile</option>
                     </select>
                 </div>
-                <button type="submit">Salva</button>
+                <button type="submit">{infrastructure ? "Modifica" : "Crea"}</button>
             </form>
         </Modal>
     );

@@ -1,0 +1,55 @@
+.modal-content {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+  }
+  
+  .form-group input,
+  .form-group select,
+  .ql-container {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  .form-group input:focus,
+  .form-group select:focus,
+  .ql-container:focus {
+    outline: none;
+    border-color: #007bff;
+  }
+  
+  .ql-container {
+    min-height: 200px;
+  }
+  
+  .ql-toolbar {
+    border-radius: 4px 4px 0 0;
+  }
+  
+  .ql-container.ql-snow {
+    border-radius: 0 0 4px 4px;
+  }
+  
+  button[type="submit"] {
+    display: inline-block;
+    padding: 10px 20px;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+  }
