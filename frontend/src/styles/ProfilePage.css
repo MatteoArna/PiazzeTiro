@@ -54,6 +54,10 @@
   .status-indicator.green {
     background-color: green;
   }
+
+  .status-indicator.orange {
+    background-color: orange;
+  }
   
   .profile-details {
     background-color: #f1f1f1; /* Sfondo sotto le informazioni dell'utente */

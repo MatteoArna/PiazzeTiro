@@ -22,13 +22,10 @@ const DocumentUploader = ({ userData, adminFile }) => {
   useEffect(() => {
     if (userData.email) {
       loadDocuments(userData.email);
-      console.log(userData.status);
     }
   }, [userData.email]);
 
   const handleOnUpload = async (file) => {
-    console.log('File uploaded:', file);
-
     const documentData = new FormData();
     const fileName = file.fileName;
     documentData.append('file', file, fileName);
@@ -47,7 +44,12 @@ const DocumentUploader = ({ userData, adminFile }) => {
     console.log('File deleted:', file);
     for (const document of documents) {
       if (document.filePath === file) {
-        await deleteDocument(document.id);
+        try{
+          await deleteDocument(document.id);
+          showAlert('success', 'File eliminato con successo.');
+        }catch (err) {
+          showAlert('error', 'Errore durante l\'eliminazione del file.');
+        }
       }
     }
     loadDocuments(userData.email);
@@ -61,6 +63,7 @@ const DocumentUploader = ({ userData, adminFile }) => {
     }
 
     updateUser({ status: 1 });
+    showAlert('success', 'Documenti inviati con successo.');
 
   };
 

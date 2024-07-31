@@ -17,6 +17,32 @@ const ProfilePage = ({ userData }) => {
         }
     }
 
+    const getColor = (status) => {
+        switch (status) {
+            case 0:
+                return 'red';
+            case 1:
+                return 'orange';
+            case 2:
+                return 'green';
+            default:
+                return null;
+        }
+    }
+
+    const getStatus = (status) => {
+        switch (status) {
+            case 0:
+                return 'Non approvato';
+            case 1:
+                return 'In attesa';
+            case 2:
+                return 'Approvato';
+            default:
+                return null;
+        }
+    }
+
   return (
     <div className="profile-container">
       <div className="profile-content">
@@ -26,7 +52,9 @@ const ProfilePage = ({ userData }) => {
           </div>
           <div className="profile-info">
             <h2>{userData.firstName + ' ' + userData.lastName}</h2>
-            <p className="status"><span className="status-indicator red"></span>Non approvato</p>
+
+
+            <p className="status"><span className={"status-indicator " + (getColor(userData.status))}></span>{getStatus(userData.status)}</p>
           </div>
         </div>
         <div className="profile-details">
