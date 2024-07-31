@@ -57,17 +57,3 @@
   .logout-button:hover {
     background-color: #ff1a1a;
   }
-  
-  .language-selector ul {
-    list-style-type: none;
-    padding: 0;
-    margin-top: 20px;
-  }
-  
-  .language-selector ul li {
-    display: inline;
-    margin-right: 10px;
-    cursor: pointer;
-    color: blue;
-  }
-  

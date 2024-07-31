@@ -2,7 +2,7 @@ import React from 'react';
 import './NavBar.css';
 import userIcon from '../../assets/user.png';
 
-const NavBar = ({ userData, handleLogout, onNewsPageClick, onAdminDashboardClick, onProfilePageClick, selected }) => {
+const NavBar = ({ userData, handleLogout, onNewsPageClick, onAdminDashboardClick, onProfilePageClick, onInfrastructurePageClick, selected }) => {
   return (
     <div className="navbar">
       <div className="user-info">
@@ -12,6 +12,9 @@ const NavBar = ({ userData, handleLogout, onNewsPageClick, onAdminDashboardClick
       <nav>
         <ul>
           <li className={selected === 'news' ? 'selected' : ''} onClick={onNewsPageClick}>News Page</li>
+          {userData.status > 1 && (
+            <li className={selected === 'infrastructures' ? 'selected' : ''} onClick={onInfrastructurePageClick}>Infrastrutture</li>
+          )}
           <li className={selected === 'profile' ? 'selected' : ''} onClick={onProfilePageClick}>Profilo</li>
           <li className={selected === 'settings' ? 'selected' : ''}>Impostazioni</li>
           {userData.roleId === 1 && (

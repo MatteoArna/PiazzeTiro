@@ -17,6 +17,7 @@ import ProfilePage from './ProfilePage';
 
 //Style
 import './BasePage.css';
+import InfratructurePage from '../components/Infrastructures/InfratructurePage';
 
 
 const BasePage = () => {
@@ -42,6 +43,7 @@ const BasePage = () => {
         onNewsPageClick={() => setSelected('news')}
         onAdminDashboardClick={() => setSelected('admin')}
         onProfilePageClick={() => setSelected('profile')}
+        onInfrastructurePageClick={() => setSelected('infrastructures')}
         selected={selected}
       />
 
@@ -49,10 +51,11 @@ const BasePage = () => {
         {selected === 'news' && <NewsPage userData={userData}/>}
         {selected === 'admin' && <AdminDashboardPage />}
         {selected === 'profile' && <ProfilePage userData={userData} />}
+        {selected === 'infrastructures' && <InfratructurePage userData={userData}/>}
       </div>
 
       <div>
-        {selected === 'news' && <Calendar />}
+        {(selected === 'news' || selected === 'infrastructures') && <Calendar />}
         {selected === 'profile' && userData.roleId !== 1 && <DocumentUploader userData={userData}/>}
       </div>
   
