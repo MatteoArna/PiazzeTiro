@@ -1,7 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 const HeadQuarter = require('./headQuarter');
-const InfrastructureStatus = require('./infrastructureStatus');
 
 const Infrastructure = sequelize.define('Infrastructure', {
   id: {
@@ -31,10 +30,6 @@ const Infrastructure = sequelize.define('Infrastructure', {
   },
   statusId: {
     type: DataTypes.INTEGER,
-    references: {
-      model: InfrastructureStatus,
-      key: 'id',
-    },
     allowNull: false,
   },
 }, {
@@ -43,6 +38,5 @@ const Infrastructure = sequelize.define('Infrastructure', {
 });
 
 Infrastructure.belongsTo(HeadQuarter, { foreignKey: 'headquarterId' });
-Infrastructure.belongsTo(InfrastructureStatus, { foreignKey: 'statusId' });
 
 module.exports = Infrastructure;

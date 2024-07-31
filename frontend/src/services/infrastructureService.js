@@ -7,19 +7,19 @@ export const fetchInfrastructures = (token) => api.get('/infrastructures', {
     }
 });
 
-export const createInfrastructure = (token, infrastructureData) => api.post('/infrastructures/create', infrastructureData, {
+export const createInfrastructure = (token, infrastructureData) => api.post('/infrastructures', infrastructureData, {
     headers:
     {
         Authorization: `Bearer ${token}`,
-        'Content-Type': 'multipart/form-data'
+        'Content-Type': 'application/json'
     }
 });
 
-export const updateInfrastructure = (token, id, infrastructureData) => api.put(`/infrastructures/update/${id}`, infrastructureData, {
+export const updateInfrastructure = (token, id, infrastructureData) => api.put(`/infrastructures/${id}`, infrastructureData, {
     headers:
     {
         Authorization: `Bearer ${token}`,
-        'Content-Type': 'multipart/form-data'
+        'Content-Type': 'application/json'
     }
 });
 
@@ -27,6 +27,6 @@ export const deleteInfrastructure = (token, id) => api.delete(`/infrastructures/
     headers:
     {
         Authorization: `Bearer ${token}`,
-        'Content-Type': 'multipart/form-data'
+        'Content-Type': 'application/json'
     }
 });

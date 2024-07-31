@@ -47,11 +47,6 @@ const CreateNewsModal = forwardRef(({ onClose, onSubmit, page }, ref) => {
         pageData.append('file', file);
       }
 
-      // Debug: Log FormData values
-      for (let [key, value] of pageData.entries()) {
-        console.log(`${key}: ${value}`);
-      }
-
       onSubmit(pageData);
       onClose();
     } catch (error) {

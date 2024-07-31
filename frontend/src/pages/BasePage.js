@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import Calendar from '../components/Calendar/Calendar';
 import DocumentUploader from '../components/DocumentUploader/DocumentUploader';
 import NavBar from '../components/NavBar/NavBar';
-import UserDetails from '../components/UserList/HelpBox/UserDetails';
 
 // Hooks
 import { useAuth } from '../hooks/useAuth';
