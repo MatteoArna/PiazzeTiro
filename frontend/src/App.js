@@ -8,7 +8,7 @@ import PrivateRoute from './components/PrivateRoute';
 import { AuthProvider } from './context/AuthContext';
 import './App.css';
 import BasePage from './pages/BasePage';
-import AdminDashboardPage from './pages/AdminDashboard/AdminDashboardPage';
+import UserApproval from './pages/UserApproval/UserApproval';
 
 const App = () => {
   return (
@@ -30,7 +30,7 @@ const App = () => {
               path="/admin"
               element={
                 <PrivateRoute requiredRoleId={1}>
-                  <AdminDashboardPage />
+                  <UserApproval />
                 </PrivateRoute>
               }
             />
