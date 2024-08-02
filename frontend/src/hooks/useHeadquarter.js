@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { fetchHeadquarters } from '../services/headquarterService';
 
 const useHeadquarter = (token) => {
@@ -19,8 +19,10 @@ const useHeadquarter = (token) => {
     }, [token]);
 
     useEffect(() => {
-        loadHeadquarters();
-    }, [loadHeadquarters]);
+        if (token) {
+            loadHeadquarters();
+        }
+    }, [token, loadHeadquarters]);
 
     return {
         headquarters,

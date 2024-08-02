@@ -1,6 +1,8 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
+
 const HeadQuarter = require('./headQuarter');
+const InfrastructureType = require('./infrastructureType');
 
 const Infrastructure = sequelize.define('Infrastructure', {
   id: {
@@ -31,6 +33,14 @@ const Infrastructure = sequelize.define('Infrastructure', {
   statusId: {
     type: DataTypes.INTEGER,
     allowNull: false,
+  },
+  typeId: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: InfrastructureType,
+      key: 'id',
+    },
+    allowNull: true,
   },
 }, {
   timestamps: false,

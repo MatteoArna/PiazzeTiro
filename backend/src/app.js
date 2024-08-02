@@ -31,6 +31,7 @@ const bookingRoutes = require('./routes/booking');
 const pageTypeRoutes = require('./routes/pageType');
 const documentRoutes = require('./routes/document');
 const headQuarterRoutes = require('./routes/headQuarter');
+const infrastructureTypeRoutes = require('./routes/infrastructureType');
 
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
@@ -41,6 +42,7 @@ app.use('/bookings', bookingRoutes);
 app.use('/pageTypes', pageTypeRoutes);
 app.use('/documents', documentRoutes);
 app.use('/headQuarters', headQuarterRoutes);
+app.use('/infrastructureTypes', infrastructureTypeRoutes);
 
 // Sincronizza il database
 sequelize.sync({ alter: true }) // Usa { alter: true } per aggiornare il database senza cancellare i dati

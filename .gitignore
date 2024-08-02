@@ -1,6 +1,7 @@
 private-docs/*
 backend/.env
 backend/node_modules
+backend/src/uploads/*
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 

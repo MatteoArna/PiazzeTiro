@@ -5,6 +5,7 @@ import Modal from "../../Modal/Modal";
 
 // Hooks
 import useHeadquarter from "../../../hooks/useHeadquarter";
+import useInfrastructureType from "../../../hooks/useInfrastructureType";
 import { useAuth } from '../../../hooks/useAuth';
 
 // Styles
@@ -19,37 +20,44 @@ const CreateInfrastructureModal = ({ onClose, onSubmit, infrastructure }) => {
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
     const [headQuarter, setHeadQuarter] = useState('');
+    const [infrastructureType, setInfrastructureType] = useState('');
     const [status, setStatus] = useState('');
 
     const { auth } = useAuth();
-    const { headquarters } = useHeadquarter(auth.token);
+    const { headquarters, loadHeadquarters } = useHeadquarter(auth.token);
+    const { infrastructureTypes, loadInfrastructureTypes } = useInfrastructureType(auth.token);
+
+    useEffect(() => {
+        if (auth.token) {
+            loadHeadquarters();
+            loadInfrastructureTypes();
+        }
+    }, [auth.token, loadHeadquarters, loadInfrastructureTypes]);
 
     useEffect(() => {
         if (infrastructure) {
             setName(infrastructure.name);
             setDescription(infrastructure.description);
             setPrice(infrastructure.price);
-            setHeadQuarter(infrastructure.headQuarter);
-            setStatus(infrastructure.status);
+            setHeadQuarter(infrastructure.headquarterId);
+            setStatus(infrastructure.statusId);
+            setInfrastructureType(infrastructure.typeId);
         }
     }, [infrastructure]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        if (!name || !description || !price || !headQuarter || !status) {
-            alert('Tutti i campi sono obbligatori!');
-            return;
-        }
-
         const data = {
             name,
             description,
             price,
             headquarterId: headQuarter,
-            statusId: status
+            statusId: status,
+            typeId: infrastructureType
         };
 
+        console.log('Submitting data:', data);
         onSubmit(data);
         onClose();
     };
@@ -68,13 +76,13 @@ const CreateInfrastructureModal = ({ onClose, onSubmit, infrastructure }) => {
                         onChange={setDescription}
                         theme="snow"
                         modules={{
-                        toolbar: [
-                            [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
-                            [{ size: [] }],
-                            ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-                            [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
-                            ['clean']
-                        ],
+                            toolbar: [
+                                [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+                                [{ size: [] }],
+                                ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                                [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+                                ['clean']
+                            ],
                         }}
                         required
                     />
@@ -87,8 +95,17 @@ const CreateInfrastructureModal = ({ onClose, onSubmit, infrastructure }) => {
                     <label htmlFor="headQuarter">Sede</label>
                     <select id="headQuarter" value={headQuarter} onChange={(e) => setHeadQuarter(e.target.value)} required>
                         <option value="">Seleziona una sede</option>
-                        {headquarters.map((headquarter) => (
-                            <option key={headquarter.id} value={headquarter.id}>{headquarter.name}</option>
+                        {headquarters.map((hq) => (
+                            <option key={hq.id} value={hq.id}>{hq.name}</option>
+                        ))}
+                    </select>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="infrastructureType">Tipo Infrastruttura</label>
+                    <select id="infrastructureType" value={infrastructureType} onChange={(e) => setInfrastructureType(e.target.value)} required>
+                        <option value="">Seleziona il tipo dell'infrastruttura</option>
+                        {infrastructureTypes.map((type) => (
+                            <option key={type.id} value={type.id}>{type.type}</option>
                         ))}
                     </select>
                 </div>

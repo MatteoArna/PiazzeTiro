@@ -1,0 +1,47 @@
+.infrastructure-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f9f9f9;
+  padding: 15px 20px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+
+.infrastructure-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.infrastructure-info {
+  display: flex;
+  align-items: center; /* Align items horizontally */
+  flex-grow: 1;
+  margin-right: 20px;
+}
+
+.infrastructure-name {
+  font-weight: bold;
+  font-size: 18px;
+  color: #333;
+}
+
+.infrastructure-price {
+  font-style: italic; /* Italic style for price */
+  color: #777;
+  font-size: 14px;
+  margin-left: 10px; /* Space between name and price */
+}
+.infrastructure-arrow {
+  font-size: 24px;
+  color: #555;
+  transition: transform 0.3s;
+  flex-shrink: 0; /* Prevent shrinking */
+}
+
+.infrastructure-item:hover .infrastructure-arrow {
+  transform: translateX(5px);
+}

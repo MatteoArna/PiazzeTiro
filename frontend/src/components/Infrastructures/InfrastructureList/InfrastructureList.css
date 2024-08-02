@@ -1,0 +1,17 @@
+.infrastructure-list {
+  max-height: 400px; /* Limita l'altezza della lista per aggiungere uno scroll */
+  overflow-y: auto; /* Aggiunge uno scroll se necessario */
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.headquarter-group {
+  margin-bottom: 20px; /* Spazio tra i gruppi */
+}
+
+.headquarter-title {
+  font-weight: bold;
+  margin-bottom: 10px; /* Spazio tra il titolo del gruppo e le infrastrutture */
+}
