@@ -11,7 +11,7 @@ import useUser from '../hooks/useUser';
 
 //Pages
 import NewsPage from '../components/News/NewsPage';
-import AdminDashboardPage from './AdminDashboard/AdminDashboardPage';
+import UserApproval from './UserApproval/UserApproval';
 import ProfilePage from './ProfilePage';
 
 //Style
@@ -40,7 +40,7 @@ const BasePage = () => {
         userData={userData}
         handleLogout={logout}
         onNewsPageClick={() => setSelected('news')}
-        onAdminDashboardClick={() => setSelected('admin')}
+        onUserApprovalClick={() => setSelected('userApproval')}
         onProfilePageClick={() => setSelected('profile')}
         onInfrastructurePageClick={() => setSelected('infrastructures')}
         selected={selected}
@@ -48,7 +48,7 @@ const BasePage = () => {
 
       <div className="main-content">
         {selected === 'news' && <NewsPage userData={userData}/>}
-        {selected === 'admin' && <AdminDashboardPage />}
+        {selected === 'userApproval' && <UserApproval />}
         {selected === 'profile' && <ProfilePage userData={userData} />}
         {selected === 'infrastructures' && <InfratructurePage userData={userData}/>}
       </div>

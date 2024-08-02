@@ -19,6 +19,22 @@ const DocumentUploader = ({ userData, adminFile }) => {
   const { documents, loading, error, loadDocuments, uploadDocument, deleteDocument } = useDocument(auth.token);
   const { updateUser } = useUser(userData.email);
 
+  const getStatus = (statusId) => {
+    switch (statusId) {
+      case 0:
+        return 'toLoad';
+      case 1:
+        return 'waiting';
+      case 2:
+        return 'toLoad';
+      case 3:
+        return 'waiting';
+      case 4:
+        return 'accepted';
+    }
+  };
+
+
   useEffect(() => {
     if (userData.email) {
       loadDocuments(userData.email);
@@ -84,7 +100,7 @@ const DocumentUploader = ({ userData, adminFile }) => {
           file={documents[0] && documents[0].filePath}
           userEmail={userData.email}
           fileName="Formulario"
-          initialState={(userData.status > 0) ? 'waiting' : 'toLoad'}
+          initialState={getStatus(userData.status)}
           fileType="application/pdf"
           onUpload={(file) => handleOnUpload(file)}
           onDelete={(file) => handleOnDelete(file)}
@@ -94,7 +110,7 @@ const DocumentUploader = ({ userData, adminFile }) => {
           file={documents[1] && documents[1].filePath}
           userEmail={userData.email}
           fileName="Polizza Assicurativa"
-          initialState={(userData.status > 0) ? 'waiting' : 'toLoad'}
+          initialState={getStatus(userData.status)}
           fileType="application/pdf"
           onUpload={(file) => handleOnUpload(file)}
           onDelete={(file) => handleOnDelete(file)}
@@ -103,13 +119,13 @@ const DocumentUploader = ({ userData, adminFile }) => {
         <hr />
 
         {
-          (userData.status === 0) && (
+          (userData.status === 0 || userData.status === 2) && (
             <button className="submit-button" onClick={handleSubmitDocuments} >Invia File </button>
           )
         }
 
         {
-          (userData.status === 2) && ( 
+          (userData.status === 4) && ( 
             <FileContainer
               file={documents[2] && documents[2].filePath}
               userEmail={userData.email}

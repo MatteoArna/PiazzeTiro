@@ -2,7 +2,7 @@ import React from 'react';
 import './NavBar.css';
 import userIcon from '../../assets/user.png';
 
-const NavBar = ({ userData, handleLogout, onNewsPageClick, onAdminDashboardClick, onProfilePageClick, onInfrastructurePageClick, selected }) => {
+const NavBar = ({ userData, handleLogout, onNewsPageClick, onUserApprovalClick, onProfilePageClick, onInfrastructurePageClick, selected }) => {
   return (
     <div className="navbar">
       <div className="user-info">
@@ -18,7 +18,7 @@ const NavBar = ({ userData, handleLogout, onNewsPageClick, onAdminDashboardClick
           <li className={selected === 'profile' ? 'selected' : ''} onClick={onProfilePageClick}>Profilo</li>
           <li className={selected === 'settings' ? 'selected' : ''}>Impostazioni</li>
           {userData.roleId === 1 && (
-            <li className={selected === 'admin' ? 'selected' : ''} onClick={onAdminDashboardClick}>Admin Dashboard</li>
+            <li className={selected === 'userApproval' ? 'selected' : ''} onClick={onUserApprovalClick}>Approvazione Utenti</li>
           )}
           <li><button onClick={handleLogout} className="logout-button">Logout</button></li>
         </ul>

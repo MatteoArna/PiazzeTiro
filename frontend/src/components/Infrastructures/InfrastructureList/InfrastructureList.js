@@ -5,7 +5,7 @@ import './InfrastructureList.css';
 import useHeadquarter from '../../../hooks/useHeadquarter';
 import { useAuth } from '../../../hooks/useAuth';
 
-const InfrastructureList = ({ infrastructures, onItemClick }) => {
+const InfrastructureList = ({ infrastructures, onItemClick, isAdmin, isCivilian }) => {
 
     const { auth } = useAuth();
     const { headquarters, loading, error, loadHeadquarters } = useHeadquarter(auth.token);

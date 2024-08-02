@@ -9,9 +9,9 @@ import { useAuth } from '../../hooks/useAuth';
 import useUser from '../../hooks/useUser';
 
 // Styles
-import './AdminDashboardPage.css';
+import './UserApproval.css';
 
-const AdminDashboardPage = () => {
+const UserApproval = () => {
   const { auth } = useAuth();
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -20,7 +20,6 @@ const AdminDashboardPage = () => {
   useEffect(() => {
     loadAllUsers(auth.token).then((users) => {
       setUsers(users);
-      console.log(users);
     });
   }, [loadAllUsers, auth.token]);
 
@@ -40,4 +39,4 @@ const AdminDashboardPage = () => {
   );
 };
 
-export default AdminDashboardPage;
+export default UserApproval;

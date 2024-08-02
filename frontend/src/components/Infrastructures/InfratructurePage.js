@@ -24,9 +24,13 @@ const InfratructurePage = ({ userData }) => {
         setSelectedInfrastructure(null);
     }
 
-    const handleEditRequest = (item) => {
-        setSelectedInfrastructure(item);
-        setShowModal(true);
+    const handleOnClick = (item) => {
+        if(userData.roleId === 1) {
+            setSelectedInfrastructure(item);
+            setShowModal(true);
+        } else {
+            console.log("You don't have permission to edit this infrastructure");
+        }
     }
 
     const handleOnSubmit = async (data) => {
@@ -58,7 +62,7 @@ const InfratructurePage = ({ userData }) => {
             
             {loading && <div>Loading...</div>}
             {error && <div>Error loading infrastructures: {error.message}</div>}
-            <InfrastructureList infrastructures={infrastructures} onItemClick={(item) => handleEditRequest(item)}/>
+            <InfrastructureList infrastructures={infrastructures} onItemClick={(item) => handleOnClick(item)}/>
         </div>
     );
 }
