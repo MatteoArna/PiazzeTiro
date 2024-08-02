@@ -1,0 +1,11 @@
+.infrastructure-page {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .filter-menus {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  

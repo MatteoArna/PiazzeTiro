@@ -1,5 +1,7 @@
 .infrastructure-list {
-  max-height: 400px; /* Limita l'altezza della lista per aggiungere uno scroll */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   overflow-y: auto; /* Aggiunge uno scroll se necessario */
   padding: 10px;
   background-color: #fff;

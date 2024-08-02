@@ -2,22 +2,39 @@ import React, { useState, useEffect } from "react";
 
 import CreateInfrastructureModal from "./CreateInfrastructureModal/CreateInfrastructureModal";
 import SearchBar from "../SearchBar/SearchBar";
+import FilterMenu from "./FilterMenu/FilterMenu";
 
 import { useAuth } from "../../hooks/useAuth";
-import {showAlert} from "../Alert";
+import { showAlert } from "../Alert";
 import useInfrastructure from "../../hooks/useInfrastructure";
 import InfrastructureList from "./InfrastructureList/InfrastructureList";
+import useInfrastructureType from "../../hooks/useInfrastructureType";
+import useHeadquarter from "../../hooks/useHeadquarter";
 
-const InfratructurePage = ({ userData }) => {
+import './InfrastructurePage.css'; // Importiamo il file CSS
+
+const InfrastructurePage = ({ userData }) => {
     const { auth } = useAuth();
     const { infrastructures, loading, error, createInfrastructure, loadInfrastructures, updateInfrastructure } = useInfrastructure(auth.token);
+    const { infrastructureTypes, loadInfrastructureTypes } = useInfrastructureType(auth.token);
+    const { headquarters, loadHeadquarters } = useHeadquarter(auth.token);
+
     const [selectedInfrastructure, setSelectedInfrastructure] = useState(null);
+    const [filteredInfrastructures, setFilteredInfrastructures] = useState([]);
+    const [selectedType, setSelectedType] = useState(null);
+    const [selectedHeadquarter, setSelectedHeadquarter] = useState(null);
 
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         loadInfrastructures();
-    }, [loadInfrastructures]);
+        loadInfrastructureTypes();
+        loadHeadquarters();
+    }, [loadInfrastructures, loadInfrastructureTypes, loadHeadquarters]);
+
+    useEffect(() => {
+        applyFilters();
+    }, [infrastructures, selectedType, selectedHeadquarter]);
 
     const handleOnClose = () => {
         setShowModal(false);
@@ -25,7 +42,7 @@ const InfratructurePage = ({ userData }) => {
     }
 
     const handleOnClick = (item) => {
-        if(userData.roleId === 1) {
+        if (userData.roleId === 1) {
             setSelectedInfrastructure(item);
             setShowModal(true);
         } else {
@@ -34,37 +51,71 @@ const InfratructurePage = ({ userData }) => {
     }
 
     const handleOnSubmit = async (data) => {
-        if(selectedInfrastructure) {
+        if (selectedInfrastructure) {
             await updateInfrastructure(selectedInfrastructure.id, data);
             showAlert('success', 'Infrastruttura aggiornata con successo');
-        }else{
+        } else {
             await createInfrastructure(data);
             showAlert('success', 'Infrastruttura creata con successo');
         }
     }
 
+    const handleInfrastructureFilter = (typeId) => {
+        setSelectedType(typeId);
+    }
+
+    const handleHeadquarterFilter = (headquarterId) => {
+        setSelectedHeadquarter(headquarterId);
+    }
+
+    const applyFilters = () => {
+        let filtered = infrastructures;
+
+        if (selectedType) {
+            filtered = filtered.filter(infrastructure => infrastructure.typeId === selectedType);
+        }
+
+        if (selectedHeadquarter) {
+            filtered = filtered.filter(infrastructure => infrastructure.headquarterId === selectedHeadquarter);
+        }
+
+        setFilteredInfrastructures(filtered);
+    }
 
     return (
-        <div>
-            <SearchBar />
+        <div className="infrastructure-page">
+            <div className="filter-menus">
+                <FilterMenu
+                    title="Infrastructures"
+                    options={infrastructureTypes}
+                    activeOption={selectedType}
+                    onSelect={handleInfrastructureFilter}
+                />
+                <FilterMenu
+                    title="Headquarters"
+                    options={headquarters}
+                    activeOption={selectedHeadquarter}
+                    onSelect={handleHeadquarterFilter}
+                />
+            </div>
 
             {userData.roleId === 1 && (
-                <button onClick={() => setShowModal(true)}>Crea Infrastruttura</button>   
+                <button onClick={() => setShowModal(true)}>Crea Infrastruttura</button>
             )}
 
             {showModal && (
-                <CreateInfrastructureModal 
-                    onClose={handleOnClose} 
+                <CreateInfrastructureModal
+                    onClose={handleOnClose}
                     infrastructure={selectedInfrastructure}
                     onSubmit={(data) => handleOnSubmit(data)}
                 />
             )}
-            
+
             {loading && <div>Loading...</div>}
             {error && <div>Error loading infrastructures: {error.message}</div>}
-            <InfrastructureList infrastructures={infrastructures} onItemClick={(item) => handleOnClick(item)}/>
+            <InfrastructureList infrastructures={filteredInfrastructures} onItemClick={(item) => handleOnClick(item)} />
         </div>
     );
 }
 
-export default InfratructurePage;
+export default InfrastructurePage;

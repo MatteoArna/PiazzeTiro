@@ -8,19 +8,23 @@ const useInfrastructureType = (token) => {
 
     const loadInfrastructureTypes = useCallback(async () => {
         try {
-            setLoading(true);
-            const response = await fetchInfrastructureTypes(token);
-            setInfrastructureTypes(response.data);
+            if (infrastructureTypes.length === 0) { // Condizione per evitare richieste multiple
+                setLoading(true);
+                const response = await fetchInfrastructureTypes(token);
+                setInfrastructureTypes(response.data);
+            }
         } catch (err) {
             setError(err);
         } finally {
             setLoading(false);
         }
-    }, [token]);
+    }, [token, infrastructureTypes.length]);
 
     useEffect(() => {
-        loadInfrastructureTypes();
-    }, [loadInfrastructureTypes]);
+        if (token) {
+            loadInfrastructureTypes();
+        }
+    }, [token, loadInfrastructureTypes]);
 
     return {
         infrastructureTypes,

@@ -3,18 +3,25 @@ import InfrastructureItem from '../InfrastructureItem/InfrastructureItem';
 import './InfrastructureList.css';
 
 import useHeadquarter from '../../../hooks/useHeadquarter';
+import useInfrastructureType from '../../../hooks/useInfrastructureType';
 import { useAuth } from '../../../hooks/useAuth';
 
 const InfrastructureList = ({ infrastructures, onItemClick, isAdmin, isCivilian }) => {
 
     const { auth } = useAuth();
     const { headquarters, loading, error, loadHeadquarters } = useHeadquarter(auth.token);
+    const { infrastructureTypes } = useInfrastructureType(auth.token);
 
     useEffect(() => {
         if (auth.token) {
             loadHeadquarters();
         }
     }, [auth.token, loadHeadquarters]);
+
+    const getInfrastructureType = (typeId) => {
+        const type = infrastructureTypes.find((type) => type.id === typeId);
+        return type ? type.type : 'Unknown type';
+    };
 
     const getHeadquarterName = (headquarterId) => {
         const hq = headquarters.find(hq => hq.id === parseInt(headquarterId));
@@ -49,6 +56,7 @@ const InfrastructureList = ({ infrastructures, onItemClick, isAdmin, isCivilian 
                             key={infrastructure.id} 
                             infrastructure={infrastructure} 
                             onClick={(item) => onItemClick(item)}
+                            infrastructureType={getInfrastructureType(infrastructure.typeId)}
                         />
                     ))}
                 </div>
