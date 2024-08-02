@@ -48,7 +48,7 @@
   background-color: #fff3e0;
 }
 
-.user-status.available {
+.user-status.accepted {
   color: #28a745; /* Green color for available */
   background-color: #e6f4ea;
 }

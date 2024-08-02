@@ -10,11 +10,26 @@ const UserBox = ({ userData, onBoxClicked }) => {
       case 1:
         return 'pending';
       case 2:
-        return 'accepted';
+        return 'documents expired';
       case 3:
+        return 'pending';
+      case 4:
+        return 'accepted';
+    }
+  };
+
+  const getStatusStyle = (status) => {
+    switch (status) {
+      case 0:
+        return 'pending';
+      case 1:
+        return 'pending';
+      case 2:
         return 'rejected';
-      default:
-        return 'unknown';
+      case 3:
+        return 'pending';
+      case 4:
+        return 'accepted';
     }
   };
 
@@ -24,7 +39,7 @@ const UserBox = ({ userData, onBoxClicked }) => {
         <div className="user-company">{userData.society}</div>
         <div className="user-name">{userData.firstName + " " + userData.lastName}</div>
       </div>
-      <div className={`user-status ${userData.status <= 1 ? 'pending' : (userData.status > 2 ? 'rejected' : 'accepted')}`}>
+      <div className={`user-status ${translateStatus(userData.status)}`}>
         {translateStatus(userData.status)}
       </div>
       <div className="user-arrow">›</div>
