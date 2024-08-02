@@ -82,6 +82,13 @@ const InfrastructurePage = ({ userData }) => {
         setFilteredInfrastructures(filtered);
     }
 
+    //Pagina dedicata ai civili
+    if(userData.roleId === 0) {
+        return(
+            <h1>Coming Soon...</h1>
+        );
+    }
+
     return (
         <div className="infrastructure-page">
             <div className="filter-menus">

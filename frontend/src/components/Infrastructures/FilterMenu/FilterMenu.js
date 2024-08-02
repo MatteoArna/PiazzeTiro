@@ -3,6 +3,7 @@ import './FilterMenu.css';
 
 const FilterMenu = ({ title, options, activeOption, onSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(null);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -11,14 +12,16 @@ const FilterMenu = ({ title, options, activeOption, onSelect }) => {
   const handleOptionClick = (option) => {
     if (activeOption === option.id) {
       onSelect(''); // Deselect if the same option is clicked again
+      setSelectedOption(null);
     } else {
       onSelect(option.id);
+      selectedOption === option.id ? setSelectedOption(null) : setSelectedOption(option.name || option.type);
     }
   };
 
   return (
     <div className="filter-menu">
-      <h3 onClick={toggleMenu} className={isOpen ? 'open' : ''}>{title}</h3>
+      <h3 onClick={toggleMenu} className={isOpen ? 'open' : ''}>{(selectedOption ? selectedOption : title)}</h3>
       {isOpen && (
         <div className="filter-buttons">
           {options.map(option => (

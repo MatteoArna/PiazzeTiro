@@ -56,9 +56,9 @@
 }
 
 .filter-button.active {
-  background-color: #007bff;
+  background-color: #004d00;
   color: #fff;
-  border-color: #007bff;
+  border-color: #004d00;
 }
 
 .filter-button:hover {
