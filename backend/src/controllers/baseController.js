@@ -8,8 +8,6 @@ class BaseController {
     // Metodo per creare una nuova istanza
     async create(req, res) {
       try {
-        //Print entirely the request body (req.body prints only [object Object])
-        console.log(req);
         const item = await this.model.create(req.body);
         res.status(201).json(item);
       } catch (error) {

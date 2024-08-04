@@ -1,10 +1,12 @@
-const BookingController = require('../controllers/bookingController');
+const bookingController = require('../controllers/bookingController');
 const createBaseRouter = require('./baseRoute');
 
-const router = createBaseRouter(BookingController);
+const router = createBaseRouter(bookingController);
 
 // Rotte GET aggiuntive
-router.get('/infrastructure/:infrastructureId', (req, res) => BookingController.getBookingByInfrastructure(req, res));
-router.get('/user/:userId', (req, res) => BookingController.getBookingByUser(req, res));
+router.get('/infrastructure/:infrastructureId', (req, res) => bookingController.getBookingByInfrastructure(req, res));
+router.get('/user/:userId', (req, res) => bookingController.getBookingByUser(req, res));
+
+router.post('/addWeaponUsed', (req, res) => bookingController.addWeaponUsed(req, res));
 
 module.exports = router;

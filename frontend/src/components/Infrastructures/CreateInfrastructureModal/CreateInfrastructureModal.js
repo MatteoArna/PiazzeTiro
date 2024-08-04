@@ -57,7 +57,6 @@ const CreateInfrastructureModal = ({ onClose, onSubmit, infrastructure }) => {
             typeId: infrastructureType
         };
 
-        console.log('Submitting data:', data);
         onSubmit(data);
         onClose();
     };

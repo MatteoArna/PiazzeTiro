@@ -1,17 +1,18 @@
+// app.js
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const sequelize = require('./config/database'); // Importa la configurazione di Sequelize
-const path = require('path'); // Importa il modulo path
-const { authenticate } = require('./middleware/authMiddleware'); // Importa il middleware di autenticazione
+const sequelize = require('./config/database');
+const path = require('path');
+const { authenticate } = require('./middleware/authMiddleware');
 
 const app = express();
 
 // Configura CORS
 app.use(cors({
-  origin: 'http://localhost:3001', // URL del frontend
+  origin: 'http://localhost:3001',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true, // Se necessario
+  credentials: true,
 }));
 
 // Body parser middleware
@@ -32,6 +33,7 @@ const pageTypeRoutes = require('./routes/pageType');
 const documentRoutes = require('./routes/document');
 const headQuarterRoutes = require('./routes/headQuarter');
 const infrastructureTypeRoutes = require('./routes/infrastructureType');
+const weaponRoutes = require('./routes/weapon');
 
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
@@ -43,9 +45,10 @@ app.use('/pageTypes', pageTypeRoutes);
 app.use('/documents', documentRoutes);
 app.use('/headQuarters', headQuarterRoutes);
 app.use('/infrastructureTypes', infrastructureTypeRoutes);
+app.use('/weapons', weaponRoutes);
 
 // Sincronizza il database
-sequelize.sync({ alter: true }) // Usa { alter: true } per aggiornare il database senza cancellare i dati
+sequelize.sync({ alter: true })
   .then(() => {
     console.log('Database synchronized');
   })

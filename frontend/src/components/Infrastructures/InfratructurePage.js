@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 
 import CreateInfrastructureModal from "./CreateInfrastructureModal/CreateInfrastructureModal";
-import SearchBar from "../SearchBar/SearchBar";
 import FilterMenu from "./FilterMenu/FilterMenu";
+import ReservationModal from "./ReservationModal/ReservationModal"; // Importa il nuovo componente
 
 import { useAuth } from "../../hooks/useAuth";
 import { showAlert } from "../Alert";
@@ -25,6 +25,7 @@ const InfrastructurePage = ({ userData }) => {
     const [selectedHeadquarter, setSelectedHeadquarter] = useState(null);
 
     const [showModal, setShowModal] = useState(false);
+    const [showReservationModal, setShowReservationModal] = useState(false); // Stato per gestire l'apertura del ReservationModal
 
     useEffect(() => {
         loadInfrastructures();
@@ -46,7 +47,8 @@ const InfrastructurePage = ({ userData }) => {
             setSelectedInfrastructure(item);
             setShowModal(true);
         } else {
-            console.log("You don't have permission to edit this infrastructure");
+            setSelectedInfrastructure(item);
+            setShowReservationModal(true); // Apri il ReservationModal per gli utenti non admin
         }
     }
 
@@ -118,9 +120,19 @@ const InfrastructurePage = ({ userData }) => {
                 />
             )}
 
+            {showReservationModal && (
+                <ReservationModal
+                    isOpen={showReservationModal}
+                    onSubmit={() => showAlert('success', 'Infrastruttura riservata, scaricato troverai il pdf da compilare')}
+                    onClose={() => setShowReservationModal(false)}
+                    userData={userData}
+                    infrastructure={selectedInfrastructure}
+                />
+            )}
+
             {loading && <div>Loading...</div>}
             {error && <div>Error loading infrastructures: {error.message}</div>}
-            <InfrastructureList infrastructures={filteredInfrastructures} onItemClick={(item) => handleOnClick(item)} />
+            <InfrastructureList infrastructures={filteredInfrastructures} onItemClick={(item) => handleOnClick(item)}  />
         </div>
     );
 }

@@ -55,7 +55,7 @@ const BasePage = () => {
 
       <div>
         {(selected === 'news' || selected === 'infrastructures') && <Calendar />}
-        {selected === 'profile' && userData.roleId !== 1 && <DocumentUploader userData={userData}/>}
+        {selected === 'profile' && userData.roleId === 0 && <DocumentUploader userData={userData}/>}
       </div>
   
     </div>
