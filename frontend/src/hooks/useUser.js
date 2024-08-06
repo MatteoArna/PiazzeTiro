@@ -57,8 +57,7 @@ const useUser = (email = null) => {
     users, 
     loading, 
     error, 
-    updateUser, 
-    loadUserById, 
+    updateUser,
     loadAllUsers 
   };
 };

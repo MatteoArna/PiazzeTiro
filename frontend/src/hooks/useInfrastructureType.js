@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { fetchInfrastructureTypes } from "../services/infrastructureTypeService";
 
-const useInfrastructureType = (token) => {
+const useInfrastructureType = () => {
     const [infrastructureTypes, setInfrastructureTypes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -10,7 +10,7 @@ const useInfrastructureType = (token) => {
         try {
             if (infrastructureTypes.length === 0) { // Condizione per evitare richieste multiple
                 setLoading(true);
-                const response = await fetchInfrastructureTypes(token);
+                const response = await fetchInfrastructureTypes();
                 setInfrastructureTypes(response.data);
             }
         } catch (err) {
@@ -18,13 +18,11 @@ const useInfrastructureType = (token) => {
         } finally {
             setLoading(false);
         }
-    }, [token, infrastructureTypes.length]);
+    }, [infrastructureTypes.length]);
 
     useEffect(() => {
-        if (token) {
-            loadInfrastructureTypes();
-        }
-    }, [token, loadInfrastructureTypes]);
+        loadInfrastructureTypes();
+    }, [loadInfrastructureTypes]);
 
     return {
         infrastructureTypes,

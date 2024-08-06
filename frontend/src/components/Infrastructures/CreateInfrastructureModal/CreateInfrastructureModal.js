@@ -3,11 +3,6 @@ import React, { useEffect, useState } from "react";
 // Components
 import Modal from "../../Modal/Modal";
 
-// Hooks
-import useHeadquarter from "../../../hooks/useHeadquarter";
-import useInfrastructureType from "../../../hooks/useInfrastructureType";
-import { useAuth } from '../../../hooks/useAuth';
-
 // Styles
 import 'react-quill/dist/quill.snow.css';
 import './CreateInfrastructureModal.css';
@@ -15,24 +10,13 @@ import './CreateInfrastructureModal.css';
 // Other
 import ReactQuill from "react-quill";
 
-const CreateInfrastructureModal = ({ onClose, onSubmit, infrastructure }) => {
+const CreateInfrastructureModal = ({ onClose, onSubmit, infrastructure, headquarters = [], infrastructureTypes = [] }) => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
     const [headQuarter, setHeadQuarter] = useState('');
     const [infrastructureType, setInfrastructureType] = useState('');
     const [status, setStatus] = useState('');
-
-    const { auth } = useAuth();
-    const { headquarters, loadHeadquarters } = useHeadquarter(auth.token);
-    const { infrastructureTypes, loadInfrastructureTypes } = useInfrastructureType(auth.token);
-
-    useEffect(() => {
-        if (auth.token) {
-            loadHeadquarters();
-            loadInfrastructureTypes();
-        }
-    }, [auth.token, loadHeadquarters, loadInfrastructureTypes]);
 
     useEffect(() => {
         if (infrastructure) {
@@ -47,7 +31,7 @@ const CreateInfrastructureModal = ({ onClose, onSubmit, infrastructure }) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-
+    
         const data = {
             name,
             description,
@@ -56,10 +40,12 @@ const CreateInfrastructureModal = ({ onClose, onSubmit, infrastructure }) => {
             statusId: status,
             typeId: infrastructureType
         };
-
+    
         onSubmit(data);
         onClose();
     };
+    
+
 
     return (
         <Modal title={infrastructure ? 'Modifica Infrastruttura' : 'Crea Infrastruttura'} isOpen={true} onClose={onClose}>
@@ -94,18 +80,26 @@ const CreateInfrastructureModal = ({ onClose, onSubmit, infrastructure }) => {
                     <label htmlFor="headQuarter">Sede</label>
                     <select id="headQuarter" value={headQuarter} onChange={(e) => setHeadQuarter(e.target.value)} required>
                         <option value="">Seleziona una sede</option>
-                        {headquarters.map((hq) => (
-                            <option key={hq.id} value={hq.id}>{hq.name}</option>
-                        ))}
+                        {headquarters.length > 0 ? (
+                            headquarters.map((hq) => (
+                                <option key={hq.id} value={hq.id}>{hq.name}</option>
+                            ))
+                        ) : (
+                            <option value="" disabled>Loading...</option>
+                        )}
                     </select>
                 </div>
                 <div className="form-group">
                     <label htmlFor="infrastructureType">Tipo Infrastruttura</label>
                     <select id="infrastructureType" value={infrastructureType} onChange={(e) => setInfrastructureType(e.target.value)} required>
                         <option value="">Seleziona il tipo dell'infrastruttura</option>
-                        {infrastructureTypes.map((type) => (
-                            <option key={type.id} value={type.id}>{type.type}</option>
-                        ))}
+                        {infrastructureTypes.length > 0 ? (
+                            infrastructureTypes.map((type) => (
+                                <option key={type.id} value={type.id}>{type.type}</option>
+                            ))
+                        ) : (
+                            <option value="" disabled>Loading...</option>
+                        )}
                     </select>
                 </div>
                 <div className="form-group">

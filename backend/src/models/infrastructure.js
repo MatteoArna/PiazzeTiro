@@ -48,5 +48,6 @@ const Infrastructure = sequelize.define('Infrastructure', {
 });
 
 Infrastructure.belongsTo(HeadQuarter, { foreignKey: 'headquarterId' });
+Infrastructure.belongsTo(InfrastructureType, { foreignKey: 'typeId' });
 
 module.exports = Infrastructure;

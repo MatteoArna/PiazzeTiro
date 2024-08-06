@@ -9,15 +9,11 @@ import BookingModal from './BookingModal/BookingModal';
 
 const Calendar = ({ userData }) => {
   const { auth } = useAuth();
-  const { bookings, loading, error, loadBookings } = useBooking(auth.token);
+  const { bookings, loading, error } = useBooking();
   const { headquarters } = useHeadquarter(auth.token);
   const { infrastructureTypes } = useInfrastructureType(auth.token);
   const { infrastructures } = useInfrastructure(auth.token);
   const [selectedBooking, setSelectedBooking] = useState(null);
-
-  useEffect(() => {
-    loadBookings(userData.email);
-  }, [loadBookings, userData.email]);
 
   const handleBookingClick = (booking) => {
     setSelectedBooking(booking);

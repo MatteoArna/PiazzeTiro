@@ -7,6 +7,12 @@ const useReservationPage = () => {
 
   const [listElements, setListElements] = useState([]);
 
+  const translateDate = (date) => {
+    const newDate = new Date(date);
+    return newDate.toLocaleDateString();
+  }
+
+
   useEffect(() => {
     if (bookings.length > 0) {
       const elements = bookings.map((element) => ({
@@ -14,13 +20,14 @@ const useReservationPage = () => {
         title: element.User.society,
         subtitle: element.User.firstName + " " + element.User.lastName,
         description: element.HeadQuarter.name,
-        more: element.date,
+        more: translateDate(element.date),
       }));
       setListElements(elements);
     }
   }, [bookings]);
 
-  const onReservationSelected = (reservation) => {
+  const onReservationSelected = (reservationId) => {
+    const reservation = bookings.find((element) => element.id === reservationId);
     setSelectedReservation(reservation);
   };
 

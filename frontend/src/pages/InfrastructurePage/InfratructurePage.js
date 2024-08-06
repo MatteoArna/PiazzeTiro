@@ -1,19 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
-import CreateInfrastructureModal from "./CreateInfrastructureModal/CreateInfrastructureModal";
-import FilterMenu from "./FilterMenu/FilterMenu";
-import ReservationModal from "./ReservationModal/ReservationModal"; // Importa il nuovo componente
+import GeneralList from '../../components/GeneralList/GeneralList';
+import CreateInfrastructureModal from "../../components/Infrastructures/CreateInfrastructureModal/CreateInfrastructureModal";
 
-import { useAuth } from "../../hooks/useAuth";
-import { showAlert } from "../Alert";
-import useInfrastructure from "../../hooks/useInfrastructure";
-import InfrastructureList from "./InfrastructureList/InfrastructureList";
-import useInfrastructureType from "../../hooks/useInfrastructureType";
-import useHeadquarter from "../../hooks/useHeadquarter";
+import useInfrastructurePage from '../../hooks/custom/useInfrastructurePage';
 
 import './InfrastructurePage.css'; // Importiamo il file CSS
 
 const InfrastructurePage = ({ userData }) => {
+
+    const {
+        listElements, 
+        openCreateModal, 
+        openEditModal, 
+        closeModal, 
+        infrastructureToEdit, 
+        showModal,
+        headquarters,
+        infrastructureTypes,
+        createInfrastructure,
+        updateInfrastructure
+    } = useInfrastructurePage();
+
+    /*
     const { auth } = useAuth();
     const { infrastructures, loading, error, createInfrastructure, loadInfrastructures, updateInfrastructure } = useInfrastructure(auth.token);
     const { infrastructureTypes, loadInfrastructureTypes } = useInfrastructureType(auth.token);
@@ -26,8 +35,32 @@ const InfrastructurePage = ({ userData }) => {
 
     const [showModal, setShowModal] = useState(false);
     const [showReservationModal, setShowReservationModal] = useState(false); // Stato per gestire l'apertura del ReservationModal
+*/
 
-    useEffect(() => {
+    return (
+        <div>
+            {userData.roleId === 'admin' && (
+                <button onClick={openCreateModal}>Crea Infrastruttura</button>
+            )}
+            <GeneralList
+            listElements={listElements}
+            onElementClicked={(infrastructureId) => {userData.roleId === 'admin' ? openEditModal(infrastructureId) : console.log('Questa operazione non è ancora supportata')}}
+            />
+
+            {showModal && (
+                <CreateInfrastructureModal
+                    onClose={closeModal}
+                    infrastructure={infrastructureToEdit}
+                    headquarters={headquarters}
+                    infrastructureTypes={infrastructureTypes}
+                    onSubmit={(data) => infrastructureToEdit ? updateInfrastructure(infrastructureToEdit.id, data) : createInfrastructure(data)}
+                />
+            
+            )}
+        </div>
+        
+    );
+   /* useEffect(() => {
         loadInfrastructures();
         loadInfrastructureTypes();
         loadHeadquarters();
@@ -114,9 +147,7 @@ const InfrastructurePage = ({ userData }) => {
                 />
             </div>
 
-            {userData.roleId === 1 && (
-                <button onClick={() => setShowModal(true)}>Crea Infrastruttura</button>
-            )}
+            
 
             {showModal && (
                 <CreateInfrastructureModal
@@ -147,6 +178,7 @@ const InfrastructurePage = ({ userData }) => {
                 />
         </div>
     );
+    */
 }
 
 export default InfrastructurePage;

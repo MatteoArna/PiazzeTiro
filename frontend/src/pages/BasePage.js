@@ -9,7 +9,7 @@ import useNavigation from '../hooks/custom/useNavigation';
 import NewsPage from './NewsPage/NewsPage';
 import UserApproval from './UserApproval/UserApproval';
 import ProfilePage from './ProfilePage/ProfilePage'
-import InfratructurePage from '../components/Infrastructures/InfratructurePage';
+import InfratructurePage from './InfrastructurePage/InfratructurePage';
 import ReservationPage from '../components/Reservations/ReservationPage';
 
 import './BasePage.css';

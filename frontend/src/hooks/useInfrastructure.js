@@ -1,13 +1,62 @@
 import { useState, useEffect, useCallback } from 'react';
 import { fetchInfrastructures, fetchInfrastructureById, createInfrastructure, updateInfrastructure } from '../services/infrastructureService';
 
-const useInfrastructure = (id = null) => {
+const useInfrastructure = () => {
     const [infrastructures, setInfrastructures] = useState([]);
-    const [infrastructure, setInfrastructure] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const loadInfrastructures = useCallback(async () => {
+    const loadAllInfrastructures = useCallback(async () => {
+        try {
+            setLoading(true);
+            const response = await fetchInfrastructures();
+            setInfrastructures(response.data);
+        } catch (err) {
+            setError(err);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
+    const handleCreateInfrastructure = useCallback(async (data) => {
+        try{
+            setLoading(true);
+            await createInfrastructure(data);
+            loadAllInfrastructures();
+        }catch(e){
+            setError(e);
+        }finally{
+            setLoading(false);
+        }   
+    }, [loadAllInfrastructures]);     
+
+    useEffect(() => {
+        loadAllInfrastructures();
+    }, [loadAllInfrastructures]);
+
+    const handleUpdateInfrastructure = useCallback(async (id, data) => {
+        try{
+            setLoading(true);
+            await updateInfrastructure(id, data);
+            loadAllInfrastructures();
+        }catch(e){
+            setError(e);
+        }finally{
+            setLoading(false);
+        }
+    }, [loadAllInfrastructures]);
+
+    return {
+        infrastructures,
+        loading,
+        error,
+        createInfrastructure: handleCreateInfrastructure,
+        updateInfrastructure: handleUpdateInfrastructure
+    };
+
+
+
+    /*const loadInfrastructures = useCallback(async () => {
         setLoading(true);
         setError(null);
         try {
@@ -80,6 +129,9 @@ const useInfrastructure = (id = null) => {
         createInfrastructure: handleCreateInfrastructure,
         updateInfrastructure: handleUpdateInfrastructure,
     };
+    */
+
+
 };
 
 export default useInfrastructure;

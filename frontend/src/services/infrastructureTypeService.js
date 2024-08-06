@@ -1,11 +1,6 @@
 import api from './api';
 
-export const fetchInfrastructureTypes = (token) => api.get('/infrastructureTypes', {
-    headers:
-    {
-        Authorization: `Bearer ${token}`
-    }
-});
+export const fetchInfrastructureTypes = () => api.get('/infrastructureTypes');
 
 export const createInfrastructureType = (token, infrastructureTypeData) => api.post('/infrastructureTypes', infrastructureTypeData, {
     headers:

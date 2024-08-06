@@ -4,7 +4,6 @@ import GeneralElement from "./GeneralElement/GeneralElement";
 import './GeneralList.css';
 
 const GeneralList = ({ listElements, onElementClicked }) => {
-    console.log(listElements);
     return(
         <div className="general-list">
             {listElements.map((element) => (
