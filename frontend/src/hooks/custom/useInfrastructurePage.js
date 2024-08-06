@@ -1,78 +1,85 @@
-import React, {useEffect, useState} from "react";
-
-import useInfrastructure from "../useInfrastructure";
+import { useEffect, useState } from "react";
 import useHeadquarter from "../useHeadquarter";
 import useInfrastructureType from "../useInfrastructureType";
+import useInfrastructure from "../useInfrastructure";
 
-const InfrastructurePage = () => {
-    const { infrastructures, loading, error, createInfrastructure, updateInfrastructure } = useInfrastructure();
+const useInfrastructurePage = () => {
+    const { infrastructureTypes, loading: infrTypeLoading, error: infrTypeError, loadInfrastructureTypes, createInfrastructureType, updateInfrastructureType } = useInfrastructureType();
     const { headquarters } = useHeadquarter();
-    const { infrastructureTypes } = useInfrastructureType();
+    const { infrastructures, loadInfrastructuresByTypeId, createInfrastructure, deleteInfrastructure } = useInfrastructure();
 
-    const [listElements, setListElements] = useState([]);
+    const [selectedInfrastructureType, setSelectedInfrastructureType] = useState(null);
+
     const [showModal, setShowModal] = useState(false);
-    const [infrastructureToEdit, setInfrastructureToEdit] = useState(null);
+
+    const [elements, setElements] = useState([]);
 
     useEffect(() => {
-        if (infrastructures.length > 0) {
-            const elements = infrastructures.map((element) => ({
-                id: element.id,
-                title: element.name,
-                subtitle: element.InfrastructureType.type,
-                description: element.HeadQuarter.name,
-                more: element.price + " chf"
-            }));
-            setListElements(elements);
-        }
-    }, [infrastructures]);
+        const elements = infrastructureTypes.map((element) => ({
+            id: element.id,
+            title: element.type,
+            subtitle: element.HeadQuarter.name,
+            more: element.price + " chf",
+        }));
+        setElements(elements);
+    }, [infrastructureTypes]);
 
-    const handleCreateInfrastructure = async (data) => {
-        try {
-            console.log(data);
-            await createInfrastructure(data);
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    const handleUpdateInfrastructure = async (id, data) => {
-        try {
-            await updateInfrastructure(id, data);
-        } catch (error) {
-            console.error(error);
-        }
-    };
-    
-
-    const openCreateModal = () => {
+    const handleShowCreateModal = () => {
         setShowModal(true);
     };
 
-    const openEditModal = (infrastructureId) => {
-        setInfrastructureToEdit(infrastructures.find((infrastructure) => infrastructure.id === infrastructureId));
+    const handleShowUpdateModal = (infrastructureTypeId) => {
+        setSelectedInfrastructureType(infrastructureTypes.find((element) => element.id === infrastructureTypeId));
+        loadInfrastructuresByTypeId(infrastructureTypeId);
         setShowModal(true);
     };
 
-    const closeModal = () => {
-        setInfrastructureToEdit(null);
+    const handleCloseModal = () => {
+        setSelectedInfrastructureType(null);
         setShowModal(false);
     };
 
+    const handleCreateInfrastructureType = async (data) => {
+        await createInfrastructureType(data);
+    };
 
+    const handleUpdateInfrastructureType = async (data) => {
+        await updateInfrastructureType(selectedInfrastructureType.id, data);
+    };
+
+    const handleCreateInfrastracture = async () => {
+        const data = {
+            name: selectedInfrastructureType.type + " " + (infrastructures.length + 1),
+            statusId: 1,
+            typeId: selectedInfrastructureType.id,
+        };
+        await createInfrastructure(data);
+        await loadInfrastructuresByTypeId(selectedInfrastructureType.id);
+    }
+
+    const handleDeleteInfrastructure = async (infrastructureId) => {
+        await deleteInfrastructure(infrastructureId);
+        await loadInfrastructuresByTypeId(selectedInfrastructureType.id);
+    }
 
     return {
-        listElements,
-        openCreateModal,
-        openEditModal,
-        closeModal,
-        infrastructureToEdit,
-        showModal,
+        elements,
+        infrastructures,
         headquarters,
-        infrastructureTypes,
-        createInfrastructure: handleCreateInfrastructure,
-        updateInfrastructure: handleUpdateInfrastructure
+        showCreateModal: handleShowCreateModal,
+        showUpdateModal : handleShowUpdateModal,
+        closeModal: handleCloseModal,
+        createInfrastructureType: handleCreateInfrastructureType,
+        updateInfrastructureType: handleUpdateInfrastructureType,
+        deleteInfrastructure: handleDeleteInfrastructure,
+        loadInfrastructureTypes,
+        showModal,
+        loading: infrTypeLoading,
+        error: infrTypeError,
+        selectedInfrastructureType,
+        createInfrastructure : handleCreateInfrastracture,
+
     };
 };
 
-export default InfrastructurePage
-
+export default useInfrastructurePage;

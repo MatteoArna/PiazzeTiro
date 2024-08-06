@@ -2,6 +2,7 @@ import api from './api';
 
 
 export const fetchAllBookings = () => api.get('/bookings');
+export const createBooking = (data) => api.post('/bookings', data);
 /*
 export const fetchBookings = (token) => api.get('/bookings', {
     headers: {
@@ -14,14 +15,14 @@ export const fetchBooking = (token, id) => api.get(`/bookings/${id}`, {
         Authorization: `Bearer ${token}`
     }
 });
-
+/*
 export const createBooking = (token, data) => api.post('/bookings', data, {
     headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json'
     }
 });
-
+*/
 export const updateBooking = (token, id, data) => api.put(`/bookings/${id}`, data, {
     headers: {
         Authorization: `Bearer ${token}`

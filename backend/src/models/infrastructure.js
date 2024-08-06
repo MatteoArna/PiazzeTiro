@@ -1,7 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
-const HeadQuarter = require('./headQuarter');
 const InfrastructureType = require('./infrastructureType');
 
 const Infrastructure = sequelize.define('Infrastructure', {
@@ -12,22 +11,6 @@ const Infrastructure = sequelize.define('Infrastructure', {
   },
   name: {
     type: DataTypes.STRING,
-    allowNull: false,
-  },
-  description: {
-    type: DataTypes.TEXT,
-    allowNull: true,
-  },
-  price: {
-    type: DataTypes.FLOAT,
-    allowNull: false,
-  },
-  headquarterId: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: HeadQuarter,
-      key: 'id',
-    },
     allowNull: false,
   },
   statusId: {
@@ -47,7 +30,6 @@ const Infrastructure = sequelize.define('Infrastructure', {
   tableName: 'infrastructures',
 });
 
-Infrastructure.belongsTo(HeadQuarter, { foreignKey: 'headquarterId' });
 Infrastructure.belongsTo(InfrastructureType, { foreignKey: 'typeId' });
 
 module.exports = Infrastructure;

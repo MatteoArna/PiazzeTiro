@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { fetchInfrastructures, fetchInfrastructureById, createInfrastructure, updateInfrastructure } from '../services/infrastructureService';
+import { fetchInfrastructures, deleteInfrastructure, createInfrastructure, updateInfrastructure, fetchInfrastructuresByTypeId } from '../services/infrastructureService';
 
 const useInfrastructure = () => {
     const [infrastructures, setInfrastructures] = useState([]);
@@ -18,40 +18,62 @@ const useInfrastructure = () => {
         }
     }, []);
 
+    const loadInfrastructuresByTypeId = useCallback(async (typeId) => {
+        try {
+            setLoading(true);
+            const response = await fetchInfrastructuresByTypeId(typeId);
+            setInfrastructures(response.data);
+        } catch (err) {
+            setError(err);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
     const handleCreateInfrastructure = useCallback(async (data) => {
         try{
             setLoading(true);
             await createInfrastructure(data);
-            loadAllInfrastructures();
+            infrastructures.push(data);
         }catch(e){
             setError(e);
         }finally{
             setLoading(false);
         }   
-    }, [loadAllInfrastructures]);     
-
-    useEffect(() => {
-        loadAllInfrastructures();
-    }, [loadAllInfrastructures]);
+    }, []);     
 
     const handleUpdateInfrastructure = useCallback(async (id, data) => {
         try{
             setLoading(true);
             await updateInfrastructure(id, data);
-            loadAllInfrastructures();
         }catch(e){
             setError(e);
         }finally{
             setLoading(false);
         }
-    }, [loadAllInfrastructures]);
+    }, []);
+
+    const handleDeleteInfrastructure = useCallback(async (id) => {
+        try{
+            setLoading(true);
+            await deleteInfrastructure(id);
+            infrastructures.filter(infrastructure => infrastructure.id !== id);
+        }catch(e){
+            setError(e);
+        }finally{
+            setLoading(false);
+        }
+    }, []);
+
 
     return {
         infrastructures,
         loading,
         error,
         createInfrastructure: handleCreateInfrastructure,
-        updateInfrastructure: handleUpdateInfrastructure
+        updateInfrastructure: handleUpdateInfrastructure,
+        deleteInfrastructure: handleDeleteInfrastructure,
+        loadInfrastructuresByTypeId,
     };
 
 

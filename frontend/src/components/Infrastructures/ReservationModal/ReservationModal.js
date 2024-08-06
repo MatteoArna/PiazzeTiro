@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
 import Modal from '../../Modal/Modal';
-import { useAuth } from '../../../hooks/useAuth';
-import useBooking from '../../../hooks/useBooking';
-import { saveAs } from 'file-saver';
-import { fetchFile } from '../../../services/fileService';
 
 const ReservationModal = ({ isOpen, onClose, onSubmit, userData, infrastructure }) => {
   const [date, setDate] = useState(null);
@@ -15,9 +11,6 @@ const ReservationModal = ({ isOpen, onClose, onSubmit, userData, infrastructure 
   const [sHourEnd, setSHourEnd] = useState(null);
   const [nPartecipants, setNPartecipants] = useState(null);
 
-  const { auth } = useAuth();
-  const { createBooking } = useBooking(auth.token);
-
   const handleReservation = async () => {
     if (!date || !hourStart || !hourEnd) {
       alert('Compila tutti i campi');
@@ -26,37 +19,27 @@ const ReservationModal = ({ isOpen, onClose, onSubmit, userData, infrastructure 
 
     const reservationData = {
       idCustomer: userData.email,
-      idInfrastructure: (userData.roleId === 3 ? infrastructure.id : null),
-      price: (userData.roleId === 3 ? infrastructure.price : null),
+      idInfrastructure: (userData.roleId === 'army' && infrastructure ? infrastructure.id : null),
+      price: (userData.roleId === 'army' && infrastructure ? infrastructure.price : null),
       date: date,
-      status: (userData.roleId === 3 ? 4 : 1),
-      infrastructureType: infrastructure.typeId,
+      status: (userData.roleId === 'army' ? 4 : 1),
+      infrastructureType: infrastructure ? infrastructure.typeId : null,
       start: hourStart,
       end: hourEnd,
       subDate: sDate,
       subStart: sHourStart,
       subEnd: sHourEnd,
       nPartecipants: nPartecipants,
-      idHeadQuarter: infrastructure.headquarterId,
+      idHeadQuarter: infrastructure ? infrastructure.headquarterId : null,
     };
 
-    console.log(reservationData);
-
-    await createBooking(reservationData);
+    onSubmit(reservationData);
     onClose();
-    onSubmit();
-    //await modifyPdf(date, userData.email, "0761234567");
-  };
-
-  const modifyPdf = async (date, email, phone) => {
-    const url = 'http://localhost:3000/uploads/ComandaBersagli.pdf';
-    const response = await fetchFile(url); 
-    saveAs(response, 'Comanda_bersagli.pdf');
   };
 
   return (
     <Modal title="Crea Prenotazione" isOpen={isOpen} onClose={onClose}>
-      {userData.roleId !== 0 && (
+      {userData.roleId !== 'civilian' && infrastructure && (
         <div className="form-group">
           <label htmlFor="hours">{infrastructure.name}</label>
         </div>  

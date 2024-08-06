@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { fetchInfrastructureTypes } from "../services/infrastructureTypeService";
+import { fetchInfrastructureTypes, createInfrastructureType, updateInfrastructureType } from "../services/infrastructureTypeService";
 
 const useInfrastructureType = () => {
     const [infrastructureTypes, setInfrastructureTypes] = useState([]);
@@ -8,28 +8,46 @@ const useInfrastructureType = () => {
 
     const loadInfrastructureTypes = useCallback(async () => {
         try {
-            if (infrastructureTypes.length === 0) { // Condizione per evitare richieste multiple
-                setLoading(true);
-                const response = await fetchInfrastructureTypes();
-                setInfrastructureTypes(response.data);
-            }
+            setLoading(true);
+            const response = await fetchInfrastructureTypes();
+            setInfrastructureTypes(response.data);
         } catch (err) {
             setError(err);
         } finally {
             setLoading(false);
         }
-    }, [infrastructureTypes.length]);
+    }, []);
 
     useEffect(() => {
         loadInfrastructureTypes();
     }, [loadInfrastructureTypes]);
 
+    const handleCreateInfrastructureType = async (data) => {
+        try {
+            await createInfrastructureType(data);
+            loadInfrastructureTypes(); // Ricarica i tipi di infrastrutture dal backend dopo la creazione
+        } catch (error) {
+            setError(error);
+        }
+    };
+
+    const handleUpdateInfrastructureType = async (id, data) => {
+        try {
+            await updateInfrastructureType(id, data);
+            loadInfrastructureTypes();
+        } catch (error) {
+            setError(error);
+        }
+    };        
+
     return {
         infrastructureTypes,
         loading,
         error,
-        loadInfrastructureTypes
+        loadInfrastructureTypes,
+        createInfrastructureType: handleCreateInfrastructureType,
+        updateInfrastructureType: handleUpdateInfrastructureType,
     };
-}
+};
 
 export default useInfrastructureType;

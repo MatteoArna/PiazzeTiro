@@ -1,58 +1,44 @@
 import React, { useEffect, useState } from "react";
-
-// Components
 import Modal from "../../Modal/Modal";
-
-// Styles
 import 'react-quill/dist/quill.snow.css';
 import './CreateInfrastructureModal.css';
-
-// Other
 import ReactQuill from "react-quill";
 
-const CreateInfrastructureModal = ({ onClose, onSubmit, infrastructure, headquarters = [], infrastructureTypes = [] }) => {
-    const [name, setName] = useState('');
+const CreateInfrastructureModal = ({ onClose, onSubmit, infrastructureType, infrastructures = [], headquarters = [], onCreateInfrastructure, onDeleteInfrastructure }) => {
+    const [type, setType] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
     const [headQuarter, setHeadQuarter] = useState('');
-    const [infrastructureType, setInfrastructureType] = useState('');
-    const [status, setStatus] = useState('');
 
     useEffect(() => {
-        if (infrastructure) {
-            setName(infrastructure.name);
-            setDescription(infrastructure.description);
-            setPrice(infrastructure.price);
-            setHeadQuarter(infrastructure.headquarterId);
-            setStatus(infrastructure.statusId);
-            setInfrastructureType(infrastructure.typeId);
+        if (infrastructureType) {
+            setType(infrastructureType.type);
+            setDescription(infrastructureType.description);
+            setPrice(infrastructureType.price);
+            setHeadQuarter(infrastructureType.headquarterId);
         }
-    }, [infrastructure]);
+    }, [infrastructureType]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
     
         const data = {
-            name,
+            type,
             description,
             price,
             headquarterId: headQuarter,
-            statusId: status,
-            typeId: infrastructureType
         };
     
         onSubmit(data);
         onClose();
     };
-    
-
 
     return (
-        <Modal title={infrastructure ? 'Modifica Infrastruttura' : 'Crea Infrastruttura'} isOpen={true} onClose={onClose}>
+        <Modal title={infrastructureType ? 'Modifica Infrastruttura' : 'Crea Infrastruttura'} isOpen={true} onClose={onClose}>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
-                    <label htmlFor="name">Nome</label>
-                    <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} required />
+                    <label htmlFor="type">Nome</label>
+                    <input type="text" id="type" value={type} onChange={(e) => setType(e.target.value)} required />
                 </div>
                 <div className="form-group">
                     <label htmlFor="description">Descrizione</label>
@@ -73,7 +59,7 @@ const CreateInfrastructureModal = ({ onClose, onSubmit, infrastructure, headquar
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="price">Prezzo/h</label>
+                    <label htmlFor="price">Prezzo</label>
                     <input type="number" id="price" value={price} onChange={(e) => setPrice(e.target.value)} required />
                 </div>
                 <div className="form-group">
@@ -90,28 +76,22 @@ const CreateInfrastructureModal = ({ onClose, onSubmit, infrastructure, headquar
                     </select>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="infrastructureType">Tipo Infrastruttura</label>
-                    <select id="infrastructureType" value={infrastructureType} onChange={(e) => setInfrastructureType(e.target.value)} required>
-                        <option value="">Seleziona il tipo dell'infrastruttura</option>
-                        {infrastructureTypes.length > 0 ? (
-                            infrastructureTypes.map((type) => (
-                                <option key={type.id} value={type.id}>{type.type}</option>
-                            ))
-                        ) : (
-                            <option value="" disabled>Loading...</option>
-                        )}
-                    </select>
+                    <label htmlFor="infrastructures">Infrastrutture</label>
+                    {infrastructures.map((infrastructure) => (
+                        <div key={infrastructure.id} className="infrastructure-item">
+                            <input
+                                type="text"
+                                id="infrastructure"
+                                value={infrastructure.name}
+                                disabled={true}
+                            />
+                            <button type="button" className="delete-button" onClick={() => onDeleteInfrastructure(infrastructure.id)}>X</button>
+                        </div>
+                    ))}
+
+                    <button type="button" onClick={onCreateInfrastructure}>Aggiungi Infrastruttura</button>
                 </div>
-                <div className="form-group">
-                    <label htmlFor="status">Stato</label>
-                    <select id="status" value={status} onChange={(e) => setStatus(e.target.value)} required>
-                        <option value="">Seleziona uno stato</option>
-                        <option value="2">Nascosta</option>
-                        <option value="1">In manutenzione</option>
-                        <option value="0">Disponibile</option>
-                    </select>
-                </div>
-                <button type="submit">{infrastructure ? "Modifica" : "Crea"}</button>
+                <button type="submit">{infrastructureType ? "Modifica" : "Crea"}</button>
             </form>
         </Modal>
     );
