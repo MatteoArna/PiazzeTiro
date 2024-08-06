@@ -9,20 +9,16 @@ class PageController extends BaseController {
   }
 
   // Metodo per creare una nuova pagina con upload di file
+
   create = async (req, res) => {
-    console.log('createPage called');
-    console.log('Request body:', req.body);
-    console.log('Request file:', req.file);
     const { summary, content, typeId } = req.body;
     const filePath = req.filePath; // Ottieni il percorso del file dal middleware
 
     try {
       const fileUrl = filePath ? `${req.protocol}://${req.get('host')}/uploads/${path.basename(filePath)}` : null;
-      console.log('Creating new page with data:', { summary, content, typeId, fileUrl });
       const newPage = await Page.create({ summary, content, typeId, file: fileUrl });
       res.status(201).json(newPage);
     } catch (error) {
-      console.error('Error creating page:', error);
       res.status(500).json({ message: 'Errore nella creazione della pagina', error });
     }
   };
@@ -30,6 +26,7 @@ class PageController extends BaseController {
   // Metodo per aggiornare una pagina esistente con upload di file
   update = async (req, res) => {
     console.log('updatePage called');
+    console.log('Request body:', req.body);
     const { summary, content, typeId } = req.body;
     const filePath = req.filePath; // Ottieni il percorso del file dal middleware
 
@@ -73,6 +70,8 @@ class PageController extends BaseController {
         include: [{ model: PageType, attributes: ['type'] }]
       });
 
+      page.typeId = page.PageType.type;
+
       if (!page) {
         return res.status(404).json({ message: 'Pagina non trovata' });
       }
@@ -88,6 +87,10 @@ class PageController extends BaseController {
     try {
       const pages = await Page.findAll({
         include: [{ model: PageType, attributes: ['type'] }]
+      });
+
+      pages.forEach(page => {
+        page.typeId = page.PageType.type;
       });
 
       res.status(200).json(pages);

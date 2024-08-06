@@ -2,23 +2,26 @@ import React from 'react';
 import './NavBar.css';
 import userIcon from '../../assets/user.png';
 
-const NavBar = ({ userData, handleLogout, onNewsPageClick, onUserApprovalClick, onProfilePageClick, onInfrastructurePageClick, selected }) => {
+const NavBar = ({ user, handleLogout, navigateTo, selectedPage }) => {
   return (
     <div className="navbar">
       <div className="user-info">
-        <img src={userIcon} className='profile-image' alt="User"/>
-        <span>{userData.firstName + " " + userData.lastName}</span>
+        <img src={userIcon} className='profile-image' alt="User" />
+        <span>{user.firstName + " " + user.lastName}</span>
       </div>
       <nav>
         <ul>
-          <li className={selected === 'news' ? 'selected' : ''} onClick={onNewsPageClick}>News Page</li>
-          {userData.status > 1 && (
-            <li className={selected === 'infrastructures' ? 'selected' : ''} onClick={onInfrastructurePageClick}>Infrastrutture</li>
+          <li className={selectedPage === 'news' ? 'selected' : ''} onClick={() => navigateTo('news')}>News Page</li>
+          {user.status > 1 && (
+            <li className={selectedPage === 'infrastructures' ? 'selected' : ''} onClick={() => navigateTo('infrastructures')}>Infrastrutture</li>
           )}
-          <li className={selected === 'profile' ? 'selected' : ''} onClick={onProfilePageClick}>Profilo</li>
-          <li className={selected === 'settings' ? 'selected' : ''}>Impostazioni</li>
-          {userData.roleId === 1 && (
-            <li className={selected === 'userApproval' ? 'selected' : ''} onClick={onUserApprovalClick}>Approvazione Utenti</li>
+          <li className={selectedPage === 'profile' ? 'selected' : ''} onClick={() => navigateTo('profile')}>Profilo</li>
+          <li className={selectedPage === 'settings' ? 'selected' : ''}>Impostazioni</li>
+          {user.roleId === 'admin' && (
+            <li className={selectedPage === 'userApproval' ? 'selected' : ''} onClick={() => navigateTo('userApproval')}>Approvazione Utenti</li>
+          )}
+          {user.roleId === 'admin' && (
+            <li className={selectedPage === 'reservations' ? 'selected' : ''} onClick={() => navigateTo('reservations')}>Prenotazioni</li>
           )}
           <li><button onClick={handleLogout} className="logout-button">Logout</button></li>
         </ul>

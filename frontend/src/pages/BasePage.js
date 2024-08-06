@@ -1,30 +1,23 @@
-import React, { useState } from 'react';
-
-// Components
+import React from 'react';
 import Calendar from '../components/Calendar/Calendar';
 import DocumentUploader from '../components/DocumentUploader/DocumentUploader';
 import NavBar from '../components/NavBar/NavBar';
-
-// Hooks
 import { useAuth } from '../hooks/useAuth';
 import useUser from '../hooks/useUser';
+import useNavigation from '../hooks/custom/useNavigation';
 
-//Pages
-import NewsPage from '../components/News/NewsPage';
+import NewsPage from './NewsPage/NewsPage';
 import UserApproval from './UserApproval/UserApproval';
-import ProfilePage from './ProfilePage';
-
-//Style
-import './BasePage.css';
+import ProfilePage from './ProfilePage/ProfilePage'
 import InfratructurePage from '../components/Infrastructures/InfratructurePage';
+import ReservationPage from '../components/Reservations/ReservationPage';
 
+import './BasePage.css';
 
 const BasePage = () => {
   const { auth, logout } = useAuth();
-  const { userData, loading, error } = useUser(auth.email);
-  const [selected, setSelected] = useState('profile');
-
-
+  const { user, loading, error } = useUser(auth.email);
+  const { selectedPage, navigateTo } = useNavigation('profile');
 
   if (loading) {
     return <div className="base-page">Loading...</div>;
@@ -37,27 +30,24 @@ const BasePage = () => {
   return (
     <div className="homepage">
       <NavBar 
-        userData={userData}
+        user={user}
         handleLogout={logout}
-        onNewsPageClick={() => setSelected('news')}
-        onUserApprovalClick={() => setSelected('userApproval')}
-        onProfilePageClick={() => setSelected('profile')}
-        onInfrastructurePageClick={() => setSelected('infrastructures')}
-        selected={selected}
+        navigateTo={navigateTo}
+        selectedPage={selectedPage}
       />
 
       <div className="main-content">
-        {selected === 'news' && <NewsPage userData={userData}/>}
-        {selected === 'userApproval' && <UserApproval />}
-        {selected === 'profile' && <ProfilePage userData={userData} />}
-        {selected === 'infrastructures' && <InfratructurePage userData={userData}/>}
+        {selectedPage === 'news' && <NewsPage userData={user} />}
+        {selectedPage === 'userApproval' && <UserApproval />}
+        {selectedPage === 'profile' && <ProfilePage userData={user} />}
+        {selectedPage === 'infrastructures' && <InfratructurePage userData={user} />}
+        {selectedPage === 'reservations' && <ReservationPage token={auth.token} />}
       </div>
 
       <div>
-        {(selected === 'news' || selected === 'infrastructures') && <Calendar />}
-        {selected === 'profile' && userData.roleId === 0 && <DocumentUploader userData={userData}/>}
+        {(selectedPage === 'news' || selectedPage === 'infrastructures') && <Calendar userData={user} />}
+        {selectedPage === 'profile' && user.roleId === 0 && <DocumentUploader userData={user} />}
       </div>
-  
     </div>
   );
 };

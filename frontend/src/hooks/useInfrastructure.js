@@ -1,45 +1,62 @@
-import { useState, useEffect, useCallback } from "react";
-import { fetchInfrastructures, createInfrastructure, updateInfrastructure } from "../services/infrastructureService";
+import { useState, useEffect, useCallback } from 'react';
+import { fetchInfrastructures, fetchInfrastructureById, createInfrastructure, updateInfrastructure } from '../services/infrastructureService';
 
-const useInfrastructure = (token) => {
+const useInfrastructure = (id = null) => {
     const [infrastructures, setInfrastructures] = useState([]);
+    const [infrastructure, setInfrastructure] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     const loadInfrastructures = useCallback(async () => {
+        setLoading(true);
+        setError(null);
         try {
-            setLoading(true);
-            const response = await fetchInfrastructures(token);
+            const response = await fetchInfrastructures();
             setInfrastructures(response.data);
         } catch (err) {
             setError(err);
         } finally {
             setLoading(false);
         }
-    }, [token]);
+    }, []);
+
+    const loadInfrastructureById = useCallback(async (id) => {
+        setLoading(true);
+        setError(null);
+        try {
+            const response = await fetchInfrastructureById(id);
+            setInfrastructure(response.data);
+        } catch (err) {
+            setError(err);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
+    useEffect(() => {
+        if (id) {
+            loadInfrastructureById(id);
+        }
+    }, [id, loadInfrastructureById]);
 
     const handleCreateInfrastructure = useCallback(async (data) => {
+        setLoading(true);
+        setError(null);
         try {
-            setLoading(true);
-            const response = await createInfrastructure(token, data);
+            const response = await createInfrastructure(data);
             setInfrastructures(prevInfrastructures => [...prevInfrastructures, response.data]);
         } catch (err) {
             setError(err);
         } finally {
             setLoading(false);
         }
-    }, [token]);
-
-    useEffect(() => {
-        if (token) {
-            loadInfrastructures();
-        }
-    }, [token, loadInfrastructures]);
+    }, []);
 
     const handleUpdateInfrastructure = useCallback(async (id, data) => {
+        setLoading(true);
+        setError(null);
         try {
-            setLoading(true);
-            await updateInfrastructure(token, id, data);
+            await updateInfrastructure(id, data);
             setInfrastructures(prevInfrastructures => prevInfrastructures.map(infrastructure => {
                 if (infrastructure.id === id) {
                     return { ...infrastructure, ...data };
@@ -51,16 +68,18 @@ const useInfrastructure = (token) => {
         } finally {
             setLoading(false);
         }
-    }, [token]);
+    }, []);
 
     return {
         infrastructures,
+        infrastructure,
         loading,
         error,
         loadInfrastructures,
+        loadInfrastructureById,
         createInfrastructure: handleCreateInfrastructure,
         updateInfrastructure: handleUpdateInfrastructure,
     };
-}
+};
 
 export default useInfrastructure;

@@ -1,10 +1,13 @@
 import api from './api';
 
+
+export const fetchAllBookings = () => api.get('/bookings');
+/*
 export const fetchBookings = (token) => api.get('/bookings', {
     headers: {
         Authorization: `Bearer ${token}`
     }
-});
+});*/
 
 export const fetchBooking = (token, id) => api.get(`/bookings/${id}`, {
     headers: {
@@ -31,7 +34,7 @@ export const deleteBooking = (token, id) => api.delete(`/bookings/${id}`, {
     }
 });
 
-export const fetchBookingsByCustomer = (token, customerId) => api.get(`/bookings/customer/${customerId}`, {
+export const fetchBookingsByCustomer = (token, customerId) => api.get(`/bookings/user/${customerId}`, {
     headers: {
         Authorization: `Bearer ${token}`
     }
@@ -48,4 +51,3 @@ export const fetchBookingsByDate = (token, date) => api.get(`/bookings/date/${da
         Authorization: `Bearer ${token}`
     }
 });
-

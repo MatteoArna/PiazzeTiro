@@ -60,12 +60,6 @@ const UserDetails = ({ user }) => {
       showAlert('error', 'Errore durante l\'approvazione dell\'utente.');
     }
   }
-
-  const testVars = () => {
-    console.log("User: " + user);
-    console.log("Docs: " + documents);
-  };
-
   return (
     <div className="user-details">
       <h2 className="user-name">{user.firstName + " " + user.lastName}</h2>

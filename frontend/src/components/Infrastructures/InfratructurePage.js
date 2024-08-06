@@ -43,23 +43,33 @@ const InfrastructurePage = ({ userData }) => {
     }
 
     const handleOnClick = (item) => {
+        setSelectedInfrastructure(item);
         if (userData.roleId === 1) {
-            setSelectedInfrastructure(item);
             setShowModal(true);
         } else {
-            setSelectedInfrastructure(item);
             setShowReservationModal(true); // Apri il ReservationModal per gli utenti non admin
         }
     }
 
-    const handleOnSubmit = async (data) => {
-        if (selectedInfrastructure) {
-            await updateInfrastructure(selectedInfrastructure.id, data);
-            showAlert('success', 'Infrastruttura aggiornata con successo');
-        } else {
+    const handleCreateInfrastructure = async (data) => {
+        try{
             await createInfrastructure(data);
+            loadInfrastructures();
             showAlert('success', 'Infrastruttura creata con successo');
+        }catch(e){
+            showAlert('error', 'Errore durante la creazione dell\'infrastruttura');
         }
+    }
+
+    const handleUpdateInfrastructure = async (data) => {
+        try{
+            await updateInfrastructure(selectedInfrastructure.id, data);
+            loadInfrastructures();
+            showAlert('success', 'Infrastruttura aggiornata con successo');
+        }catch(e){
+            showAlert('error', 'Errore durante l\'aggiornamento dell\'infrastruttura');
+        }
+
     }
 
     const handleInfrastructureFilter = (typeId) => {
@@ -84,22 +94,18 @@ const InfrastructurePage = ({ userData }) => {
         setFilteredInfrastructures(filtered);
     }
 
-    //Pagina dedicata ai civili
-    if(userData.roleId === 0) {
-        return(
-            <h1>Coming Soon...</h1>
-        );
-    }
-
     return (
         <div className="infrastructure-page">
             <div className="filter-menus">
-                <FilterMenu
-                    title="Infrastructures"
-                    options={infrastructureTypes}
-                    activeOption={selectedType}
-                    onSelect={handleInfrastructureFilter}
-                />
+                {userData.roleId !== 0 && (
+                    <FilterMenu
+                        title="Infrastructures"
+                        options={infrastructureTypes}
+                        activeOption={selectedType}
+                        onSelect={handleInfrastructureFilter}
+                    />
+                    
+                )}
                 <FilterMenu
                     title="Headquarters"
                     options={headquarters}
@@ -116,7 +122,7 @@ const InfrastructurePage = ({ userData }) => {
                 <CreateInfrastructureModal
                     onClose={handleOnClose}
                     infrastructure={selectedInfrastructure}
-                    onSubmit={(data) => handleOnSubmit(data)}
+                    onSubmit={(data) => selectedInfrastructure ? handleUpdateInfrastructure(data) : handleCreateInfrastructure(data)}
                 />
             )}
 
@@ -132,7 +138,13 @@ const InfrastructurePage = ({ userData }) => {
 
             {loading && <div>Loading...</div>}
             {error && <div>Error loading infrastructures: {error.message}</div>}
-            <InfrastructureList infrastructures={filteredInfrastructures} onItemClick={(item) => handleOnClick(item)}  />
+            <InfrastructureList 
+                infrastructures={filteredInfrastructures} 
+                onItemClick={(item) => handleOnClick(item)}  
+                infrastructureTypes={infrastructureTypes}
+                headquarters={headquarters}
+                showOnlyTypes={userData.roleId === 0}
+                />
         </div>
     );
 }

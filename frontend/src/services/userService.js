@@ -1,6 +1,6 @@
 import api from './api';
 
-export const fetchUserData = (email) => api.get(`/users/${email}`);
-export const fetchAllUsers = (token) => api.get('/users', { headers: { Authorization: `Bearer ${token}` } });
-
+export const fetchUserById = (email) => api.get(`/users/${email}`);
+export const fetchAllUsers = () => api.get('/users');
+export const fetchUserRoleById = (roleId) => api.get(`/user_roles/${roleId}`);
 export const updateUserStatus = (email, data) => api.put(`/users/${email}`, data);

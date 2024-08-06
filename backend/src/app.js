@@ -34,6 +34,7 @@ const documentRoutes = require('./routes/document');
 const headQuarterRoutes = require('./routes/headQuarter');
 const infrastructureTypeRoutes = require('./routes/infrastructureType');
 const weaponRoutes = require('./routes/weapon');
+const userRoleRoutes = require('./routes/userRole');
 
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
@@ -46,6 +47,7 @@ app.use('/documents', documentRoutes);
 app.use('/headQuarters', headQuarterRoutes);
 app.use('/infrastructureTypes', infrastructureTypeRoutes);
 app.use('/weapons', weaponRoutes);
+app.use('user_roles', userRoleRoutes);
 
 // Sincronizza il database
 sequelize.sync({ alter: true })

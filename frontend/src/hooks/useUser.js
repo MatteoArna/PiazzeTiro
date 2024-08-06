@@ -1,46 +1,66 @@
 import { useState, useEffect, useCallback } from 'react';
-import { fetchAllUsers, fetchUserData, updateUserStatus } from '../services/userService';
+import { fetchAllUsers, fetchUserById, updateUserStatus } from '../services/userService';
 
-const useUser = (email) => {
-  const [userData, setUserData] = useState(null);
+const useUser = (email = null) => {
+  const [user, setUser] = useState(null);
+  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const loadUserData = async () => {
-      try {
-        const response = await fetchUserData(email);
-        setUserData(response.data);
-      } catch (err) {
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadUserData();
-  }, [email]);
-
-  const updateUser = async (data) => {
+  const loadUserById = useCallback(async (email) => {
+    setLoading(true);
+    setError(null);
     try {
-      const response = await updateUserStatus(email, data);
-      setUserData(response.data);
+      const response = await fetchUserById(email);
+      setUser(response.data);
     } catch (err) {
       setError(err);
-    }
-  };
-
-  const loadAllUsers = useCallback(async (token) => {
-    try {
-      const response = await fetchAllUsers(token);
-      return response.data;
-    } catch (err) {
-      setError(err);
-      return [];
+    } finally {
+      setLoading(false);
     }
   }, []);
 
-  return { userData, loading, error, updateUser, loadAllUsers };
+  useEffect(() => {
+    if (email) {
+      loadUserById(email);
+    }
+  }, [email, loadUserById]);
+
+  const updateUser = useCallback(async (email, data) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await updateUserStatus(email, data);
+      setUser(response.data);
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  const loadAllUsers = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetchAllUsers();
+      setUsers(response.data);
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  return { 
+    user, 
+    users, 
+    loading, 
+    error, 
+    updateUser, 
+    loadUserById, 
+    loadAllUsers 
+  };
 };
 
 export default useUser;

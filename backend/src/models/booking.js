@@ -4,6 +4,7 @@ const sequelize = require('../config/database');
 const User = require('./user');
 const Infrastructure = require('./infrastructure');
 const InfrastructureType = require('./infrastructureType');
+const HeadQuarter = require('./headQuarter');
 
 const Booking = sequelize.define('Booking', {
   id: {
@@ -27,6 +28,14 @@ const Booking = sequelize.define('Booking', {
     },
     allowNull: true,
   },
+  idHeadQuarter: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: HeadQuarter,
+      key: 'id',
+    },
+    allowNull: false,
+  },
   infrastructureType: {
     type: DataTypes.INTEGER,
     references: {
@@ -37,7 +46,7 @@ const Booking = sequelize.define('Booking', {
   },
   price: {
     type: DataTypes.FLOAT,
-    allowNull: false,
+    allowNull: true,
   },
   date: {
     type: DataTypes.DATE,
@@ -79,5 +88,6 @@ const Booking = sequelize.define('Booking', {
 Booking.belongsTo(User, { foreignKey: 'idCustomer' });
 Booking.belongsTo(Infrastructure, { foreignKey: 'idInfrastructure' });
 Booking.belongsTo(InfrastructureType, { foreignKey: 'infrastructureType' });
+Booking.belongsTo(HeadQuarter, { foreignKey: 'idHeadQuarter' });
 
 module.exports = Booking;

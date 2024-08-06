@@ -4,17 +4,53 @@ const WeaponUsed = require('../models/weaponUsed');
 const Weapon = require('../models/weapon');
 const User = require('../models/user');
 const Infrastructure = require('../models/infrastructure');
+const InfrastructureType = require('../models/infrastructureType');
+const HeadQuarter = require('../models/headQuarter');
 
 class BookingController extends baseController {
     constructor() {
         super(Booking);
     }
 
+    findAll = async (req, res) => {
+        try {
+            const bookings = await Booking.findAll({
+                include: [
+                    {
+                        model: User,
+                        attributes: ['firstName', 'lastName', 'email', 'society'] // Include la colonna society
+                    },
+                    {
+                        model: Infrastructure,
+                        attributes: ['name']
+                    },
+                    {
+                        model: InfrastructureType,
+                        attributes: ['type']
+                    },
+                    {
+                        model: HeadQuarter,
+                        attributes: ['name']
+                    }
+                ]
+            });
+
+            if (!bookings || bookings.length === 0) {
+                return res.status(404).json({ message: 'No bookings found' });
+            }
+    
+            res.status(200).json(bookings);
+        } catch (error) {
+            res.status(500).json({ message: 'Errore nel recuperare le prenotazioni', error });
+        }
+    };
+    
+
     // GET methods
     getBookingByInfrastructure = async (req, res) => {
         try {
             const bookings = await Booking.findAll({
-                where: { infrastructureId: req.params.infrastructureId },
+                where: { idInfrastructure: req.params.infrastructureId },
                 include: [{ model: User, attributes: ['name', 'surname', 'email'] }]
             });
             res.status(200).json(bookings);
@@ -26,7 +62,7 @@ class BookingController extends baseController {
     getBookingByUser = async (req, res) => {
         try {
             const bookings = await Booking.findAll({
-                where: { userId: req.params.userId },
+                where: { idCustomer: req.params.userId },
                 include: [{ model: Infrastructure, attributes: ['name'] }]
             });
             res.status(200).json(bookings);

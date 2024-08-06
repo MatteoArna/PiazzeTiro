@@ -1,71 +1,58 @@
-import React, { useState } from 'react';
-
-// Components
-import NewsDetailsModal from '../NewsDetailsModal/NewsDetailsModal';
-
-// Icons
-import maintenanceIcon from '../../../assets/maintenance.png';
-import infoIcon from '../../../assets/info.png';
-import warningIcon from '../../../assets/warning.png';
-
-// Styles
+import React, { useState, useEffect } from 'react';
+import { getIcon } from '../../../utils/newsUtil';
 import './NewsSummary.css';
+import InfoModal from '../../InfoModal/InfoModal';
+import useFile from '../../../hooks/data/useFile';
 
 const NewsSummary = ({ page, isAdmin, onEditPage, onDeletePage }) => {
   const [showModal, setShowModal] = useState(false);
+  const { fileUrl, isImage, handleFetchFile } = useFile();
 
-  const getIcon = (type) => {
-    switch (type) {
-      case 0:
-        return infoIcon;
-      case 1:
-        return warningIcon;
-      case 2:
-        return maintenanceIcon;
-      default:
-        return null;
+  useEffect(() => {
+    if (showModal && page.file) {
+      handleFetchFile(page.file);
     }
-  };
-
-  const getType = (type) => {
-    switch (type) {
-      case 0:
-        return 'Informazioni';
-      case 1:
-        return 'Attenzione';
-      case 2:
-        return 'Manutenzione';
-      default:
-        return null;
-    }
-  };
+  }, [showModal, page.file, handleFetchFile]);
 
   return (
     <div className="news-summary">
       <div className="card" key={page.id}>
         <div className="card-icon">
-          <img src={getIcon(page.typeId)} alt={page.type} />
+          <img src={getIcon(page.typeId)} alt={page.typeId} />
         </div>
         <div className="card-content">
-          <h3>{getType(page.typeId)}</h3>
+          <h3>{page.typeId}</h3>
           <p>{page.summary}</p>
           <a href="#" onClick={() => setShowModal(true)}>Più informazioni</a>
           {isAdmin && (
-            <>
-              <button className="edit-button" onClick={() => onEditPage(page)}>Modifica</button>
-              <button className="delete-button" onClick={() => onDeletePage(page.id)}>Elimina</button>
-            </>
+            <AdminControls
+              page={page}
+              onEditPage={onEditPage}
+              onDeletePage={onDeletePage}
+            />
           )}
         </div>
       </div>
       {showModal && (
-        <NewsDetailsModal
-          page={page}
+        <InfoModal
+          title={page.typeId}
+          subtitle={page.summary}
+          content={page.content}
+          icon={getIcon(page.typeId)}
+          file={fileUrl}
+          showPreview={isImage}
           onClose={() => setShowModal(false)}
         />
       )}
     </div>
   );
 };
+
+const AdminControls = ({ page, onEditPage, onDeletePage }) => (
+  <>
+    <button className="edit-button" onClick={() => onEditPage(page)}>Modifica</button>
+    <button className="delete-button" onClick={() => onDeletePage(page.id)}>Elimina</button>
+  </>
+);
 
 export default NewsSummary;

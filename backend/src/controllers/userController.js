@@ -7,7 +7,21 @@ class UserController extends BaseController {
         super(User);
     }
 
-    //GET methods 
+    findOne = async (req, res) => {
+        try {
+            const user = await User.findOne({
+                where: { email: req.params.id },
+                include: [{ model: UserRole, attributes: ['role'] }]
+            });
+
+            user.roleId = user.UserRole.role;
+
+            res.status(200).json(user);
+        } catch (error) {
+            console.log(error)
+            res.status(500).json({ message: 'Errore nel recuperare gli utenti', error });
+        }
+    }
 
     getUserByRole = async (req, res) => {
         try {

@@ -5,7 +5,6 @@ import { showAlert } from '../../Alert';
 import Modal from '../../Modal/Modal';
 
 // Hooks
-import usePages from '../../../hooks/usePages';
 
 // Styles
 import 'react-quill/dist/quill.snow.css';
@@ -13,19 +12,22 @@ import 'react-quill/dist/quill.snow.css';
 // Other
 import ReactQuill from 'react-quill';
 
-const CreateNewsModal = forwardRef(({ onClose, onSubmit, page }, ref) => {
+const CreateNewsModal = forwardRef(({ onClose, onSubmit, page, pageTypes }) => {
   const [summary, setSummary] = useState('');
   const [content, setContent] = useState('');
   const [file, setFile] = useState(null);
   const [typeId, setTypeId] = useState('');
 
-  const { pageTypes } = usePages();
+  const getTypeId = (type) => {
+    return pageTypes.find((pageType) => pageType.type === type).id;
+  };
+
 
   useEffect(() => {
     if (page) {
       setSummary(page.summary);
       setContent(page.content);
-      setTypeId(page.typeId);
+      setTypeId(getTypeId(page.typeId));
     }
   }, [page]);
 
@@ -47,6 +49,7 @@ const CreateNewsModal = forwardRef(({ onClose, onSubmit, page }, ref) => {
         pageData.append('file', file);
       }
 
+      //Print pageDAta values
       onSubmit(pageData);
       onClose();
     } catch (error) {

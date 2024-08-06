@@ -1,78 +1,91 @@
-import { useState, useEffect } from 'react';
-import { fetchPages, fetchPageTypes, createPage, updatePage, deletePage } from '../services/pageService';
+import { useState, useEffect, useCallback } from 'react';
+import { fetchAllPages, fetchPageTypes, createPage, updatePage, deletePage } from '../services/pageService';
 
-const usePages = (token) => {
+const usePages = () => {
   const [pages, setPages] = useState([]);
   const [pageTypes, setPageTypes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const loadPages = async () => {
+  const loadPageTypes = useCallback(async () => {
+    setLoading(true);
+    setError(null);
     try {
-      setLoading(true);
-      const [pagesResponse, pageTypesResponse] = await Promise.all([
-        fetchPages(token),
-        fetchPageTypes(token)
-      ]);
-      setPages(pagesResponse.data);
-      setPageTypes(pageTypesResponse.data);
+      const response = await fetchPageTypes();
+      setPageTypes(response.data);
     } catch (err) {
       setError(err);
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  const loadAllPages = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try{
+      const response = await fetchAllPages();
+      setPages(response.data);
+    }catch(err){
+      setError(err);
+    }finally{
+      setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
-    loadPages();
-  }, [token]);
+    loadAllPages();
+    loadPageTypes();
+  }, [loadAllPages, loadPageTypes]);
 
-  const handleCreatePage = async (pageData) => {
-    try {
-      setLoading(true);
-      const response = await createPage(token, pageData);
-      setPages(prevPages => [...prevPages, response.data]);
-    } catch (err) {
+  const handleCreatePage = useCallback(async (data) =>{
+    setLoading(true);
+    setError(null);
+    try{
+      await createPage(data);
+      loadAllPages();
+    }catch (err){
       setError(err);
-    } finally {
+    }finally{
       setLoading(false);
     }
-  };
+  }, []); 
 
-  const handleUpdatePage = async (id, pageData) => {
-    try {
-      setLoading(true);
-      const response = await updatePage(token, id, pageData);
-      setPages(prevPages => prevPages.map(page => page.id === id ? response.data : page));
-    } catch (err) {
+  const handleUpdatePage = useCallback(async (id, data) =>{
+    setLoading(true);
+    setError(null);
+    try{
+      await updatePage(id, data);
+      loadAllPages();
+    }catch (err){
       setError(err);
-    } finally {
+    }finally{
       setLoading(false);
     }
-  };
+  }, []);
 
-  const handleDeletePage = async (id) => {
-    try {
-      setLoading(true);
-      await deletePage(token, id);
+  const handleDeletePage = useCallback(async (id) =>{
+    setLoading(true);
+    setError(null);
+    try{
+      await deletePage(id);
       setPages(prevPages => prevPages.filter(page => page.id !== id));
-    } catch (err) {
+    }catch (err){
       setError(err);
-    } finally {
+    }finally{
       setLoading(false);
     }
-  };
+  }, []);
 
-  return {
+  return{
     pages,
     pageTypes,
-    loading,
-    error,
     createPage: handleCreatePage,
     updatePage: handleUpdatePage,
     deletePage: handleDeletePage,
-    reloadPages: loadPages // Esporta la funzione per ricaricare le pagine
-  };
+    loading,
+    error
+  }
 };
 
 export default usePages;
