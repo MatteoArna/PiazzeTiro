@@ -7,7 +7,6 @@ export const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({
     token: getAuthToken() || null,
     email: getUserEmail() || null,
-    
   });
 
   const login = (token, email) => {

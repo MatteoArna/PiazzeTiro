@@ -72,7 +72,6 @@ const useInfrastructurePage = () => {
         createInfrastructureType: handleCreateInfrastructureType,
         updateInfrastructureType: handleUpdateInfrastructureType,
         deleteInfrastructure: handleDeleteInfrastructure,
-        loadInfrastructureTypes,
         showModal,
         loading: infrTypeLoading,
         error: infrTypeError,

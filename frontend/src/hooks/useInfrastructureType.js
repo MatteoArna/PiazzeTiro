@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { fetchInfrastructureTypes, createInfrastructureType, updateInfrastructureType } from "../services/infrastructureTypeService";
 
-const useInfrastructureType = () => {
+const useInfrastructureType = (initialLoading = true) => {
     const [infrastructureTypes, setInfrastructureTypes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -19,7 +19,9 @@ const useInfrastructureType = () => {
     }, []);
 
     useEffect(() => {
-        loadInfrastructureTypes();
+        if(initialLoading){
+            loadInfrastructureTypes();
+        }
     }, [loadInfrastructureTypes]);
 
     const handleCreateInfrastructureType = async (data) => {
@@ -38,7 +40,7 @@ const useInfrastructureType = () => {
         } catch (error) {
             setError(error);
         }
-    };        
+    };
 
     return {
         infrastructureTypes,

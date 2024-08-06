@@ -1,30 +1,40 @@
 import React from "react";
 import GeneralList from '../../components/GeneralList/GeneralList';
 import CreateInfrastructureModal from "../../components/Infrastructures/CreateInfrastructureModal/CreateInfrastructureModal";
-import useInfrastructurePage from '../../hooks/custom/useInfrastructurePage';
-import './InfrastructurePage.css'; // Importiamo il file CSS
+//import useInfrastructurePage from '../../hooks/custom/useInfrastructurePage';
+
+
+import useInfrastructurePage from "../../hooks/custom/infrastructurePage/useInfrastructurePage";
+import useAdmin from "../../hooks/custom/infrastructurePage/useAdmin";
+
+import './InfrastructurePage.css'; 
 
 const InfrastructurePage = ({ userData }) => {
-    const { 
-        elements, 
-        showCreateModal, 
+    const {elements, infrastructureTypes, loadInfrastructureTypes} = useInfrastructurePage();
+
+    const {
         closeModal, 
         showModal, 
-        headquarters, 
-        infrastructureTypes, 
-        createInfrastructureType, 
-        loadInfrastructureTypes,
-        selectedInfrastructureType,
+        showCreateModal,
         showUpdateModal,
-        updateInfrastructureType,
+        createInfrastructureType, 
+        updateInfrastructureType, 
+        selectedInfrastructureType,
+        headquarters,
         infrastructures,
         createInfrastructure,
         deleteInfrastructure
-    } = useInfrastructurePage();
+    } = useAdmin(infrastructureTypes);
 
-    const handleSubmit = async (data) => {
+
+    const handleCreateInfrastractureType = async (data) => {
         await createInfrastructureType(data);
-        loadInfrastructureTypes(); // Ricarica i tipi di infrastrutture dal backend dopo la creazione
+        await loadInfrastructureTypes();
+    };
+
+    const handleUpdateInfrastructureType = async (data) => {
+        await updateInfrastructureType(data);
+        await loadInfrastructureTypes();
     };
 
     return (
@@ -45,11 +55,13 @@ const InfrastructurePage = ({ userData }) => {
                     infrastructures={infrastructures}
                     onCreateInfrastructure={createInfrastructure}
                     onDeleteInfrastructure={(id) => deleteInfrastructure(id)}
-                    onSubmit={selectedInfrastructureType ? (data) => updateInfrastructureType(data) : (data) => createInfrastructureType(data)}
+                    onSubmit={selectedInfrastructureType ? (data) => handleUpdateInfrastructureType(data) : (data) => handleCreateInfrastractureType(data)}
                 />   
             )}
         </div>
     );
+
+
 };
 
 export default InfrastructurePage;
