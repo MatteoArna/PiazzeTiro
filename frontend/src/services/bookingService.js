@@ -3,6 +3,7 @@ import api from './api';
 
 export const fetchAllBookings = () => api.get('/bookings');
 export const createBooking = (data) => api.post('/bookings', data);
+export const fetchBookingsByCustomer = (customerId) => api.get(`/bookings/user/${customerId}`);
 /*
 export const fetchBookings = (token) => api.get('/bookings', {
     headers: {
@@ -30,12 +31,6 @@ export const updateBooking = (token, id, data) => api.put(`/bookings/${id}`, dat
 });
 
 export const deleteBooking = (token, id) => api.delete(`/bookings/${id}`, {
-    headers: {
-        Authorization: `Bearer ${token}`
-    }
-});
-
-export const fetchBookingsByCustomer = (token, customerId) => api.get(`/bookings/user/${customerId}`, {
     headers: {
         Authorization: `Bearer ${token}`
     }

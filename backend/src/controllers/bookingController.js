@@ -12,6 +12,49 @@ class BookingController extends baseController {
         super(Booking);
     }
 
+    getBookingByInfrastructure = async (req, res) => {
+        try {
+            const bookings = await Booking.findAll({
+                where: { idInfrastructure: req.params.infrastructureId },
+                include: [{ model: User, attributes: ['name', 'surname', 'email'] }]
+            });
+            res.status(200).json(bookings);
+        } catch (error) {
+            res.status(500).json({ message: 'Errore nel recuperare le prenotazioni', error });
+        }
+    };
+
+    getBookingByUser = async (req, res) => {
+        try {
+            const bookings = await Booking.findAll({
+                where: { idCustomer: req.params.userId },
+                include: [
+                    {
+                        model: User,
+                        attributes: ['firstName', 'lastName', 'email', 'society'] // Include la colonna society
+                    },
+                    {
+                        model: Infrastructure,
+                        attributes: ['name']
+                    },
+                    {
+                        model: InfrastructureType,
+                        attributes: ['type'],
+                        include: [
+                            {
+                                model: HeadQuarter,
+                                attributes: ['name']
+                            }
+                        ]
+                    }
+                ]
+            });
+            res.status(200).json(bookings);
+        } catch (error) {
+            res.status(500).json({ message: 'Errore nel recuperare le prenotazioni', error });
+        }
+    };
+
     findAll = async (req, res) => {
         try {
             const bookings = await Booking.findAll({
@@ -26,11 +69,13 @@ class BookingController extends baseController {
                     },
                     {
                         model: InfrastructureType,
-                        attributes: ['type']
-                    },
-                    {
-                        model: HeadQuarter,
-                        attributes: ['name']
+                        attributes: ['type'],
+                        include: [
+                            {
+                                model: HeadQuarter,
+                                attributes: ['name']
+                            }
+                        ]
                     }
                 ]
             });
@@ -47,29 +92,8 @@ class BookingController extends baseController {
     
 
     // GET methods
-    getBookingByInfrastructure = async (req, res) => {
-        try {
-            const bookings = await Booking.findAll({
-                where: { idInfrastructure: req.params.infrastructureId },
-                include: [{ model: User, attributes: ['name', 'surname', 'email'] }]
-            });
-            res.status(200).json(bookings);
-        } catch (error) {
-            res.status(500).json({ message: 'Errore nel recuperare le prenotazioni', error });
-        }
-    }
+    
 
-    getBookingByUser = async (req, res) => {
-        try {
-            const bookings = await Booking.findAll({
-                where: { idCustomer: req.params.userId },
-                include: [{ model: Infrastructure, attributes: ['name'] }]
-            });
-            res.status(200).json(bookings);
-        } catch (error) {
-            res.status(500).json({ message: 'Errore nel recuperare le prenotazioni', error });
-        }
-    }
 
     addWeaponUsed = async (req, res) => {
         const { bookingId, weaponId } = req.body;

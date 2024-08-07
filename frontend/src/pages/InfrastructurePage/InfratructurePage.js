@@ -1,13 +1,14 @@
 import React from "react";
 import GeneralList from '../../components/GeneralList/GeneralList';
 import CreateInfrastructureModal from "../../components/Infrastructures/CreateInfrastructureModal/CreateInfrastructureModal";
-//import useInfrastructurePage from '../../hooks/custom/useInfrastructurePage';
 
 
 import useInfrastructurePage from "../../hooks/custom/infrastructurePage/useInfrastructurePage";
 import useAdmin from "../../hooks/custom/infrastructurePage/useAdmin";
+import useBooker from "../../hooks/custom/infrastructurePage/useBooker";
 
 import './InfrastructurePage.css'; 
+import ReservationModal from "../../components/Infrastructures/ReservationModal/ReservationModal";
 
 const InfrastructurePage = ({ userData }) => {
     const {elements, infrastructureTypes, loadInfrastructureTypes} = useInfrastructurePage();
@@ -25,6 +26,15 @@ const InfrastructurePage = ({ userData }) => {
         createInfrastructure,
         deleteInfrastructure
     } = useAdmin(infrastructureTypes);
+
+    const {
+        handleShowReservationModal,
+        handleCloseReservationModal,
+        showReservationModal,
+        selectedReservationInfrastructureType,
+        reservationInfrastructures,
+        createReservation
+    } = useBooker(userData.roleId === 'army', infrastructureTypes);
 
 
     const handleCreateInfrastractureType = async (data) => {
@@ -44,7 +54,7 @@ const InfrastructurePage = ({ userData }) => {
             )}
             <GeneralList
                 listElements={elements}
-                onElementClicked={(elementId) => userData.roleId === 'admin' ? showUpdateModal(elementId) : console.log("Funzione non ancora implementata")}
+                onElementClicked={(elementId) => userData.roleId === 'admin' ? showUpdateModal(elementId) : handleShowReservationModal(elementId)}
             />  
 
             {showModal && (
@@ -56,6 +66,16 @@ const InfrastructurePage = ({ userData }) => {
                     onCreateInfrastructure={createInfrastructure}
                     onDeleteInfrastructure={(id) => deleteInfrastructure(id)}
                     onSubmit={selectedInfrastructureType ? (data) => handleUpdateInfrastructureType(data) : (data) => handleCreateInfrastractureType(data)}
+                />   
+            )}
+
+            {showReservationModal && (
+                <ReservationModal
+                    onClose={handleCloseReservationModal}
+                    infrastructureType={selectedReservationInfrastructureType}
+                    infrastructures={reservationInfrastructures}
+                    onSubmit={(data) => createReservation(data)}
+                    userData={userData}
                 />   
             )}
         </div>
