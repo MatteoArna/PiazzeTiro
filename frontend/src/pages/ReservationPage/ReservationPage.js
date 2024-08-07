@@ -1,11 +1,11 @@
 import React from 'react';
-import ReservationDetails from './HelpBox/ReservationDetails';
+import ReservationDetails from '../../components/Reservations/HelpBox/ReservationDetails';
 import './ReservationPage.css';
-import GeneralList from '../GeneralList/GeneralList';
+import GeneralList from '../../components/GeneralList/GeneralList';
 import useReservationPage from '../../hooks/custom/useReservationPage';
 
 const ReservationPage = () => {
-  const { listElements, onReservationSelected, selectedReservation, loading, error } = useReservationPage();
+  const { listElements, loading, error, onReservationSelected, selectedReservation } = useReservationPage();
 
   if (loading) {
     return <div>Loading...</div>;
@@ -23,9 +23,11 @@ const ReservationPage = () => {
           onElementClicked={onReservationSelected}
         />
       </div>
+      {
       <div className="reservation-details-container">
         {selectedReservation && <ReservationDetails reservation={selectedReservation} />}
       </div>
+      }
     </div>
   );
 };

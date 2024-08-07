@@ -19,7 +19,7 @@ const useReservationPage = () => {
         id: element.id,
         title: element.User.society,
         subtitle: element.User.firstName + " " + element.User.lastName,
-        description: element.HeadQuarter.name,
+        description: element.InfrastructureType.HeadQuarter.name,
         more: translateDate(element.date),
       }));
       setListElements(elements);

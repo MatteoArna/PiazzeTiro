@@ -10,7 +10,7 @@ import NewsPage from './NewsPage/NewsPage';
 import UserApproval from './UserApproval/UserApproval';
 import ProfilePage from './ProfilePage/ProfilePage'
 import InfratructurePage from './InfrastructurePage/InfratructurePage';
-import ReservationPage from '../components/Reservations/ReservationPage';
+import ReservationPage from './ReservationPage/ReservationPage';
 
 import './BasePage.css';
 

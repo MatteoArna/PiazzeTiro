@@ -39,7 +39,7 @@ class BookingController extends baseController {
                     },
                     {
                         model: InfrastructureType,
-                        attributes: ['type'],
+                        attributes: ['id', 'type'],
                         include: [
                             {
                                 model: HeadQuarter,
@@ -69,7 +69,7 @@ class BookingController extends baseController {
                     },
                     {
                         model: InfrastructureType,
-                        attributes: ['type'],
+                        attributes: ['id', 'type'],
                         include: [
                             {
                                 model: HeadQuarter,

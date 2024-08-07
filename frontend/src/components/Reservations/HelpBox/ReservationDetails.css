@@ -29,6 +29,24 @@
   font-weight: bold;
 }
 
+.select {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 1.1em;
+  border: none;
+}
+
+.reject-button {
+  background-color: #f44336;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
 @media (max-width: 600px) {
   .reservation-details {
     grid-template-columns: 1fr;
