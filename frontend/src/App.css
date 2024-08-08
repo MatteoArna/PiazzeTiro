@@ -44,16 +44,6 @@ html, body, #root {
   padding: 0;
 }
 
-@media (max-width: 1000px) {
-  .content {
-    display: none;
-  }
-
-  .warning {
-    display: block;
-  }
-}
-
 .warning {
   display: none;
   color: red;
