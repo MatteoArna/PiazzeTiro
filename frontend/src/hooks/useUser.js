@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { fetchAllUsers, fetchUserById, setUserToNextStatus } from '../services/userService';
+import { fetchAllUsers, fetchUserById, setUserToNextStatus, changeUserRole, removeUserApproval, approveUser } from '../services/userService';
 
 const useUser = (email = null) => {
   const [user, setUser] = useState(null);
@@ -54,6 +54,28 @@ const useUser = (email = null) => {
     }
   }, []);
 
+  const handleChangeRole = useCallback(async (email = null, roleId) => {
+    console.log("Changing role to " + roleId);
+    setLoading(true);
+    setError(null);
+    try {
+      await changeUserRole(email, roleId);
+
+      if(roleId === '0'){
+        console.log("Removing approval");
+        removeUserApproval(email);
+      }else{
+        approveUser(email);
+      }
+
+      loadAllUsers();
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
   return { 
     user, 
     users, 
@@ -62,6 +84,7 @@ const useUser = (email = null) => {
     loadAllUsers,
     loadUserById,
     setUserToNextStatus: handleSetUserToNextStatus,
+    changeRole: handleChangeRole
   };
 };
 

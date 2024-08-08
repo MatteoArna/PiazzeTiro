@@ -47,7 +47,7 @@ app.use('/documents', documentRoutes);
 app.use('/headQuarters', headQuarterRoutes);
 app.use('/infrastructureTypes', infrastructureTypeRoutes);
 app.use('/weapons', weaponRoutes);
-app.use('user_roles', userRoleRoutes);
+app.use('/user_roles', userRoleRoutes);
 
 // Sincronizza il database
 sequelize.sync({ alter: true })

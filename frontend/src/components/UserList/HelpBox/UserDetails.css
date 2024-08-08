@@ -1,85 +1,51 @@
 .user-details {
-    padding: 20px;
-  }
-  
-  .user-name {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
-  
-  .user-info {
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
-  
-  .document-boxes {
-    display: flex;
-    flex-direction: column;
-    gap: 15px; /* Adds space between the elements */
-  }
-  
-  .document-box-container {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Adds space between the box and delete button */
-  }
-  
-  .document-box {
-    flex: 1;
-    position: relative;
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    cursor: pointer;
-    border: 2px solid gray; /* Default border color */
-  }
-  
-  .document-box.blue {
-    border: 2px solid blue; /* Blue border when file is uploaded */
-  }
-  
-  .document-box.orange {
-    border: 2px solid orange; /* Orange border when in approval */
-  }
-  
-  .document-box.red {
-    border: 2px solid red; /* Red border for admin response */
-  }
-  
-  .document-box input[type="file"] {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    cursor: pointer;
-  }
-  
-  .document-box-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-  }
-  
-  .document-box .status-icon {
-    font-size: 24px;
-  }
-  
-  .submit-button {
-    margin-top: 15px;
-  }
-  
-  .submit-button:disabled {
-    background-color: gray; /* Optional: to visually indicate that the button is disabled */
-    cursor: not-allowed; /* Optional: to change the cursor when hovering over a disabled button */
-  }
-  
-  .delete-button {
-    flex-shrink: 0;
-  }
-  
+  padding: 20px;
+}
+
+.user-society {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.user-info {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.role-select {
+  width: 100%;
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  color: #333;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  appearance: none; /* Rimuove lo stile predefinito */
+  background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="%23007BFF" d="M2 0L0 2h4zm0 5L0 3h4z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 10px;
+}
+
+.role-select:hover {
+  background-color: #e9e9e9;
+  border-color: #0056b3;
+}
+
+.role-select:focus {
+  outline: none;
+  border-color: #0056b3;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.role-select-option {
+  font-size: 16px;
+  padding: 10px;
+}
+
+/* Per i browser che supportano le pseudo-classi */
+.role-select::-ms-expand {
+  display: none;
+}

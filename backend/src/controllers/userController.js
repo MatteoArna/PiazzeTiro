@@ -58,6 +58,42 @@ class UserController extends BaseController {
             res.status(500).json({ message: 'Errore nel recuperare gli utenti', error });
         }
     }
+
+    changeRole = async (req, res) => {
+        try {
+            const user = await User.findOne({
+                where: { email: req.params.email }
+            });
+            await user.update({ roleId: req.body.roleId });
+            res.status(200).json(user);
+        }catch (error) {
+            res.status(500).json({ message: 'Errore nel recuperare gli utenti', error });
+        }
+    }
+
+    approveUser = async (req, res) => {
+        try {
+            const user = await User.findOne({
+                where: { email: req.params.email }
+            });
+            await user.update({ status: 4 });
+            res.status(200).json(user);
+        }catch (error) {
+            res.status(500).json({ message: 'Errore nel recuperare gli utenti', error });
+        }
+    }
+
+    removeApproval = async (req, res) => {
+        try {
+            const user = await User.findOne({
+                where: { email: req.params.email }
+            });
+            await user.update({ status: 0 });
+            res.status(200).json(user);
+        }catch (error) {
+            res.status(500).json({ message: 'Errore nel recuperare gli utenti', error });
+        }
+    }
 }
 
 module.exports = new UserController();

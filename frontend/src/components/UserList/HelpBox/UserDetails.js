@@ -1,71 +1,59 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import './UserDetails.css';
-import FileContainer from '../../FileContainer/FileContainer';
 
-//Hooks
-import { useAuth } from '../../../hooks/useAuth';
-import useDocument from '../../../hooks/useDocument';
-import useUser from '../../../hooks/useUser';
-import { showAlert } from '../../Alert';
 
-const UserDetails = ({ user }) => { 
+import useDetailPage from '../../../hooks/custom/userApprovalPage/useDetailPage';
 
-  const { auth } = useAuth();
-  const { documents, loading, error, loadDocuments, uploadDocument, deleteDocument } = useDocument(auth.token);
-  const {updateUser} = useUser(user.email);
+const UserDetails = ({ user, onChangeRole }) => { 
+
+  const { society, name, email, status, roles} = useDetailPage(user);
+
+
+  const [selectedRole, setSelectedRole] = React.useState(user?.roleId);
+
+  const handleChangeRole = (roleId) => {
+    setSelectedRole(roleId);
+    onChangeRole(roleId);
+  }
 
   useEffect(() => {
-    if(user.email){
-      loadDocuments(user.email);
-    }
-  }, [user.email]);
+    setSelectedRole(user?.roleId);
+    console.log(user);
+  }, [user]);
 
-  const handleOnUpload = async (file) => {
-    const documentData = new FormData();
-    const fileName = file.fileName;
-    documentData.append('file', file, fileName);
-    documentData.append('userId', user.email);
-
-    try {
-      await uploadDocument(documentData);
-      loadDocuments(user.email);
-      showAlert('success', 'File caricato con successo.');
-    } catch (err) {
-      console.log(err);
-      showAlert('error', 'Errore durante il caricamento del file.');
-    }
-  };
-
-  const handleOnDelete = async (file) => {
-    for (const document of documents) {
-      if (document.filePath === file) {
-        try {
-          await deleteDocument(document.id);
-          showAlert('success', 'File eliminato con successo.');
-        } catch (err) {
-          console.log(err);
-          showAlert('error', 'Errore durante l\'eliminazione del file.');
-        }
-      }
-    }
-    loadDocuments(user.email);
-  };
-
-  const activateUser = async () => {
-    try {
-      await updateUser({status: 2});
-      showAlert('success', 'Utente approvato con successo.');
-    } catch (err) {
-      console.log(err);
-      showAlert('error', 'Errore durante l\'approvazione dell\'utente.');
-    }
+  if(!user){
+    return(
+      <h1>Seleziona un utente per vederne i dettagli</h1>
+    )
   }
   return (
     <div className="user-details">
-      <h2 className="user-name">{user.firstName + " " + user.lastName}</h2>
-      <p className="user-info"><b>{user.society}</b></p>
-      <p className="user-info">Status: {user.status}</p>
+      <h2 className="user-society">{society}</h2>
+      <p className="user-info"><i>{status}</i></p>
+      <p className="user-info">{name}</p>
+      <p className='user-info'><b>{email}</b></p>
 
+      <hr />
+
+
+      <p className='user-info'>Ruolo attuale</p>
+      <select 
+        className="role-select" 
+        value={selectedRole}
+        onChange={(event) => {
+          handleChangeRole(event.target.value);
+        }}
+      >
+        {roles.map(role => (
+          <option className="role-select-option" key={role.id} value={role.id}>
+            {role.role}
+          </option>
+        ))}
+      </select>
+
+
+
+    {/*}
       <div className="document-boxes">
 
         { user.status === 0 &&
@@ -122,6 +110,7 @@ const UserDetails = ({ user }) => {
         }
 
       </div>
+      {*/}
     </div>
   );
 };

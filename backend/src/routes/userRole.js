@@ -1,4 +1,4 @@
-const UserRoleController = require('../controllers/userController');
+const UserRoleController = require('../controllers/userRolesController');
 const createBaseRouter = require('./baseRoute');
 
 const router = createBaseRouter(UserRoleController);

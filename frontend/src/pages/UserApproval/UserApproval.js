@@ -12,17 +12,18 @@ import './UserApproval.css';
 
 const UserApproval = ({userData}) => {
 
-  const { users, elements, loading, error, onUserSelected, selectedUser } = useUserApproval(userData.email);
+  const { elements, loading, error, onUserClicked, selectedUser, changeRole } = useUserApproval(userData.email);
   
   return (
-    <div className='main-content'>
+    <div className='mainContent'>
       <div className='user-container'>
         <GeneralList
           listElements={elements}
+          onElementClicked={onUserClicked}
         />
       </div>
       <div className='user-details-container'>
-        {selectedUser && <UserDetails user={selectedUser} />}
+        <UserDetails user={selectedUser} onChangeRole={changeRole} />
       </div>
     </div>
   );
