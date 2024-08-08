@@ -2,10 +2,12 @@ import { useCallback, useEffect, useState } from "react";
 import { getStatus } from '../../../utils/userUtil';
 import { fetchAllRoles } from "../../../services/userRoleService";
 
+
 const useDetailPage = (user) => {
   const [name, setName] = useState("");
   const [status, setStatus] = useState("");
   const [roles, setRoles] = useState([]);
+
 
     const handleFetchAllRoles = async () => {
         try {

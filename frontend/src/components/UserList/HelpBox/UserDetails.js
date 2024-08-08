@@ -1,13 +1,18 @@
 import React, {useEffect, useState} from 'react';
 import './UserDetails.css';
 
+import FileContainer from '../../FileContainer/FileContainer';
 
 import useDetailPage from '../../../hooks/custom/userApprovalPage/useDetailPage';
+import useDocumentHelper from '../../../hooks/custom/userApprovalPage/useDocumentHelper';
+
+import { getDocumentName } from '../../../utils/userUtil';
 
 const UserDetails = ({ user, onChangeRole }) => { 
 
-  const { society, name, email, status, roles} = useDetailPage(user);
+  const { society, name, email, status: userStatus, roles} = useDetailPage(user);
 
+  const { documents, loading, error, status, uploadDocument, deleteDocument, downloadFile, submitDocuments } = useDocumentHelper(user?.email);
 
   const [selectedRole, setSelectedRole] = React.useState(user?.roleId);
 
@@ -18,7 +23,6 @@ const UserDetails = ({ user, onChangeRole }) => {
 
   useEffect(() => {
     setSelectedRole(user?.roleId);
-    console.log(user);
   }, [user]);
 
   if(!user){
@@ -29,7 +33,7 @@ const UserDetails = ({ user, onChangeRole }) => {
   return (
     <div className="user-details">
       <h2 className="user-society">{society}</h2>
-      <p className="user-info"><i>{status}</i></p>
+      <p className="user-info"><i>{userStatus}</i></p>
       <p className="user-info">{name}</p>
       <p className='user-info'><b>{email}</b></p>
 
@@ -50,6 +54,46 @@ const UserDetails = ({ user, onChangeRole }) => {
           </option>
         ))}
       </select>
+
+      <hr />
+
+      <p className='user-info'>Documenti</p>
+
+      {
+  selectedRole === 0 && (
+    <>
+      {documents.length > 0 && documents.map((doc, index) => (
+        index < 2 && (
+          <FileContainer
+            key={index}
+            file={doc.filePath}
+            fileType={'application/pdf'}
+            initialState={status}
+            fileName={getDocumentName(index)}
+            onDownload={() => downloadFile(doc.filePath)}
+            onDelete={() => deleteDocument(doc.filePath)}
+            onUpload={uploadDocument}
+          />
+        )
+      ))}
+      {documents.length >= 2 && (
+        <FileContainer
+          file={documents[2] && documents[2].filePath}
+          fileType={'application/pdf'}
+          initialState={status === 'accepted' ? 'accepted' : 'toLoad'}
+          fileName={getDocumentName(2)}
+          onDownload={downloadFile}
+          onDelete={deleteDocument}
+          onUpload={uploadDocument}
+        />
+      )}
+      {status !== 'accepted' && documents.length > 1 && (
+        <button className="submit-button" onClick={submitDocuments}>Invia File</button>
+      )}
+    </>
+  )
+}
+
 
 
 
