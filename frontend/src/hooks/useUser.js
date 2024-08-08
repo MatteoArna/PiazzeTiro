@@ -45,7 +45,7 @@ const useUser = (email = null) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await setUserToNextStatus(email);
+      await setUserToNextStatus(email);
       loadUserById(email);
     } catch (err) {
       setError(err);

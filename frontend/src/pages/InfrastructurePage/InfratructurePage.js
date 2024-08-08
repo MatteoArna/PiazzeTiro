@@ -34,7 +34,7 @@ const InfrastructurePage = ({ userData }) => {
         selectedReservationInfrastructureType,
         reservationInfrastructures,
         createReservation
-    } = useBooker(userData.roleId === 'army', infrastructureTypes);
+    } = useBooker(infrastructureTypes);
 
 
     const handleCreateInfrastractureType = async (data) => {
@@ -46,6 +46,7 @@ const InfrastructurePage = ({ userData }) => {
         await updateInfrastructureType(data);
         await loadInfrastructureTypes();
     };
+
 
     return (
         <div>

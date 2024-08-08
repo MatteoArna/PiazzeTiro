@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 // Components
 import UserDetails from '../../components/UserList/HelpBox/UserDetails';
@@ -12,7 +12,7 @@ import './UserApproval.css';
 
 const UserApproval = ({userData}) => {
 
-  const { elements, loading, error, onUserClicked, selectedUser, changeRole } = useUserApproval(userData.email);
+  const { elements, onUserClicked, selectedUser, changeRole } = useUserApproval(userData.email);
   
   return (
     <div className='mainContent'>

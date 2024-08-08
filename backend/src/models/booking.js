@@ -25,7 +25,7 @@ const Booking = sequelize.define('Booking', {
       model: Infrastructure,
       key: 'id',
     },
-    allowNull: true,
+    allowNull: false,
   },
   infrastructureType: {
     type: DataTypes.INTEGER,
@@ -37,15 +37,11 @@ const Booking = sequelize.define('Booking', {
   },
   price: {
     type: DataTypes.FLOAT,
-    allowNull: true,
+    allowNull: false,
   },
   date: {
     type: DataTypes.DATE,
     allowNull: false,
-  },
-  subDate: {
-    type: DataTypes.DATE,
-    allowNull: true,
   },
   start: {
     type: DataTypes.TIME,
@@ -54,14 +50,6 @@ const Booking = sequelize.define('Booking', {
   end: {
     type: DataTypes.TIME,
     allowNull: false,
-  },
-  subStart: {
-    type: DataTypes.TIME,
-    allowNull: true,
-  },
-  subEnd: {
-    type: DataTypes.TIME,
-    allowNull: true,
   },
   nPartecipants: {
     type: DataTypes.INTEGER,

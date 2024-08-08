@@ -3,7 +3,7 @@ import { useState } from "react";
 import useInfrastructure from "../../useInfrastructure";
 import useBooking from "../../useBooking";
 
-const useBooker = (isArmy, infrastructureTypes) => {
+const useBooker = (infrastructureTypes) => {
     const { infrastructures, loadInfrastructuresByTypeId } = useInfrastructure();
     const [showReservationModal, setShowReservationModal] = useState(false);
 
@@ -11,11 +11,9 @@ const useBooker = (isArmy, infrastructureTypes) => {
 
     const { createBooking } = useBooking();
 
-    const handleShowReservationModal = (infrastructureTypeId) => {
+    const handleShowReservationModal = async (infrastructureTypeId) => {
         setSelectedInfrastructureType(infrastructureTypes.find((element) => element.id === infrastructureTypeId));
-        if(isArmy){
-            loadInfrastructuresByTypeId(infrastructureTypeId);
-        }
+        loadInfrastructuresByTypeId(infrastructureTypeId);
         setShowReservationModal(true);
     }
 
