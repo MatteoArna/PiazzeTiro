@@ -32,7 +32,7 @@ const useFile = () => {
     loading,
     error,
     isImage,
-    handleFetchFile
+    fetchFile: handleFetchFile
   };
 };
 

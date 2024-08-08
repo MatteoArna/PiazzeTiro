@@ -38,15 +38,15 @@ const BasePage = () => {
 
       <div className="main-content">
         {selectedPage === 'news' && <NewsPage userData={user} />}
-        {selectedPage === 'userApproval' && <UserApproval />}
+        {selectedPage === 'userApproval' && <UserApproval userData={user}/>}
         {selectedPage === 'profile' && <ProfilePage userData={user} />}
         {selectedPage === 'infrastructures' && <InfratructurePage userData={user} />}
-        {selectedPage === 'reservations' && <ReservationPage token={auth.token} />}
+        {selectedPage === 'reservations' && <ReservationPage />}
       </div>
 
       <div>
         {(selectedPage === 'news' || selectedPage === 'infrastructures') && <Calendar userData={user} />}
-        {selectedPage === 'profile' && user.roleId === 0 && <DocumentUploader userData={user} />}
+        {selectedPage === 'profile' && user.roleId === 'civilian' && <DocumentUploader userData={user} />}
       </div>
     </div>
   );

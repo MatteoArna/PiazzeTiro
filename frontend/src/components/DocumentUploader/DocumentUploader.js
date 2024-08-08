@@ -1,87 +1,29 @@
 import React, { useState, useEffect } from 'react';
 
 // Hooks
-import { useAuth } from '../../hooks/useAuth';
-import useDocument from '../../hooks/useDocument';
-import useUser from '../../hooks/useUser';
-
+import useDocumentHelper from '../../hooks/custom/userApprovalPage/useDocumentHelper';
 
 // Styles
 import './DocumentUploader.css';
 
 // Components
 import FileContainer from '../FileContainer/FileContainer';
-import { showAlert } from '../Alert'
+
+//Utils
+import { getDocumentName } from '../../utils/userUtil';
 
 
 const DocumentUploader = ({ userData, adminFile }) => {
-  const { auth } = useAuth();
-  const { documents, loading, error, loadDocuments, uploadDocument, deleteDocument } = useDocument(auth.token);
-  const { updateUser } = useUser(userData.email);
-
-  const getStatus = (statusId) => {
-    switch (statusId) {
-      case 0:
-        return 'toLoad';
-      case 1:
-        return 'waiting';
-      case 2:
-        return 'toLoad';
-      case 3:
-        return 'waiting';
-      case 4:
-        return 'accepted';
-    }
-  };
-
-
-  useEffect(() => {
-    if (userData.email) {
-      loadDocuments(userData.email);
-    }
-  }, [userData.email]);
-
-  const handleOnUpload = async (file) => {
-    const documentData = new FormData();
-    const fileName = file.fileName;
-    documentData.append('file', file, fileName);
-    documentData.append('userId', userData.email);
-
-    try {
-      await uploadDocument(documentData);
-      loadDocuments(userData.email);
-      showAlert('success', 'File caricato con successo.');
-    }catch (err) {
-      showAlert('error', 'Errore durante il caricamento del file.');
-    }
-  };
-
-  const handleOnDelete = async (file) => {
-    console.log('File deleted:', file);
-    for (const document of documents) {
-      if (document.filePath === file) {
-        try{
-          await deleteDocument(document.id);
-          showAlert('success', 'File eliminato con successo.');
-        }catch (err) {
-          showAlert('error', 'Errore durante l\'eliminazione del file.');
-        }
-      }
-    }
-    loadDocuments(userData.email);
-  };
-
-  const handleSubmitDocuments = async () => {
-    console.log(documents.length)
-    if (documents.length < 2) {
-      showAlert('error', 'Devi caricare entrambi i file per poter procedere.');
-      return;
-    }
-
-    updateUser({ status: 1 });
-    showAlert('success', 'Documenti inviati con successo.');
-
-  };
+  const { 
+    documents, 
+    loading, 
+    error, 
+    status, 
+    uploadDocument, 
+    deleteDocument, 
+    downloadFile,
+    submitDocuments
+  } = useDocumentHelper(userData.email);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -91,52 +33,31 @@ const DocumentUploader = ({ userData, adminFile }) => {
     return <div>Error loading documents</div>;
   }
 
+  const handleSubmitDocuments = async () => {
+    await submitDocuments();
+    // Forza un refresh
+    window.location.reload();
+  }
+
   return (
-    <div className="document-uploader">
-      <h2>Stato Approvazione</h2>
-      <div className="document-boxes">
-        
+    <div className='document-uploader'>
+      {documents.length > 0 && documents.map((doc, index) => (
         <FileContainer
-          file={documents[0] && documents[0].filePath}
-          userEmail={userData.email}
-          fileName="Formulario"
-          initialState={getStatus(userData.status)}
-          fileType="application/pdf"
-          onUpload={(file) => handleOnUpload(file)}
-          onDelete={(file) => handleOnDelete(file)}
+          key={index}
+          file={doc.filePath}
+          fileType={'application/pdf'}
+          initialState={status}
+          fileName={getDocumentName(index)}
+          onDownload={() => downloadFile(doc.filePath)}
+          onDelete={() => deleteDocument(doc.filePath)}
+          onUpload={uploadDocument}
         />
-
-        <FileContainer
-          file={documents[1] && documents[1].filePath}
-          userEmail={userData.email}
-          fileName="Polizza Assicurativa"
-          initialState={getStatus(userData.status)}
-          fileType="application/pdf"
-          onUpload={(file) => handleOnUpload(file)}
-          onDelete={(file) => handleOnDelete(file)}
-        />
-
-        <hr />
-
-        {
-          (userData.status === 0 || userData.status === 2) && (
-            <button className="submit-button" onClick={handleSubmitDocuments} >Invia File </button>
-          )
-        }
-
-        {
-          (userData.status === 4) && ( 
-            <FileContainer
-              file={documents[2] && documents[2].filePath}
-              userEmail={userData.email}
-              fileName="Decisione"
-              initialState={'accepted'}
-              fileType="application/pdf"
-            />
-          )
-        }
-
-      </div>
+      ))}
+      {
+        (userData.status === 0 || userData.status === 2) && (
+          <button className="submit-button" onClick={handleSubmitDocuments}>Invia File</button>
+        )
+      }
     </div>
   );
 };

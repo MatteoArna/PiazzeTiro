@@ -8,7 +8,7 @@ import useDocument from '../../../hooks/useDocument';
 import useUser from '../../../hooks/useUser';
 import { showAlert } from '../../Alert';
 
-const UserDetails = ({ user }) => {
+const UserDetails = ({ user }) => { 
 
   const { auth } = useAuth();
   const { documents, loading, error, loadDocuments, uploadDocument, deleteDocument } = useDocument(auth.token);

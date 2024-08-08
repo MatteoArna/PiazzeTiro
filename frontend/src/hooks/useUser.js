@@ -1,11 +1,24 @@
 import { useState, useEffect, useCallback } from 'react';
-import { fetchAllUsers, fetchUserById, updateUserStatus } from '../services/userService';
+import { fetchAllUsers, fetchUserById, setUserToNextStatus } from '../services/userService';
 
 const useUser = (email = null) => {
   const [user, setUser] = useState(null);
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const loadAllUsers = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetchAllUsers();
+      setUsers(response.data);
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   const loadUserById = useCallback(async (email) => {
     setLoading(true);
@@ -23,28 +36,17 @@ const useUser = (email = null) => {
   useEffect(() => {
     if (email) {
       loadUserById(email);
+    }else{
+      loadAllUsers();
     }
-  }, [email, loadUserById]);
+  }, [email, loadUserById, loadAllUsers]);
 
-  const updateUser = useCallback(async (email, data) => {
+  const handleSetUserToNextStatus = useCallback(async (email) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await updateUserStatus(email, data);
-      setUser(response.data);
-    } catch (err) {
-      setError(err);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  const loadAllUsers = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await fetchAllUsers();
-      setUsers(response.data);
+      const response = await setUserToNextStatus(email);
+      loadUserById(email);
     } catch (err) {
       setError(err);
     } finally {
@@ -57,8 +59,9 @@ const useUser = (email = null) => {
     users, 
     loading, 
     error, 
-    updateUser,
-    loadAllUsers 
+    loadAllUsers,
+    loadUserById,
+    setUserToNextStatus: handleSetUserToNextStatus,
   };
 };
 

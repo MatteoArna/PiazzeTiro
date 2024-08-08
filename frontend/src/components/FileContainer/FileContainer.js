@@ -1,23 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { fetchFile } from '../../services/fileService';
 import './FileContainer.css';
-import { saveAs } from 'file-saver';
 
-const FileContainer = ({ file, userEmail, fileName, initialState, fileType, onUpload, onDelete }) => {
+const FileContainer = ({ file, fileName, initialState, fileType, onUpload, onDelete, onDownload }) => {
   const [status, setStatus] = useState(initialState);
 
-    useEffect(() => {
-        if (file && initialState === 'toLoad') {
-            setStatus('preview');
-        }
-    }, [file, initialState]);
+  useEffect(() => {
+    if (file && initialState === 'toLoad') {
+      setStatus('preview');
+      console.log(file);
+    } else {
+      setStatus(initialState); // Aggiungi questa riga per aggiornare lo stato
+    }
+  }, [file, initialState]);
 
+  const handleDeleteFile = () => {
+    setStatus('toLoad');
+    onDelete(file);
+  };
 
-  const handleFileUpload = (event) => {
+  const handleUploadFile = (event) => {
     const selectedFile = event.target.files[0];
     if (selectedFile && selectedFile.type === fileType) {
-      const currentYear = new Date().getFullYear();
-      const renamedFile = new File([selectedFile], `${userEmail}-${fileName}-${currentYear}.${fileType.split('/')[1]}`, {
+      const renamedFile = new File([selectedFile], `${fileName}`, {
         type: fileType
       });
       setStatus('preview');
@@ -27,15 +31,9 @@ const FileContainer = ({ file, userEmail, fileName, initialState, fileType, onUp
     }
   };
 
-  const handleDeleteFile = () => {
-    setStatus('toLoad');
-    onDelete(file);
-  };
-
-  const handleDownloadFile = async () => {
-    const response = await fetchFile(file);
-    saveAs(response, file);
-  };
+  const handleDownloadFile = () => {
+    onDownload(file);
+  }
 
   return (
     <div className={`file-container ${status}`}>
@@ -47,7 +45,7 @@ const FileContainer = ({ file, userEmail, fileName, initialState, fileType, onUp
             accept={fileType}
             style={{ display: 'none' }}
             id={`file-upload-${fileName}`}
-            onChange={handleFileUpload}
+            onChange={handleUploadFile}
           />
           <label htmlFor={`file-upload-${fileName}`} className="file-action upload-action">📤</label>
         </>

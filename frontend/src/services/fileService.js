@@ -10,14 +10,12 @@ export const fetchFile = async (filename) => {
         'Authorization': `Bearer ${token}`
       }
     });
-
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
 
-    const blob = await response.blob();
-    const url = window.URL.createObjectURL(blob);
-    return url;
+    const blob = await response.blob();    
+    return blob;
   } catch (error) {
     throw new Error('Error fetching file:', error);
   }

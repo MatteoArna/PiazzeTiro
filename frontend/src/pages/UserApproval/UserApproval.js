@@ -1,36 +1,25 @@
 import React, { useState, useEffect } from 'react';
 
 // Components
-import UserList from '../../components/UserList/UserList';
 import UserDetails from '../../components/UserList/HelpBox/UserDetails';
+import GeneralList from '../../components/GeneralList/GeneralList';
 
 // Hooks
-import { useAuth } from '../../hooks/useAuth';
-import useUser from '../../hooks/useUser';
+import useUserApproval from '../../hooks/custom/userApprovalPage/useUserApproval';
 
 // Styles
 import './UserApproval.css';
 
-const UserApproval = () => {
-  const { auth } = useAuth();
-  const [users, setUsers] = useState([]);
-  const [selectedUser, setSelectedUser] = useState(null);
-  const { loadAllUsers } = useUser(auth.email);
+const UserApproval = ({userData}) => {
 
-  useEffect(() => {
-    loadAllUsers(auth.token).then((users) => {
-      setUsers(users);
-    });
-  }, [loadAllUsers, auth.token]);
-
-  const onUserSelected = (user) => {
-    setSelectedUser(user);
-  }
-
+  const { users, elements, loading, error, onUserSelected, selectedUser } = useUserApproval(userData.email);
+  
   return (
-    <div className='mainContent'>
-      <div className='user-list-container'>
-        <UserList users={users} onUserClicked={(user) => onUserSelected(user)} />
+    <div className='main-content'>
+      <div className='user-container'>
+        <GeneralList
+          listElements={elements}
+        />
       </div>
       <div className='user-details-container'>
         {selectedUser && <UserDetails user={selectedUser} />}

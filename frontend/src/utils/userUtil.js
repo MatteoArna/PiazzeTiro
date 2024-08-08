@@ -25,13 +25,30 @@ export const getColor = (status) => {
   }
 }
 
+export const getDocumentName = (index) => {
+  switch (index) {
+      case 0:
+          return 'Formulario';
+      case 1:
+          return 'Assicurazione';
+      case 2:
+          return 'Decisione'
+      default:
+          return 'Documento';
+  }
+} 
+
 export const getStatus = (status) => {
   switch (status) {
     case 0:
-      return 'Non approvato';
+      return 'Mai approvato';
     case 1:
-      return 'In attesa';
+      return 'In attesa della prima approvazione';
     case 2:
+      return 'Approvazione scaduta';
+    case 3:
+      return 'In attesa dell\'approvazione';
+    case 4:
       return 'Approvato';
     default:
       return null;
