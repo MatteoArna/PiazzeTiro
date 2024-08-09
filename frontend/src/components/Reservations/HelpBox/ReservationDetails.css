@@ -1,12 +1,14 @@
 .reservation-details {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: 1fr; /* Forza una singola colonna */
   gap: 20px;
   padding: 20px;
   background-color: #f9f9f9;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+
 
 .detail {
   display: flex;
@@ -49,6 +51,6 @@
 
 @media (max-width: 600px) {
   .reservation-details {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* Già impostato per una colonna */
   }
 }

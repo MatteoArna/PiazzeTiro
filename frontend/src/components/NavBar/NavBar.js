@@ -16,7 +16,7 @@ const NavBar = ({ user, handleLogout, navigateTo, selectedPage }) => {
             <li className={selectedPage === 'infrastructures' ? 'selected' : ''} onClick={() => navigateTo('infrastructures')}>Infrastrutture</li>
           )}
           <li className={selectedPage === 'profile' ? 'selected' : ''} onClick={() => navigateTo('profile')}>Profilo</li>
-          <li className={selectedPage === 'settings' ? 'selected' : ''}>Impostazioni</li>
+          <li className={selectedPage === 'settings' ? 'selected' : ''} onClick={() => navigateTo('settings')}>Impostazioni</li>
           {user.roleId === 'admin' && (
             <li className={selectedPage === 'userApproval' ? 'selected' : ''} onClick={() => navigateTo('userApproval')}>Approvazione Utenti</li>
           )}

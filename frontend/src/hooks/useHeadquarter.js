@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { fetchHeadquarters } from '../services/headquarterService';
+import { fetchHeadquarters, createHeadquarter } from '../services/headquarterService';
 
 const useHeadquarter = () => {
     const [headquarters, setHeadquarters] = useState([]);
@@ -22,10 +22,24 @@ const useHeadquarter = () => {
         loadHeadquarters();
     }, [loadHeadquarters]);
 
+    const handleCreateHeadquarter = useCallback(async (data) => {
+        try{
+            setLoading(true);
+            const response = await createHeadquarter(data);
+            setHeadquarters(response.data);
+            return response.data;
+        }catch (err){
+            setError(err);
+        }finally{
+            setLoading(false);
+        }
+    }, []);
+
     return {
         headquarters,
         loading,
         error,
+        createHeadquarter: handleCreateHeadquarter
     };
 }
 

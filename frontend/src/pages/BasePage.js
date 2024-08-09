@@ -11,6 +11,7 @@ import UserApproval from './UserApproval/UserApproval';
 import ProfilePage from './ProfilePage/ProfilePage'
 import InfratructurePage from './InfrastructurePage/InfratructurePage';
 import ReservationPage from './ReservationPage/ReservationPage';
+import SettingsPage from './SettingsPage/SettingsPage';
 
 import './BasePage.css';
 
@@ -42,6 +43,7 @@ const BasePage = () => {
         {selectedPage === 'profile' && <ProfilePage userData={user} />}
         {selectedPage === 'infrastructures' && <InfratructurePage userData={user} />}
         {selectedPage === 'reservations' && <ReservationPage />}
+        {selectedPage === 'settings' && <SettingsPage />}
       </div>
 
       <div>

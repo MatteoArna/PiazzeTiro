@@ -1,0 +1,45 @@
+/* SettingsOption.css */
+
+
+.settings-option-link {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    margin: 10px 0;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    border-left: 5px solid #007bff;
+}
+
+.settings-option-link:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.settings-option-content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.settings-option-info {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    text-align: left;
+}
+
+.settings-option-title {
+    font-size: 1.4em;
+    font-weight: bold;
+    color: #333;
+}
+
+.settings-option-arrow {
+    font-size: 2em;
+    color: #888;
+    margin-left: 15px;
+}
