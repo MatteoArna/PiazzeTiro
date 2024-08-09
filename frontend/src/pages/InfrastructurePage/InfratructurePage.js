@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 
 //Components
 import GeneralList from '../../components/GeneralList/GeneralList';
 import CreateInfrastructureModal from "../../components/Infrastructures/CreateInfrastructureModal/CreateInfrastructureModal";
 import FilterMenu from "../../components/Infrastructures/FilterMenu/FilterMenu";
-
 
 //Hooks
 import useInfrastructurePage from "../../hooks/custom/infrastructurePage/useInfrastructurePage";
@@ -15,6 +14,8 @@ import './InfrastructurePage.css';
 import ReservationModal from "../../components/Infrastructures/ReservationModal/ReservationModal";
 
 const InfrastructurePage = ({ userData }) => {
+    const [editMode, setEditMode] = useState(false);
+
     const {
         elements, 
         infrastructureTypes, 
@@ -34,7 +35,8 @@ const InfrastructurePage = ({ userData }) => {
         headquarters,
         infrastructures,
         createInfrastructure,
-        deleteInfrastructure
+        deleteInfrastructure,
+        users
     } = useAdmin(infrastructureTypes);
 
     const {
@@ -45,7 +47,6 @@ const InfrastructurePage = ({ userData }) => {
         reservationInfrastructures,
         createReservation,
     } = useBooker(infrastructureTypes);
-
 
     const handleCreateInfrastractureType = async (data) => {
         await createInfrastructureType(data);
@@ -64,19 +65,34 @@ const InfrastructurePage = ({ userData }) => {
     };
 
     return (
-        <div>
-            <FilterMenu 
-                title={'Headquarter'}
-                options={headquarters}
-                activeOption={selectedHeadQuarter}
-                onSelect={(id) => test(id)}
-            />
+        <div className="infrastructure-page">
+            <div className="filter-menus">
+                <FilterMenu 
+                    title={'Headquarter'}
+                    options={headquarters}
+                    activeOption={selectedHeadQuarter}
+                    onSelect={(id) => test(id)}
+                />
+                {userData.roleId === 'admin' && (
+                    <div className="edit-mode-toggle">
+                        <input 
+                            type="checkbox" 
+                            id="editMode" 
+                            checked={editMode}
+                            onChange={(e) => setEditMode(e.target.checked)}
+                        />
+                        <label htmlFor="editMode">Edit Mode</label>
+                    </div>
+                )}
+                
+            </div>
             {userData.roleId === 'admin' && (
                 <button onClick={showCreateModal}>Crea Infrastruttura</button>   
             )}
+            
             <GeneralList
                 listElements={elements}
-                onElementClicked={(elementId) => userData.roleId === 'admin' ? showUpdateModal(elementId) : handleShowReservationModal(elementId)}
+                onElementClicked={(elementId) => editMode ? showUpdateModal(elementId) : handleShowReservationModal(elementId)}
             />  
 
             {showModal && (
@@ -98,12 +114,11 @@ const InfrastructurePage = ({ userData }) => {
                     infrastructures={reservationInfrastructures}
                     onSubmit={(data) => createReservation(data)}
                     userData={userData}
+                    users={users}
                 />   
             )}
         </div>
     );
-
-
 };
 
 export default InfrastructurePage;

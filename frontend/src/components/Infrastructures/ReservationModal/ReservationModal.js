@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
 import Modal from '../../Modal/Modal';
 
-const ReservationModal = ({ onClose, onSubmit, userData, infrastructureType, infrastructures }) => {
+const ReservationModal = ({ onClose, onSubmit, userData, infrastructureType, infrastructures, users = [] }) => {
   const [date, setDate] = useState('');
   const [hourStart, setHourStart] = useState('');
   const [hourEnd, setHourEnd] = useState('');
   const [infrastructure, setInfrastructure] = useState('');
+  const [user, setUser] = useState('');
 
   //Only for civilians
   const [nPartecipants, setNPartecipants] = useState(0);
 
   const handleReservation = async () => {
     const reservationData = {
-      idCustomer: userData.email,
+      idCustomer: user ? user : userData.email,
       infrastructureType: infrastructureType.id,
       status: 1,
       date,
@@ -55,7 +56,7 @@ const ReservationModal = ({ onClose, onSubmit, userData, infrastructureType, inf
       </div>
 
       {
-        userData.roleId !== 'army' && (
+        userData.roleId === 'civilian' && (
           <>
             <div className='form-group'>
               <label htmlFor='nPartecipants'>Numero Partecipanti</label>
@@ -64,6 +65,23 @@ const ReservationModal = ({ onClose, onSubmit, userData, infrastructureType, inf
           </>
         )
       }
+
+      {
+        userData.roleId === 'admin' && (
+          <div className='form-group'>
+            <label htmlFor='user'>Utenti</label>
+            <select id='user' value={user} onChange={(e) => setUser(e.target.value)} required>
+              <option value=''>Seleziona un utente</option>
+              {users.map((user) => (
+                <option key={user.email} value={user.email}>
+                  {user.society + " (" + user.firstName + " " + user.lastName + ")"}
+                </option>
+              ))}
+
+            </select>
+          </div>
+
+        )}
 
      
       <button onClick={handleReservation}>Crea Prenotazione</button>

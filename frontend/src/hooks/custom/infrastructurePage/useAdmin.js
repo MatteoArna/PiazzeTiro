@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import useInfrastructureType from '../../useInfrastructureType';
 import useHeadquarter from '../../useHeadquarter';
 import useInfrastructure from '../../useInfrastructure';
+import useUser from '../../useUser';
 
 const useAdmin = (infrastructureTypes) => {
     const [showCreateModal, setShowCreateModal] = useState(false);
@@ -11,9 +12,19 @@ const useAdmin = (infrastructureTypes) => {
     const [selectedInfrastructureType, setSelectedInfrastructureType] = useState(null);
     const {infrastructures, loadInfrastructuresByTypeId, createInfrastructure, deleteInfrastructure} = useInfrastructure();
 
+    const { users } = useUser();
+
+    const [filteredUsers, setFilteredUsers] = useState([]);
+
     const { createInfrastructureType, updateInfrastructureType } = useInfrastructureType(false);
     
     const { headquarters } = useHeadquarter();
+    
+    useEffect(() => {
+        const usersFiltered = users.filter(user => user.UserRole.role === 'army');
+        setFilteredUsers(usersFiltered);
+        console.log("Filtered users:", usersFiltered);
+    }, [users]); // Rimuovi filteredUsers dalle dipendenze
     
 
 
@@ -70,6 +81,7 @@ const useAdmin = (infrastructureTypes) => {
         infrastructures,
         createInfrastructure: handleCreateInfrastracture,
         deleteInfrastructure: handleDeleteInfrastructure,
+        users: filteredUsers,
     };
 };
 
