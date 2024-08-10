@@ -13,6 +13,7 @@
   display: block;
   margin-bottom: 8px;
   font-weight: bold;
+  color: #333;
 }
 
 .form-group input,
@@ -29,11 +30,10 @@
 .form-group select:focus,
 .ql-container:focus {
   outline: none;
-  border-color: #007bff;
 }
 
 .ql-container {
-  min-height: 200px;
+  min-height: 150px;
 }
 
 .ql-toolbar {
@@ -44,7 +44,10 @@
   border-radius: 0 0 4px 4px;
 }
 
-button[type="submit"] {
+/* Pulsanti */
+button[type="submit"],
+.add-button,
+.delete-button {
   display: inline-block;
   padding: 10px 20px;
   color: #fff;
@@ -52,26 +55,41 @@ button[type="submit"] {
   border-radius: 4px;
   font-size: 16px;
   cursor: pointer;
+  margin-top: 10px;
 }
 
-/* Nuovi stili */
+
+.delete-button {
+  background-color: #dc3545; /* Rosso */
+  flex: 1;
+  margin-left: 10px;
+}
+
+
+.delete-button:hover {
+  background-color: #c82333; /* Scuro per il rosso */
+}
+
+/* Liste di target e infrastrutture */
+.target-list,
+.infrastructure-list {
+  max-height: 150px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+.target-item,
 .infrastructure-item {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
 }
 
+.target-item input,
 .infrastructure-item input {
-  flex: 1;
-}
-
-.delete-button {
-  margin-left: 10px;
-  padding: 5px 10px;
-  width: 100px;
-  background-color: red;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  flex: 4;
 }

@@ -36,7 +36,9 @@ const InfrastructurePage = ({ userData }) => {
         infrastructures,
         createInfrastructure,
         deleteInfrastructure,
-        users
+        users,
+        targets,
+        addTarget
     } = useAdmin(infrastructureTypes);
 
     const {
@@ -63,6 +65,7 @@ const InfrastructurePage = ({ userData }) => {
         selectHeadquarter(id);
         console.log("newSelectedHQ", selectedHeadQuarter);
     };
+
 
     return (
         <div className="infrastructure-page">
@@ -99,11 +102,13 @@ const InfrastructurePage = ({ userData }) => {
                 <CreateInfrastructureModal
                     onClose={closeModal}
                     headquarters={headquarters}
+                    targets={targets}
                     infrastructureType={selectedInfrastructureType}
                     infrastructures={infrastructures}
                     onCreateInfrastructure={createInfrastructure}
                     onDeleteInfrastructure={(id) => deleteInfrastructure(id)}
                     onSubmit={selectedInfrastructureType ? (data) => handleUpdateInfrastructureType(data) : (data) => handleCreateInfrastractureType(data)}
+                    onAddTarget={addTarget}
                 />   
             )}
 

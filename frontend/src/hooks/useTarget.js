@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react"
 import { fetchAllTargets, createTarget } from "../services/targetService";
 
-const useTarget = () => {
+const useTarget = (id = null) => {
     const [targets, setTargets] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);

@@ -1,8 +1,10 @@
 const BaseController = require('./baseController');
+
 const InfrastructureType = require('../models/InfrastructureType');
 
-const HeadQuarter = require('../models/HeadQuarter');
 const TargetsForInfrastructure = require('../models/targetsForInfrastructure');
+const HeadQuarter = require('../models/HeadQuarter');
+const Target = require('../models/target');
 
 class InfrastructureTypeController extends BaseController {
     constructor() {
@@ -11,13 +13,32 @@ class InfrastructureTypeController extends BaseController {
 
     findAll = async (req, res) => {
         try {
-            const infrastructures = await this.model.findAll({
-                include: {
-                    association: 'HeadQuarter',
-                    attributes: ['name']
-                }
+            const targets = await TargetsForInfrastructure.findAll({
+                include: [
+                    {
+                        model: Target,
+                        attributes: ['name']
+                    }
+                ]
             });
-            res.json(infrastructures);
+
+            targets.forEach((element) => {
+                element.dataValues.target = element.Target.name;
+            });
+
+            const response = await this.model.findAll({
+                include: [
+                    {
+                        model: HeadQuarter,
+                        attributes: ['name']
+                    }
+                ]
+            });
+
+            response.forEach((element) => {
+                element.dataValues.targets = targets.filter((target) => target.infrastructureTypeId === element.id);
+            });
+            res.json(response);
         } catch (error) {
             console.log(error);
             res.status(400).json({ error: error.message });
@@ -25,11 +46,14 @@ class InfrastructureTypeController extends BaseController {
     }
 
     addAvailableTarget = async (req, res) => {
-        try{
-            const { infrastructureTypeId, targetId } = req.body;
-            const targetForInfrastructure = await TargetsForInfrastructure.create({ infrastructureTypeId, targetId });
-            res.json(targetForInfrastructure);
-        }catch{
+        try {
+            const { id, targetId } = req.params;
+            const response = await TargetsForInfrastructure.create({
+                infrastructureTypeId: id,
+                targetId
+            });
+            res.json(response);
+        } catch (error) {
             console.log(error);
             res.status(400).json({ error: error.message });
         }

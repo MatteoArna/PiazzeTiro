@@ -1,7 +1,9 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
+
+// Importa i modelli correttamente
 const Target = require('./target');
-const InfrastructureType = require('./infrastructureType');
+const InfrastructureType = require('./InfrastructureType');
 
 const TargetsForInfrastructure = sequelize.define('TargetsForInfrastructure', {
     id: {
@@ -31,5 +33,9 @@ const TargetsForInfrastructure = sequelize.define('TargetsForInfrastructure', {
     tableName: 'targets_for_infrastructure',
     timestamps: false
 });
+
+// Definisci le associazioni solo dopo aver caricato i modelli
+TargetsForInfrastructure.belongsTo(Target, { foreignKey: 'targetId' });
+TargetsForInfrastructure.belongsTo(InfrastructureType, { foreignKey: 'infrastructureTypeId' });
 
 module.exports = TargetsForInfrastructure;

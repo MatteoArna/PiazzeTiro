@@ -4,6 +4,7 @@ import useInfrastructureType from '../../useInfrastructureType';
 import useHeadquarter from '../../useHeadquarter';
 import useInfrastructure from '../../useInfrastructure';
 import useUser from '../../useUser';
+import useTarget from '../../useTarget';
 
 const useAdmin = (infrastructureTypes) => {
     const [showCreateModal, setShowCreateModal] = useState(false);
@@ -12,11 +13,13 @@ const useAdmin = (infrastructureTypes) => {
     const [selectedInfrastructureType, setSelectedInfrastructureType] = useState(null);
     const {infrastructures, loadInfrastructuresByTypeId, createInfrastructure, deleteInfrastructure} = useInfrastructure();
 
+    const {targets} = useTarget();
+
     const { users } = useUser();
 
     const [filteredUsers, setFilteredUsers] = useState([]);
 
-    const { createInfrastructureType, updateInfrastructureType } = useInfrastructureType(false);
+    const { createInfrastructureType, updateInfrastructureType, addTarget } = useInfrastructureType(false);
     
     const { headquarters } = useHeadquarter();
     
@@ -68,6 +71,18 @@ const useAdmin = (infrastructureTypes) => {
         await deleteInfrastructure(infrastructureId);
         await loadInfrastructuresByTypeId(selectedInfrastructureType.id);
     }
+
+    const handleAddTarget = async (targetId) => {
+        const response = await addTarget(selectedInfrastructureType.id, targetId);
+        const addedTarget = targets.find((target) => target.id === Number(targetId));
+        const data = {
+            id: response.id,
+            target: addedTarget.name,
+            infrastructureTypeId: selectedInfrastructureType.id,
+            targetId: targetId
+        };
+        selectedInfrastructureType.targets.push(data);
+    }
     
     return {
         selectedInfrastructureType,
@@ -82,6 +97,8 @@ const useAdmin = (infrastructureTypes) => {
         createInfrastructure: handleCreateInfrastracture,
         deleteInfrastructure: handleDeleteInfrastructure,
         users: filteredUsers,
+        targets,
+        addTarget: handleAddTarget
     };
 };
 

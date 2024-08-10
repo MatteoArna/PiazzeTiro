@@ -5,6 +5,8 @@ export const fetchInfrastructureType = (id) => api.get(`/infrastructureTypes/${i
 export const createInfrastructureType = (infrastructureTypeData) => api.post('/infrastructureTypes', infrastructureTypeData);
 export const updateInfrastructureType = (id, infrastructureTypeData) => api.put(`/infrastructureTypes/${id}`, infrastructureTypeData);
 export const fetchInfrastructuresByType = (id) => api.get(`/infrastructureTypes/${id}/infrastructures`);
+export const addTarget = (id, targetId) => api.post(`/infrastructureTypes/${id}/targets/${targetId}`);
+
 
 export const deleteInfrastructureType = (token, id) => api.delete(`/infrastructureTypes/${id}`, {
     headers:
