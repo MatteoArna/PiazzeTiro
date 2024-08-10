@@ -6,8 +6,6 @@ const ReservationDetails = ({ reservation }) => {
 
     const {translateTime } = useReservationApprover(reservation);
 
-    console.log(reservation);
-
     return (
         <div className="reservation-details">
             <span className="value">{reservation.User.society}</span>
@@ -41,6 +39,15 @@ const ReservationDetails = ({ reservation }) => {
                 <span className="label">Target:</span>
                 <span className="value">{reservation.Target.name}</span>
             </div>
+
+            {
+                reservation.price > 0 && (
+                    <div className="detail">
+                        <span className="label">Price:</span>
+                        <span className="value">{reservation.price} chf</span>
+                    </div>
+            )}
+            
             
         </div>
     );

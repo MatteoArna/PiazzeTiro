@@ -15,6 +15,19 @@ const ReservationModal = ({ onClose, onSubmit, userData, infrastructureType, inf
   const [nPartecipants, setNPartecipants] = useState(0);
 
   const handleReservation = async () => {
+
+    //Da modificare
+
+    //Get the total number of hours from the start and end time
+    const start = hourStart.split(':');
+    const end = hourEnd.split(':');
+    const totalHours = (parseInt(end[0]) - parseInt(start[0])) + (parseInt(end[1]) - parseInt(start[1])) / 60;
+
+    const targetPrice = infrastructureType.targets.find(t => t.targetId === Number(target)).Target.price;
+  
+
+    const finalPrice = (targetPrice * nPartecipants) + (infrastructureType.price * totalHours);
+
     const reservationData = {
       idCustomer: user ? user : userData.email,
       infrastructureType: infrastructureType.id,
@@ -24,7 +37,7 @@ const ReservationModal = ({ onClose, onSubmit, userData, infrastructureType, inf
       end: hourEnd,
       nPartecipants,
       idInfrastructure: infrastructure,
-      price: infrastructureType.price,
+      price: finalPrice,
       target,
     };
 

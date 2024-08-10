@@ -38,7 +38,7 @@ const Booking = sequelize.define('Booking', {
   },
   price: {
     type: DataTypes.FLOAT,
-    allowNull: false,
+    allowNull: true,
   },
   date: {
     type: DataTypes.DATE,

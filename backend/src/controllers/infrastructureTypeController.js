@@ -17,7 +17,7 @@ class InfrastructureTypeController extends BaseController {
                 include: [
                     {
                         model: Target,
-                        attributes: ['name']
+                        attributes: ['name', 'price']
                     }
                 ]
             });
