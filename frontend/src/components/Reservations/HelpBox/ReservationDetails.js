@@ -6,6 +6,8 @@ const ReservationDetails = ({ reservation }) => {
 
     const {translateTime } = useReservationApprover(reservation);
 
+    console.log(reservation);
+
     return (
         <div className="reservation-details">
             <span className="value">{reservation.User.society}</span>
@@ -34,6 +36,11 @@ const ReservationDetails = ({ reservation }) => {
                     </div>
                 )
             }
+
+            <div className="detail">
+                <span className="label">Target:</span>
+                <span className="value">{reservation.Target.name}</span>
+            </div>
             
         </div>
     );

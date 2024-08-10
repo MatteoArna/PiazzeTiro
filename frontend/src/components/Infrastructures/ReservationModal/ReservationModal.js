@@ -7,6 +7,9 @@ const ReservationModal = ({ onClose, onSubmit, userData, infrastructureType, inf
   const [hourEnd, setHourEnd] = useState('');
   const [infrastructure, setInfrastructure] = useState('');
   const [user, setUser] = useState('');
+  const [target, setTarget] = useState('');
+
+  console.log(infrastructureType);
 
   //Only for civilians
   const [nPartecipants, setNPartecipants] = useState(0);
@@ -22,6 +25,7 @@ const ReservationModal = ({ onClose, onSubmit, userData, infrastructureType, inf
       nPartecipants,
       idInfrastructure: infrastructure,
       price: infrastructureType.price,
+      target,
     };
 
     onSubmit(reservationData);
@@ -66,6 +70,17 @@ const ReservationModal = ({ onClose, onSubmit, userData, infrastructureType, inf
         )
       }
 
+      <div className='form-group'>
+        <select id='target' value={target} onChange={(e) => setTarget(e.target.value)} required>
+          <option value=''>Seleziona un target</option>
+        {
+          infrastructureType.targets.map((target) => (
+            <option key={target.targetId} value={target.targetId}>{target.target}</option>
+          ))
+        }
+        </select>
+      </div>
+        
       {
         userData.roleId === 'admin' && (
           <div className='form-group'>

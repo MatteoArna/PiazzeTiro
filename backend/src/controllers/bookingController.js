@@ -6,6 +6,7 @@ const User = require('../models/user');
 const Infrastructure = require('../models/infrastructure');
 const InfrastructureType = require('../models/infrastructureType');
 const HeadQuarter = require('../models/headQuarter');
+const Target = require('../models/target');
 
 class BookingController extends baseController {
     constructor() {
@@ -76,6 +77,10 @@ class BookingController extends baseController {
                                 attributes: ['name']
                             }
                         ]
+                    },
+                    {
+                        model: Target,
+                        attributes: ['name', 'price']
                     }
                 ]
             });
@@ -86,6 +91,7 @@ class BookingController extends baseController {
     
             res.status(200).json(bookings);
         } catch (error) {
+            console.log(error);
             res.status(500).json({ message: 'Errore nel recuperare le prenotazioni', error });
         }
     };

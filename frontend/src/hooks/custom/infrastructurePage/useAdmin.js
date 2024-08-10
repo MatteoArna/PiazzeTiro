@@ -26,7 +26,6 @@ const useAdmin = (infrastructureTypes) => {
     useEffect(() => {
         const usersFiltered = users.filter(user => user.UserRole.role === 'army');
         setFilteredUsers(usersFiltered);
-        console.log("Filtered users:", usersFiltered);
     }, [users]); // Rimuovi filteredUsers dalle dipendenze
     
 

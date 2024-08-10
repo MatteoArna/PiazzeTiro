@@ -4,6 +4,7 @@ const sequelize = require('../config/database');
 const User = require('./user');
 const Infrastructure = require('./infrastructure');
 const InfrastructureType = require('./infrastructureType');
+const Target = require('./target');
 
 const Booking = sequelize.define('Booking', {
   id: {
@@ -59,6 +60,14 @@ const Booking = sequelize.define('Booking', {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
+  target: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: Target,
+      key: 'id',
+    }
+  }
 }, {
   timestamps: false,
   tableName: 'bookings',
@@ -67,5 +76,6 @@ const Booking = sequelize.define('Booking', {
 Booking.belongsTo(User, { foreignKey: 'idCustomer' });
 Booking.belongsTo(Infrastructure, { foreignKey: 'idInfrastructure' });
 Booking.belongsTo(InfrastructureType, { foreignKey: 'infrastructureType' });
+Booking.belongsTo(Target, { foreignKey: 'target' });
 
 module.exports = Booking;
