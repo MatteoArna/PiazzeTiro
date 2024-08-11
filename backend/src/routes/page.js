@@ -8,6 +8,7 @@ const router = createBaseRouter(PageController);
 router.get('/type/:typeId', (req, res) => PageController.getPageByType(req, res));
 
 router.post('/create', uploadFile, (req, res) => PageController.create(req, res));
+
 router.put('/update/:id', uploadFile, (req, res) => PageController.update(req, res));
 
 module.exports = router;

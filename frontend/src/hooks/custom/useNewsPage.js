@@ -34,23 +34,43 @@ const useNewsPage = () => {
   }, []);
 
   const handleSubmit = async (pageData) => {
+    if (pageData.get('file') !== null) {
+        const file = pageData.get('file'); // Prendi il file originale
+        const fileExtension = file.name.split('.').pop(); // Estrai l'estensione del file
+        const randomNum = Math.floor(Math.random() * 1000000); // Genera un numero casuale
+        const newFileName = `${file.name.split('.')[0]}-${randomNum}.${fileExtension}`; // Crea il nuovo nome del file
+
+        console.log("Content of pageData: ", pageData);
+        
+        const renamedFile = new File([file], newFileName, {
+            type: file.type
+        });
+
+        // Rimuovi il file originale da pageData
+        pageData.delete('file');
+        // Aggiungi il file rinominato
+        pageData.append('file', renamedFile, renamedFile.name);
+    }
+
     if (pageToEdit) {
-      await handleOperation(
-        updatePage,
-        'Pagina aggiornata con successo',
-        'Errore durante l\'aggiornamento della pagina',
-        pageToEdit.id,
-        pageData
-      );
+        await handleOperation(
+            updatePage,
+            'Pagina aggiornata con successo',
+            'Errore durante l\'aggiornamento della pagina',
+            pageToEdit.id,
+            pageData
+        );
     } else {
-      await handleOperation(
-        createPage,
-        'Pagina creata con successo',
-        'Errore durante la creazione della pagina',
-        pageData
-      );
+        await handleOperation(
+            createPage,
+            'Pagina creata con successo',
+            'Errore durante la creazione della pagina',
+            pageData
+        );
     }
   };
+
+
 
   const handleDeletePage = async (id) => {
     await handleOperation(

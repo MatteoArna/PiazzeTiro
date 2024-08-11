@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { fetchAllPages, fetchPageTypes, createPage, updatePage, deletePage } from '../services/pageService';
 
+import { fetchFile } from '../services/fileService';
+
 const usePages = () => {
   const [pages, setPages] = useState([]);
   const [pageTypes, setPageTypes] = useState([]);
@@ -20,6 +22,21 @@ const usePages = () => {
     }
   }, []);
 
+  const processPages = useCallback(async () => {
+    for (const page of pages) {
+      if(page.file === null)
+        continue;
+      try{
+        const filePath = process.env.REACT_APP_API_URL + "/uploads/" + page.file;
+        const blob = await fetchFile(filePath);
+        page.file = blob;
+      }catch(err){
+        page.file = null;
+      }
+    }
+  }, [pages]);
+  
+
   const loadAllPages = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -37,6 +54,10 @@ const usePages = () => {
     loadAllPages();
     loadPageTypes();
   }, [loadAllPages, loadPageTypes]);
+
+  useEffect(() => {
+    processPages();
+  }, [pages, processPages]);
 
   const handleCreatePage = useCallback(async (data) =>{
     setLoading(true);

@@ -12,13 +12,13 @@ class PageController extends BaseController {
 
   create = async (req, res) => {
     const { summary, content, typeId } = req.body;
-    const filePath = req.filePath; // Ottieni il percorso del file dal middleware
+    const file = path.basename(req.file.path);
 
     try {
-      const fileUrl = filePath ? `${req.protocol}://${req.get('host')}/uploads/${path.basename(filePath)}` : null;
-      const newPage = await Page.create({ summary, content, typeId, file: fileUrl });
+      const newPage = await Page.create({ summary, content, typeId, file });
       res.status(201).json(newPage);
     } catch (error) {
+      console.log('Error creating page:', error);
       res.status(500).json({ message: 'Errore nella creazione della pagina', error });
     }
   };

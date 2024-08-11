@@ -2,17 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { getIcon } from '../../../utils/newsUtil';
 import './NewsSummary.css';
 import InfoModal from '../../InfoModal/InfoModal';
-import useFile from '../../../hooks/data/useFile';
 
 const NewsSummary = ({ page, isAdmin, onEditPage, onDeletePage }) => {
   const [showModal, setShowModal] = useState(false);
-  const { fileUrl, isImage, handleFetchFile } = useFile();
-
-  useEffect(() => {
-    if (showModal && page.file) {
-      handleFetchFile(page.file);
-    }
-  }, [showModal, page.file, handleFetchFile]);
 
   return (
     <div className="news-summary">
@@ -39,8 +31,8 @@ const NewsSummary = ({ page, isAdmin, onEditPage, onDeletePage }) => {
           subtitle={page.summary}
           content={page.content}
           icon={getIcon(page.typeId)}
-          file={fileUrl}
-          showPreview={isImage}
+          file={page.file}
+          showPreview={true}
           onClose={() => setShowModal(false)}
         />
       )}
