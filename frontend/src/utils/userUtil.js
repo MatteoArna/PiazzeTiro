@@ -19,6 +19,10 @@ export const getColor = (status) => {
     case 1:
       return 'orange';
     case 2:
+      return 'orange';
+    case 3:
+      return 'orange';
+    case 4:
       return 'green';
     default:
       return null;

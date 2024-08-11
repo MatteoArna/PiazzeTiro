@@ -20,12 +20,24 @@ const useUser = (email = null) => {
     }
   }, []);
 
+  const checkIfUserIsExpired = (user) => {
+    // check if user.updatedAt is in the previous year
+    const currentYear = new Date().getFullYear();
+    const updatedAtYear = new Date(user.updatedAt).getFullYear();
+    return currentYear - updatedAtYear > 0;
+  }
+
   const loadUserById = useCallback(async (email) => {
     setLoading(true);
     setError(null);
     try {
       const response = await fetchUserById(email);
+      if(checkIfUserIsExpired(response.data)){
+        console.log("User is expired");
+        removeUserApproval(email);
+      }
       setUser(response.data);
+      console.log(response.data);
     } catch (err) {
       setError(err);
     } finally {

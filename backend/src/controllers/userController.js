@@ -22,6 +22,7 @@ class UserController extends BaseController {
         try {
             const user = await User.findOne({
                 where: { email: req.params.id },
+                attributes: { include: ['createdAt', 'updatedAt'] },
                 include: [{ model: UserRole, attributes: ['role'] }]
             });
 
@@ -86,9 +87,15 @@ class UserController extends BaseController {
     removeApproval = async (req, res) => {
         try {
             const user = await User.findOne({
-                where: { email: req.params.email }
+                where: { email: req.params.email },
+                attributes: { include: ['createdAt', 'updatedAt'] },
+                include: [{ model: UserRole, attributes: ['role'] }]
             });
-            await user.update({ status: 0 });
+            if(user.roleId === 0 && user.status !== 0){
+                await user.update({ status: 2 });
+            }else{
+                await user.update({ status: 0 });
+            }
             res.status(200).json(user);
         }catch (error) {
             res.status(500).json({ message: 'Errore nel recuperare gli utenti', error });

@@ -41,18 +41,32 @@ const DocumentUploader = ({ userData, adminFile }) => {
 
   return (
     <div className='document-uploader'>
-      {documents.length > 0 && documents.map((doc, index) => (
+      {[0, 1].map((index) => (
         <FileContainer
           key={index}
-          file={doc.filePath}
+          file={documents[index]?.filePath}
           fileType={'application/pdf'}
           initialState={status}
           fileName={getDocumentName(index)}
-          onDownload={() => downloadFile(doc.filePath)}
-          onDelete={() => deleteDocument(doc.filePath)}
+          onDownload={() => downloadFile(documents[index]?.filePath)}
+          onDelete={() => deleteDocument(documents[index]?.filePath)}
           onUpload={uploadDocument}
         />
       ))}
+
+      {
+        documents[2] && (
+          <FileContainer
+            file={documents[2]?.filePath}
+            fileType={'application/pdf'}
+            initialState={status}
+            fileName={getDocumentName(2)}
+            onDownload={() => downloadFile(documents[2]?.filePath)}
+            onDelete={() => deleteDocument(documents[2]?.filePath)}
+            onUpload={uploadDocument}
+          />
+        )
+      }
       {
         (userData.status === 0 || userData.status === 2) && (
           <button className="submit-button" onClick={handleSubmitDocuments}>Invia File</button>

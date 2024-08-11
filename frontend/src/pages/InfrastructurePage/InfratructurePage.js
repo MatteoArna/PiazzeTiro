@@ -79,6 +79,15 @@ const InfrastructurePage = ({ userData }) => {
         }
     };
 
+    const handleElementClicked = (elementId) => {
+        if(editMode)
+            showUpdateModal(elementId);
+        else if (userData.status === 4)
+            handleShowReservationModal(elementId);
+        else
+            showAlert('error', 'Non hai i permessi per prenotare');
+    };
+
     return (
         <div className="infrastructure-page">
             <div className="filter-menus">
@@ -107,7 +116,7 @@ const InfrastructurePage = ({ userData }) => {
             
             <GeneralList
                 listElements={elements}
-                onElementClicked={(elementId) => editMode ? showUpdateModal(elementId) : handleShowReservationModal(elementId)}
+                onElementClicked={(elementId) => handleElementClicked(elementId)}
             />  
 
             {showModal && (
