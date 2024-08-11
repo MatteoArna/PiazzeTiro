@@ -3,8 +3,11 @@ import { getIcon } from '../../../utils/newsUtil';
 import './NewsSummary.css';
 import InfoModal from '../../InfoModal/InfoModal';
 
+import { isImage } from '../../../utils/fileUtil';
+
 const NewsSummary = ({ page, isAdmin, onEditPage, onDeletePage }) => {
   const [showModal, setShowModal] = useState(false);
+
 
   return (
     <div className="news-summary">
@@ -32,7 +35,7 @@ const NewsSummary = ({ page, isAdmin, onEditPage, onDeletePage }) => {
           content={page.content}
           icon={getIcon(page.typeId)}
           file={page.file}
-          showPreview={true}
+          showPreview={page.file && page.file.type.startsWith('image/')}
           onClose={() => setShowModal(false)}
         />
       )}
