@@ -2,6 +2,7 @@ const BaseController = require('./baseController');
 const Page = require('../models/page');
 const PageType = require('../models/pageType');
 const path = require('path');
+const fs = require('fs');
 
 class PageController extends BaseController {
   constructor() {
@@ -9,7 +10,6 @@ class PageController extends BaseController {
   }
 
   // Metodo per creare una nuova pagina con upload di file
-
   create = async (req, res) => {
     const { summary, content, typeId } = req.body;
     const file = path.basename(req.file.path);
@@ -28,20 +28,38 @@ class PageController extends BaseController {
     console.log('updatePage called');
     console.log('Request body:', req.body);
     const { summary, content, typeId } = req.body;
-    const filePath = req.filePath; // Ottieni il percorso del file dal middleware
+    const newFile = req.file ? path.basename(req.file.path) : null;
 
     try {
-      const fileUrl = filePath ? `${req.protocol}://${req.get('host')}/uploads/${path.basename(filePath)}` : null;
-      console.log('Updating page with data:', { summary, content, typeId, fileUrl });
-      const [updated] = await Page.update(
-        { summary, content, typeId, file: fileUrl },
+      // Trova la pagina esistente
+      const page = await Page.findByPk(req.params.id);
+      if (!page) {
+        return res.status(404).json({ message: 'Pagina non trovata' });
+      }
+
+      // Se esiste un nuovo file, elimina il vecchio file
+      if (newFile && page.file) {
+        const oldFilePath = path.join(__dirname, '../uploads', page.file);
+        fs.unlink(oldFilePath, (err) => {
+          if (err) {
+            console.error('Error deleting old file:', err);
+          } else {
+            console.log('Old file deleted:', oldFilePath);
+          }
+        });
+      }
+
+      // Aggiorna la pagina con i nuovi dati
+      const updated = await Page.update(
+        { summary, content, typeId, file: newFile || page.file },
         { where: { id: req.params.id } }
       );
-      if (updated) {
+
+      if (updated[0] > 0) { // Se l'aggiornamento ha avuto successo
         const updatedPage = await Page.findByPk(req.params.id);
         res.status(200).json(updatedPage);
       } else {
-        res.status(404).json({ message: 'Pagina non trovata' });
+        res.status(500).json({ message: 'Errore nell\'aggiornamento della pagina' });
       }
     } catch (error) {
       console.error('Error updating page:', error);
@@ -98,6 +116,35 @@ class PageController extends BaseController {
       res.status(500).json({ message: 'Errore nel recuperare le pagine', error });
     }
   };
+
+  delete = async (req, res) => {
+    try {
+      const page = await Page.findByPk(req.params.id);
+      if (!page) {
+        return res.status(404).json({ message: 'Pagina non trovata' });
+      }
+
+      const deleted = await Page.destroy({ where: { id: req.params.id } });
+
+      if (deleted > 0) {
+        const filePath = path.join(__dirname, '../uploads', page.file);
+        fs.unlink(filePath, (err) => {
+          if (err) {
+            console.error('Error deleting file:', err);
+          } else {
+            console.log('File deleted:', filePath);
+          }
+        });
+
+        res.status(200).json({ message: 'Pagina eliminata con successo' });
+      } else {
+        res.status(500).json({ message: 'Errore nell\'eliminazione della pagina' });
+      }
+    } catch (error) {
+      console.error('Error deleting page:', error);
+      res.status(500).json({ message: 'Errore nell\'eliminazione della pagina', error });
+    }
+  }
 }
 
 module.exports = new PageController();
