@@ -54,13 +54,20 @@ const InfrastructurePage = ({ userData }) => {
     } = useBooker(infrastructureTypes);
 
     const handleCreateInfrastractureType = async (data) => {
-        await createInfrastructureType(data);
-        await loadInfrastructureTypes();
+        try{
+            await createInfrastructureType(data);
+            await loadInfrastructureTypes();
+            showAlert('success', 'Tipo di infrastruttura creato con successo');
+        }catch(err){
+            showAlert('error', err);
+        }
+        
     };
 
     const handleUpdateInfrastructureType = async (data) => {
         await updateInfrastructureType(data);
         await loadInfrastructureTypes();
+        showAlert('success', 'Tipo di infrastruttura aggiornato con successo');
     };
 
     const handleCreateReservation = async (data) => {
@@ -72,13 +79,6 @@ const InfrastructurePage = ({ userData }) => {
         }
     };
 
-    const test = (id) => {
-        console.log("testid", id);
-        selectHeadquarter(id);
-        console.log("newSelectedHQ", selectedHeadQuarter);
-    };
-
-
     return (
         <div className="infrastructure-page">
             <div className="filter-menus">
@@ -86,7 +86,7 @@ const InfrastructurePage = ({ userData }) => {
                     title={'Headquarter'}
                     options={headquarters}
                     activeOption={selectedHeadQuarter}
-                    onSelect={(id) => test(id)}
+                    onSelect={(id) => selectHeadquarter(id)}
                 />
                 {userData.roleId === 'admin' && (
                     <div className="edit-mode-toggle">

@@ -24,12 +24,20 @@ const useInfrastructureType = (initialLoading = true) => {
         }
     }, [loadInfrastructureTypes]);  
 
+    const checkData = (data) => {
+        if(data.price < 0){
+            throw new Error("Price must be greater than 0");
+        }
+    }
+
     const handleCreateInfrastructureType = async (data) => {
         try {
+            checkData(data);
             await createInfrastructureType(data);
             loadInfrastructureTypes(); // Ricarica i tipi di infrastrutture dal backend dopo la creazione
         } catch (error) {
             setError(error);
+            throw error;
         }
     };
 

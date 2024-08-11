@@ -46,10 +46,23 @@ const useAdmin = (infrastructureTypes) => {
         setSelectedInfrastructureType(null);
     }
 
+    /**
+     * Creates a new infrastructure type by invoking createInfrastructureType.
+     * Closes the modal after successful creation.
+     * This function might throw an error if the infrastructure creation fails.
+     * 
+     * @param {Object} data - The data for the new infrastructure type.
+     * @throws {Error} If the infrastructure creation fails.
+     */
     const handleCreateInfrastructureType = async (data) => {
-        await createInfrastructureType(data);
-        handleCloseModal();
-    }
+        try {
+            await createInfrastructureType(data);
+            handleCloseModal();
+        } catch (error) {
+            throw error;  // Rilancia l'errore per permettere la gestione a un livello superiore
+        }
+    };
+
 
     const handleUpdateInfrastructureType = async (data) => {
         await updateInfrastructureType(selectedInfrastructureType.id, data);
