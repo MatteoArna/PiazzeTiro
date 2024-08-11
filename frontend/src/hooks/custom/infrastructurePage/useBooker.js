@@ -22,10 +22,16 @@ const useBooker = (infrastructureTypes) => {
         setSelectedInfrastructureType(null);
     }
 
+    /**
+     * Creates a reservation by invoking createBooking.
+     * This function might throw an error if the booking creation fails.
+     * 
+     * @param {Object} data - The reservation data.
+     * @throws {Error} If the booking creation fails.
+     */
     const handleCreateReservation = async (data) => {
-        createBooking(data);
+        await createBooking(data);
     }
-
 
     return {
         handleShowReservationModal,
@@ -36,6 +42,7 @@ const useBooker = (infrastructureTypes) => {
         reservationInfrastructures: infrastructures,
 
         createReservation: handleCreateReservation,
+
     };
 };
 

@@ -13,6 +13,8 @@ import useBooker from "../../hooks/custom/infrastructurePage/useBooker";
 import './InfrastructurePage.css'; 
 import ReservationModal from "../../components/Infrastructures/ReservationModal/ReservationModal";
 
+import { showAlert } from "../../components/Alert";
+
 const InfrastructurePage = ({ userData }) => {
     const [editMode, setEditMode] = useState(false);
 
@@ -48,6 +50,7 @@ const InfrastructurePage = ({ userData }) => {
         selectedReservationInfrastructureType,
         reservationInfrastructures,
         createReservation,
+        error
     } = useBooker(infrastructureTypes);
 
     const handleCreateInfrastractureType = async (data) => {
@@ -58,6 +61,15 @@ const InfrastructurePage = ({ userData }) => {
     const handleUpdateInfrastructureType = async (data) => {
         await updateInfrastructureType(data);
         await loadInfrastructureTypes();
+    };
+
+    const handleCreateReservation = async (data) => {
+        try{
+            await createReservation(data);
+            showAlert('success', 'Prenotazione effettuata con successo');
+        }catch(err){
+            showAlert('error', err);
+        }
     };
 
     const test = (id) => {
@@ -117,7 +129,7 @@ const InfrastructurePage = ({ userData }) => {
                     onClose={handleCloseReservationModal}
                     infrastructureType={selectedReservationInfrastructureType}
                     infrastructures={reservationInfrastructures}
-                    onSubmit={(data) => createReservation(data)}
+                    onSubmit={(data) => handleCreateReservation(data)}
                     userData={userData}
                     users={users}
                 />   

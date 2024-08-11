@@ -35,60 +35,37 @@ const useBooking = (initialLoading = true) => {
             loadAllBookings();
     }, []);
 
+    const checkData = (data) => {
+        //check if data.date is in the past
+        const date = new Date(data.date);
+        const now = new Date();
+        if(date < now)
+            throw new Error("Date is in the past");
+
+        //check if date.start is after date.end (the format is "14:00")
+        const start = data.start.split(":");
+        const end = data.end.split(":");
+        if(start[0] > end[0] || (start[0] === end[0] && start[1] > end[1]))
+            throw new Error("Start time is after end time");
+
+        //Check if data.nPartecipants is more or equal to 1
+        if(data.nPartecipants < 0)
+            throw new Error("Number of partecipants must be more or equal to 1");
+
+    }
+
     const handleCreateBooking = useCallback(async (data) => {
         try {
-            console.log(data);
+            checkData(data);
             setLoading(true);
             await createBooking(data);
         } catch (err) {
-            setError(err);
+            throw err;
         } finally {
             setLoading(false);
         }
     }, [loadAllBookings]);
-    /*
-    const handleCreateBooking = useCallback(async (data) => {
-        try {
-            setLoading(true);
-            const response = await createBookingService(token, data);
-            setBookings(prevBookings => [...prevBookings, response.data]);
-        } catch (err) {
-            setError(err);
-        } finally {
-            setLoading(false);
-        }
-    }, [token]);
-
-    const handleUpdateBooking = useCallback(async (id, data) => {
-        try {
-            setLoading(true);
-            await updateBookingService(token, id, data);
-            setBookings(prevBookings => prevBookings.map(booking => {
-                if (booking.id === id) {
-                    return { ...booking, ...data };
-                }
-                return booking;
-            }));
-        } catch (err) {
-            setError(err);
-        } finally {
-            setLoading(false);
-        }
-    }, [token]);
-
-    const handleDeleteBooking = useCallback(async (id) => {
-        try {
-            setLoading(true);
-            await deleteBookingService(token, id);
-            setBookings(prevBookings => prevBookings.filter(booking => booking.id !== id));
-        } catch (err) {
-            setError(err);
-        } finally {
-            setLoading(false);
-        }
-    }, [token]);
-    */
-
+   
     return {
         bookings,
         loading,
