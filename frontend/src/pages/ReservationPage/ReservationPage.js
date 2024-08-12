@@ -4,8 +4,8 @@ import './ReservationPage.css';
 import GeneralList from '../../components/GeneralList/GeneralList';
 import useReservationPage from '../../hooks/custom/useReservationPage';
 
-const ReservationPage = () => {
-  const { listElements, loading, error, onReservationSelected, selectedReservation } = useReservationPage();
+const ReservationPage = ({showUserReservation = false}) => {
+  const { listElements, loading, error, onReservationSelected, selectedReservation, deleteReservation } = useReservationPage(showUserReservation);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -25,7 +25,13 @@ const ReservationPage = () => {
       </div>
       {
       <div className="reservation-details-container">
-        {selectedReservation && <ReservationDetails reservation={selectedReservation} />}
+        {selectedReservation && 
+          <ReservationDetails 
+            reservation={selectedReservation} 
+            onDeleteReservation={deleteReservation}
+            isAdmin={true}
+          />
+        }
       </div>
       }
     </div>

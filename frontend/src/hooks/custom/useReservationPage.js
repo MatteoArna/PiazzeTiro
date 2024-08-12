@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback } from "react";
 import useBooking from "../useBooking";
 
-const useReservationPage = () => {
+const useReservationPage = (showUserReservation) => {
   const [selectedReservation, setSelectedReservation] = useState(null);
-  const { bookings, loading, error } = useBooking();
+  const { bookings, loading, error, deleteBooking } = useBooking();
 
   const [listElements, setListElements] = useState([]);
 
@@ -14,13 +14,15 @@ const useReservationPage = () => {
 
 
   useEffect(() => {
+    console.log(bookings);
     if (bookings.length > 0) {
       const elements = bookings.map((element) => ({
         id: element.id,
-        title: element.User.society,
-        subtitle: element.User.firstName + " " + element.User.lastName,
+        title: showUserReservation ? element.Infrastructure.name : element.User.society,
+        subtitle: showUserReservation ? "Target: " + element.Target.name : element.User.firstName + " " + element.User.lastName,
         description: element.InfrastructureType.HeadQuarter.name,
         more: translateDate(element.date),
+        isRed: element.status === 0,
       }));
       setListElements(elements);
     }
@@ -31,12 +33,30 @@ const useReservationPage = () => {
     setSelectedReservation(reservation);
   };
 
+  const handleDeleteBooking = (data) => {
+    deleteBooking(data.id, data.motivation);
+    //Find the interested element in the listElements list, set isRed to true and update the list of bookings, so that there is the motivation and the new state
+    const element = listElements.find((element) => element.id === data.id);
+    element.isRed = true;
+    setListElements([...listElements]);
+
+    bookings.forEach((element) => {
+      if (element.id === data.id) {
+        element.status = 0;
+        element.motivation = data.motivation;
+      }
+    });
+
+    setSelectedReservation(null);
+  }
+
   return {
     listElements,
     onReservationSelected,
     selectedReservation,
     loading,
     error,
+    deleteReservation: handleDeleteBooking,
   };
 };
 

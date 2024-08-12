@@ -6,9 +6,9 @@
     background-color: #ffffff;
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     cursor: pointer;
-    border-left: 5px solid;
+    border-left: 5px solid black; /* Colore predefinito del bordo sinistro */
 }
 
 .general-element:hover {
@@ -29,14 +29,14 @@
     text-align: left;
 }
 
-.title{
+.title {
     font-size: 1.4em;
     font-weight: bold;
     color: #333;
     margin-bottom: 5px;
 }
 
-.subtitle{
+.subtitle {
     font-size: 1em;
     color: #555;
     margin-bottom: 5px;
@@ -47,14 +47,14 @@
     color: #888;
 }
 
-.more{
+.more {
     font-size: 1.1em;
     color: #888;
     margin-left: auto;
     text-align: left;
 }
 
-.arrow{
+.arrow {
     font-size: 2em;
     color: #888;
     margin-left: 15px;

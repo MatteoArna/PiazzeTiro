@@ -67,7 +67,11 @@ const Booking = sequelize.define('Booking', {
       model: Target,
       key: 'id',
     }
-  }
+  },
+  motivation: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
 }, {
   timestamps: false,
   tableName: 'bookings',

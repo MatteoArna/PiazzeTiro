@@ -82,9 +82,12 @@ class BookingController extends baseController {
                         model: Target,
                         attributes: ['name', 'price']
                     }
+                ],
+                order: [
+                    ['date', 'ASC'] // Ordina per data in ordine crescente (ASC)
                 ]
             });
-
+    
             if (!bookings || bookings.length === 0) {
                 return res.status(404).json({ message: 'No bookings found' });
             }
@@ -96,8 +99,28 @@ class BookingController extends baseController {
         }
     };
     
+    
 
-    // GET methods
+    delete = async (req, res) => {
+        //Get the booking id from the request, set the motivation and the status to 0
+        const { id } = req.params;
+        const { motivation } = req.body;
+        try {
+            const booking = await Booking.findByPk(id);
+            if (!booking) {
+                return res.status(404).json({ message: 'Booking not found' });
+            }
+            booking.motivation = motivation;
+            booking.status = 0;
+            console.log("Motivation: " + motivation);
+            console.log(booking);
+            await booking.save();
+            res.status(200).json(booking);
+        } catch (error) {
+            res.status(500).json({ message: 'Internal server error', error });
+        }
+ 
+    };
     
 
 

@@ -62,7 +62,6 @@ button[type="submit"],
 .delete-button {
   background-color: #dc3545; /* Rosso */
   flex: 1;
-  margin-left: 10px;
 }
 
 

@@ -20,7 +20,7 @@ const NavBar = ({ user, handleLogout, navigateTo, selectedPage }) => {
           {user.roleId === 'admin' && (
             <li className={selectedPage === 'userApproval' ? 'selected' : ''} onClick={() => navigateTo('userApproval')}>Approvazione Utenti</li>
           )}
-          {user.roleId === 'admin' && (
+          {user.status === 4 && (
             <li className={selectedPage === 'reservations' ? 'selected' : ''} onClick={() => navigateTo('reservations')}>Prenotazioni</li>
           )}
           <li><button onClick={handleLogout} className="logout-button">Logout</button></li>

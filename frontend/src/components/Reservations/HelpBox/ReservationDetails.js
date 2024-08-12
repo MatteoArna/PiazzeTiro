@@ -1,10 +1,23 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './ReservationDetails.css';
 
 import useReservationApprover from '../../../hooks/custom/useReservationApprover';
-const ReservationDetails = ({ reservation }) => {
+const ReservationDetails = ({ reservation, onDeleteReservation, isAdmin = false }) => {
 
-    const {translateTime } = useReservationApprover(reservation);
+    const { translateTime } = useReservationApprover(reservation);
+
+    const [motivation, setMotivation] = React.useState('');
+
+    const handleDeleteReservation = (e) => {
+        e.preventDefault();
+        if(!motivation)
+            return;
+        const data = {
+            id: reservation.id,
+            motivation: motivation
+        }
+        onDeleteReservation(data);
+    }
 
     return (
         <div className="reservation-details">
@@ -20,10 +33,6 @@ const ReservationDetails = ({ reservation }) => {
             <div className="detail">
                 <span className="label">Period:</span>
                 <span className="value">{translateTime(reservation.start) + " - " + translateTime(reservation.end)}</span>
-            </div>
-            <div className="detail">
-                <span className='label'>Comanda Bersagli</span>
-                <span className="value">Da aggiungere</span>
             </div>
 
             {
@@ -47,6 +56,33 @@ const ReservationDetails = ({ reservation }) => {
                         <span className="value">{reservation.price} chf</span>
                     </div>
             )}
+
+            {
+                isAdmin && !reservation.motivation && (
+                    <form onSubmit={handleDeleteReservation}>
+                        <label className="label">Cancel Reservation</label>
+                        <textarea
+                            className="motivation-textarea"
+                            placeholder="Motivation"
+                            value={motivation}
+                            onChange={(e) => setMotivation(e.target.value)}
+                            required
+                        ></textarea>
+                        <button className="delete-button" type="submit">Delete</button>
+                    </form>
+                )
+            }
+
+            {
+                reservation.motivation && (
+                    <div className="detail">
+                        <span className="label">Motivation:</span>
+                        <span className="value">{reservation.motivation}</span>
+                    </div>
+                )
+            }
+            
+
             
             
         </div>

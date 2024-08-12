@@ -5,7 +5,6 @@ const cors = require('cors');
 const sequelize = require('./config/database');
 const path = require('path');
 const { authenticate } = require('./middleware/authMiddleware');
-
 const app = express();
 
 // Configura CORS
@@ -14,28 +13,45 @@ app.use(cors({
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
 }));
+console.log("cors configurato");
 
 // Body parser middleware
 app.use(bodyParser.json());
+console.log("body-parser configurato");
 app.use(bodyParser.urlencoded({ extended: true }));
+console.log("body-parser configurato");
 
 // Configura il percorso statico per la directory uploads con autenticazione
 app.use('/uploads', authenticate, express.static(path.join(__dirname, 'uploads')));
+console.log("uploads configurato");
 
 // Import routes
 const authRoutes = require('./routes/auth');
+console.log("auth importate");
 const userRoutes = require('./routes/user');
+console.log("user importate");
 const infrastructureRoutes = require('./routes/infrastructure');
+console.log("infrastructureRoutes importate");
 const estimateRoutes = require('./routes/estimate');
+console.log("estimateRoutes importate");
 const pageRoutes = require('./routes/page');
+console.log("pageRoutes importate");
 const bookingRoutes = require('./routes/booking');
+console.log("bookingRoutes importate");
 const pageTypeRoutes = require('./routes/pageType');
+console.log("pageTypeRoutes importate");
 const documentRoutes = require('./routes/document');
+console.log("documentRoutes importate");
 const headQuarterRoutes = require('./routes/headQuarter');
+console.log("headQuarterRoutes importate");
 const infrastructureTypeRoutes = require('./routes/infrastructureType');
+console.log("infrastructureTypeRoutes importate");
 const weaponRoutes = require('./routes/weapon');
+console.log("weaponRoutes importate");
 const userRoleRoutes = require('./routes/userRole');
+console.log("userRoleRoutes importate");
 const targetRoutes = require('./routes/target');
+console.log("routes importate");
 
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
@@ -50,6 +66,8 @@ app.use('/infrastructureTypes', infrastructureTypeRoutes);
 app.use('/weapons', weaponRoutes);
 app.use('/user_roles', userRoleRoutes);
 app.use('/targets', targetRoutes)
+console.log("routes configurate");
+
 
 // Sincronizza il database
 sequelize.sync({ alter: true })

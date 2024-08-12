@@ -14,6 +14,7 @@ const GeneralList = ({ listElements = [], onElementClicked }) => {
                     subtitle={element.subtitle}
                     description={element.description}
                     more={element.more}
+                    isRed={element.isRed}
                     onClick={onElementClicked}
                 />
             ))}

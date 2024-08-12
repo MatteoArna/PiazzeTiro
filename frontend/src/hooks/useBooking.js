@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { createBooking, fetchAllBookings, fetchBookingsByCustomer } from '../services/bookingService';
+import { createBooking, fetchAllBookings, fetchBookingsByCustomer, deleteBooking } from '../services/bookingService';
 
 const useBooking = (initialLoading = true) => {
     const [bookings, setBookings] = useState([]);
@@ -54,6 +54,26 @@ const useBooking = (initialLoading = true) => {
 
     }
 
+    const handleDeleteBooking = useCallback(async (id, motivation) => {
+        try {
+            setLoading(true);
+            console.log("Motivation: " + motivation);
+            await deleteBooking(id, motivation);
+            //Add motivation to the booking and set the status to 0
+            bookings.map((booking) => {
+                if(booking.id === id) {
+                    booking.status = 0;
+                    booking.motivation = motivation;
+                }
+                return booking;
+            });
+        } catch (err) {
+            throw err;
+        } finally {
+            setLoading(false);
+        }
+    }, [loadAllBookings]);
+
     const handleCreateBooking = useCallback(async (data) => {
         try {
             checkData(data);
@@ -72,6 +92,7 @@ const useBooking = (initialLoading = true) => {
         error,
         loadBookingsById,
         createBooking: handleCreateBooking,
+        deleteBooking: handleDeleteBooking
     };
 }
 

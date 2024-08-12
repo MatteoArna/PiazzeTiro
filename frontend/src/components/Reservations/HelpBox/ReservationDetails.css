@@ -2,13 +2,11 @@
   display: grid;
   grid-template-columns: 1fr; /* Forza una singola colonna */
   gap: 20px;
-  padding: 20px;
+  padding: 20px; /* Spazio interno per evitare che gli elementi tocchino i bordi */
   background-color: #f9f9f9;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-
-
 
 .detail {
   display: flex;
@@ -17,6 +15,8 @@
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  box-sizing: border-box; /* Include padding e border nella larghezza totale */
 }
 
 .label {
@@ -37,9 +37,33 @@
   justify-content: space-between;
   font-size: 1.1em;
   border: none;
+  width: 100%;
+  box-sizing: border-box; /* Include padding e border nella larghezza totale */
+}
+
+.motivation-textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 1em;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  resize: vertical;
+  min-height: 100px;
+  max-height: 300px;
+  transition: border-color 0.3s;
+  box-sizing: border-box; /* Include padding e border nella larghezza totale */
+}
+
+.motivation-textarea:focus {
+  outline: none;
+  border-color: #666;
 }
 
 .reject-button {
+  width: 100%;
   background-color: #f44336;
   color: #fff;
   padding: 10px 20px;
@@ -47,6 +71,7 @@
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s;
+  box-sizing: border-box; /* Include padding e border nella larghezza totale */
 }
 
 @media (max-width: 600px) {
