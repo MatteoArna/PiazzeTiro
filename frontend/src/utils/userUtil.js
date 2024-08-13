@@ -42,18 +42,18 @@ export const getDocumentName = (index) => {
   }
 } 
 
-export const getStatus = (status) => {
+export const getStatus = (status, t) => {
   switch (status) {
     case 0:
-      return 'Mai approvato';
+      return t('profile.never_approved');
     case 1:
-      return 'In attesa della prima approvazione';
+      return t('profile.waiting_first');
     case 2:
-      return 'Approvazione scaduta';
+      return t('profile.expired');
     case 3:
-      return 'In attesa dell\'approvazione';
+      return t('profile.waiting');
     case 4:
-      return 'Approvato';
+      return t('profile.approved');
     default:
       return null;
   }

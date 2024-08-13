@@ -1,6 +1,6 @@
 {
     "navigation": {
-      "news_page": "Pagina Notizie",
+      "news_page": "Notizie",
       "infrastructure": "Infrastrutture",
       "profile": "Profilo",
       "settings": "Impostazioni",
@@ -52,7 +52,21 @@
         "reservation_created_success": "Prenotazione creata con successo",
         "reservation_created_error": "Errore durante la richiesta di prenotazione",
         "no_allowment": "Non puoi prenotare un'infrastruttura"
+    },
+    "profile":{
+        "never_approved": "Mai Approvato",
+        "waiting_first": "In attesa della prima approvazione",
+        "expired": "Approvazione Scaduta",
+        "waiting": "In attesa di approvazione",
+        "approved": "Approvato",
+        "role": "Ruolo",
+        "firstname": "Nome",
+        "lastname": "Cognome",
+        "society": "Società"
+
     }
+
+    
 
   }
   
