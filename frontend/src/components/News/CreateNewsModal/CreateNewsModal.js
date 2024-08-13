@@ -5,6 +5,7 @@ import { showAlert } from '../../Alert';
 import Modal from '../../Modal/Modal';
 
 // Hooks
+import { useTranslation } from 'react-i18next';
 
 // Styles
 import 'react-quill/dist/quill.snow.css';
@@ -17,6 +18,8 @@ const CreateNewsModal = forwardRef(({ onClose, onSubmit, page, pageTypes }) => {
   const [content, setContent] = useState('');
   const [file, setFile] = useState(null);
   const [typeId, setTypeId] = useState('');
+
+  const { t } = useTranslation();
 
   const getTypeId = (type) => {
     return pageTypes.find((pageType) => pageType.type === type).id;
@@ -54,15 +57,15 @@ const CreateNewsModal = forwardRef(({ onClose, onSubmit, page, pageTypes }) => {
       onClose();
     } catch (error) {
       console.error('Error saving news:', error);
-      showAlert('error', 'Errore nel salvataggio della pagina', error.response ? error.response.data.message : 'Si è verificato un problema, riprova più tardi.');
+      showAlert('error', t('news_page.error'), error.response ? error.response.data.message : 'Si è verificato un problema, riprova più tardi.');
     }
   };
 
   return (
-    <Modal title={page ? 'Modifica News' : 'Crea News'} isOpen={true} onClose={onClose}>
+    <Modal title={page ? t('news_page.edit_news') : t('news_page.create_news')} isOpen={true} onClose={onClose}>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="summary">Summary</label>
+          <label htmlFor="summary">{t('news_page.summary')}</label>
           <input
             type="text"
             id="summary"
@@ -73,7 +76,7 @@ const CreateNewsModal = forwardRef(({ onClose, onSubmit, page, pageTypes }) => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="content">Content</label>
+          <label htmlFor="content">{t('news_page.content')}</label>
           <ReactQuill
             value={content}
             onChange={setContent}
@@ -90,7 +93,7 @@ const CreateNewsModal = forwardRef(({ onClose, onSubmit, page, pageTypes }) => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="type">Type</label>
+          <label htmlFor="type">{t('news_page.type')}</label>
           {pageTypes.length > 0 ? (
             <select
               id="type"
@@ -100,22 +103,22 @@ const CreateNewsModal = forwardRef(({ onClose, onSubmit, page, pageTypes }) => {
               required
               className="custom-select"
             >
-              <option value="">Select Type</option>
+              <option value="">{t('news_page.choose_type')}</option>
               {pageTypes.map((type) => (
                 <option key={type.id} value={type.id}>
-                  {type.type}
+                  {t('news_page.' + type.type)}
                 </option>
               ))}
             </select>
           ) : (
-            <p>Loading types...</p>
+            <p>Loading...</p>
           )}
         </div>
         <div className="form-group">
           <label htmlFor="file">File</label>
           <input type="file" id="file" name="file" onChange={handleFileChange} className="custom-file-input" />
         </div>
-        <button type="submit">{page ? 'Modifica News' : 'Crea News'}</button>
+        <button type="submit">{page ? t('news_page.edit_news') : t('news_page.create_news')}</button>
       </form>
     </Modal>
   );

@@ -13,6 +13,7 @@ import InfratructurePage from './InfrastructurePage/InfratructurePage';
 import ReservationPage from './ReservationPage/ReservationPage';
 import SettingsPage from './SettingsPage/SettingsPage';
 
+
 import './BasePage.css';
 
 const BasePage = () => {

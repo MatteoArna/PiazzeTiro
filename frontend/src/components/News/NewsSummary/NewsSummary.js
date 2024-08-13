@@ -3,11 +3,12 @@ import { getIcon } from '../../../utils/newsUtil';
 import './NewsSummary.css';
 import InfoModal from '../../InfoModal/InfoModal';
 
-import { isImage } from '../../../utils/fileUtil';
+import { useTranslation } from 'react-i18next';
 
 const NewsSummary = ({ page, isAdmin, onEditPage, onDeletePage }) => {
   const [showModal, setShowModal] = useState(false);
 
+  const { t } = useTranslation();
 
   return (
     <div className="news-summary">
@@ -16,21 +17,22 @@ const NewsSummary = ({ page, isAdmin, onEditPage, onDeletePage }) => {
           <img src={getIcon(page.typeId)} alt={page.typeId} />
         </div>
         <div className="card-content">
-          <h3>{page.typeId}</h3>
+          <h3>{t(('news_page.' + page.typeId))}</h3>
           <p>{page.summary}</p>
-          <a href="#" onClick={() => setShowModal(true)}>Più informazioni</a>
+          <a href="#" onClick={() => setShowModal(true)}>{t('news_page.more_info')}</a>
           {isAdmin && (
             <AdminControls
               page={page}
               onEditPage={onEditPage}
               onDeletePage={onDeletePage}
+              t={t}
             />
           )}
         </div>
       </div>
       {showModal && (
         <InfoModal
-          title={page.typeId}
+          title={t(('news_page.' + page.typeId)) }
           subtitle={page.summary}
           content={page.content}
           icon={getIcon(page.typeId)}
@@ -43,10 +45,10 @@ const NewsSummary = ({ page, isAdmin, onEditPage, onDeletePage }) => {
   );
 };
 
-const AdminControls = ({ page, onEditPage, onDeletePage }) => (
+const AdminControls = ({ page, onEditPage, onDeletePage, t }) => (
   <>
-    <button className="edit-button" onClick={() => onEditPage(page)}>Modifica</button>
-    <button className="delete-button" onClick={() => onDeletePage(page.id)}>Elimina</button>
+    <button className="edit-button" onClick={() => onEditPage(page)}>{t('news_page.edit')}</button>
+    <button className="delete-button" onClick={() => onDeletePage(page.id)}>{t('news_page.delete')}</button>
   </>
 );
 

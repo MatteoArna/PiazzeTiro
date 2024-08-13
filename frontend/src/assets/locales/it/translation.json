@@ -1,0 +1,58 @@
+{
+    "navigation": {
+      "news_page": "Pagina Notizie",
+      "infrastructure": "Infrastrutture",
+      "profile": "Profilo",
+      "settings": "Impostazioni",
+      "user_approval": "Approvazione Utenti",
+      "reservations": "Prenotazioni",
+        "logout": "Esci"
+    },
+
+    "news_page": {
+        "info": "Informazioni",
+        "warning": "Avviso",
+        "more_info": "Maggiori informazioni",
+        "edit": "Modifica",
+        "delete": "Elimina",
+        "summary": "Breve riassunto",
+        "content": "Descrizione",
+        "type": "Tipo",
+        "choose_type": "Scegli il tipo",
+        "create_news": "Crea News",
+        "edit_news": "Modifica News",
+        "creation_success": "News creata con successo",
+        "creation_error": "Errore nella creazione della News",
+        "edit_success": "News modificata con successo",
+        "edit_error": "Errore nella modifica della News",
+        "delete_success": "News eliminata con successo",
+        "delete_error": "Errore nell'eliminazione della News"
+    },
+
+    "infrastructures": {
+        "headquarter": "Sede",
+        "select_headquarter": "Seleziona una sede",
+        "edit_mode": "Modifica",
+        "create_infrastructure": "Crea Infrastruttura",
+        "name": "Nome",
+        "description": "Descrizione",
+        "price": "Prezzo",
+        "create": "Crea",
+        "available_targets": "Bersagli disponibili",
+        "select_target": "Seleziona bersagli",
+        "add_target": "Aggiungi bersaglio",
+        "add_infrastructure": "Aggiungi Infrastruttura",
+        "linked_infrastructures": "Infrastrutture collegate",
+        "delete": "Elimina",
+        "edit_infrastructure": "Modifica Infrastruttura",
+        "creation_success": "Infrastruttura creata con successo",
+        "creation_error": "Errore nella creazione dell'infrastruttura",
+        "edit_success": "Infrastruttura modificata con successo",
+        "edit_error": "Errore nella modifica dell'infrastruttura",
+        "reservation_created_success": "Prenotazione creata con successo",
+        "reservation_created_error": "Errore durante la richiesta di prenotazione",
+        "no_allowment": "Non puoi prenotare un'infrastruttura"
+    }
+
+  }
+  

@@ -1,0 +1,59 @@
+{
+    "navigation": {
+      "news_page": "News Page",
+      "infrastructure": "Infrastructures",
+      "profile": "Profile",
+      "settings": "Settings",
+      "user_approval": "User Approval",
+      "reservations": "Reservations",
+      "logout": "Logout"
+    },
+    "news_page": {
+      "info": "Information",
+      "warning": "Warning",
+      "more_info": "More information",
+      "edit": "Edit",
+      "delete": "Delete",
+      "summary": "Brief summary",
+      "content": "Description",
+      "type": "Type",
+      "choose_type": "Choose the type",
+      "create_news": "Create News",
+      "edit_news": "Edit News",
+      
+      "creation_success": "News created successfully",
+      "creation_error": "Error creating News",
+      "edit_success": "News edited successfully",
+      "edit_error": "Error editing News",
+      "delete_success": "News deleted successfully",
+      "delete_error": "Error deleting News"
+    },
+
+    "infrastructures": {
+      "headquarter": "Headquarter",
+      "edit_mode": "Edit",
+      "create_infrastructure": "Create Infrastructure",
+      "name": "Name",
+      "description": "Description",
+      "price": "Price",
+      "create": "Create",
+      "available_targets": "Available Targets",
+      "select_target": "Select Targets",
+      "add_target": "Add target",
+      "add_infrastructure": "Add Infrastructure",
+      "linked_infrastructures": "Linked Infrastructures",
+      "delete": "Delete",
+      "edit_infrastructure": "Edit Infrastructure",
+      "creation_success": "Infrastructure created successfully",
+      "creation_error": "Error creating Infrastructure",
+      "edit_success": "Infrastructure edited successfully",
+      "edit_error": "Error editing Infrastructure",
+      "reservation_created_success": "Reservation created succesfully",
+      "reservation_created_error": "Error during the reservation request",
+      "no_allowment": "You can not reserve an infrastructure",
+      "select_headquarter": "Select a headquarter"
+    }
+
+
+}
+  

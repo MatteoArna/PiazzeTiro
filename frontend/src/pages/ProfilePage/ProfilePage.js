@@ -6,6 +6,7 @@ import { getColor, getStatus } from '../../utils/userUtil';
 
 //Styles
 import './ProfilePage.css';
+import LanguageSwitcher from '../../components/LanguageSwitcher/LanguageSwitcher';
 
 const ProfilePage = ({ userData }) => {
   return (
@@ -26,6 +27,10 @@ const ProfilePage = ({ userData }) => {
           <p><strong>Cognome:</strong> {userData.lastName}</p>
           <p><strong>E-mail:</strong> {userData.email}</p>
           {userData.society && <p><strong>Società:</strong> {userData.society}</p>}
+        </div>
+
+        <div className="profile-actions">
+          <LanguageSwitcher />
         </div>
       </div>
     </div>

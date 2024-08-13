@@ -2,11 +2,15 @@ import { useState, useCallback } from 'react';
 import { showAlert } from '../../components/Alert';
 import usePages from '../usePages';
 
+import { useTranslation } from 'react-i18next';
+
 const useNewsPage = () => {
   const { pages, pageTypes, loading, error, createPage, updatePage, deletePage } = usePages();
 
   const [pageToEdit, setPageToEdit] = useState(null);
   const [showModal, setShowModal] = useState(false);
+
+  const { t } = useTranslation();
 
   const openCreateModal = () => {
     setShowModal(true);
@@ -55,16 +59,16 @@ const useNewsPage = () => {
     if (pageToEdit) {
         await handleOperation(
             updatePage,
-            'Pagina aggiornata con successo',
-            'Errore durante l\'aggiornamento della pagina',
+            t('news_page.edit_success'),
+            t('news_page.edit_error'),
             pageToEdit.id,
             pageData
         );
     } else {
         await handleOperation(
             createPage,
-            'Pagina creata con successo',
-            'Errore durante la creazione della pagina',
+            t('news_page.creation_success'),
+            t('news_page.creation_error'),
             pageData
         );
     }
@@ -75,8 +79,8 @@ const useNewsPage = () => {
   const handleDeletePage = async (id) => {
     await handleOperation(
       deletePage,
-      'Pagina eliminata con successo',
-      'Errore durante l\'eliminazione della pagina',
+      t('news_page.delete_success'),
+      t('news_page.delete_error'),
       id
     );
   };

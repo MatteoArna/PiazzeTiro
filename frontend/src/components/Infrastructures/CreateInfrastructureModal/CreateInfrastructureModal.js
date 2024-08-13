@@ -4,6 +4,8 @@ import 'react-quill/dist/quill.snow.css';
 import './CreateInfrastructureModal.css';
 import ReactQuill from "react-quill";
 
+import { useTranslation } from "react-i18next";
+
 const CreateInfrastructureModal = ({ onClose, onSubmit, infrastructureType, infrastructures = [], headquarters = [], targets = [], onCreateInfrastructure, onDeleteInfrastructure, onAddTarget }) => {
     const [type, setType] = useState('');
     const [description, setDescription] = useState('');
@@ -12,6 +14,8 @@ const CreateInfrastructureModal = ({ onClose, onSubmit, infrastructureType, infr
     const [targetToAdd, setTargetToAdd] = useState('');
 
     const [targetsToAvoid, setTargetsToAvoid] = useState([]);
+
+    const {t} = useTranslation();
 
     useEffect(() => {
         if (infrastructureType) {
@@ -42,14 +46,14 @@ const CreateInfrastructureModal = ({ onClose, onSubmit, infrastructureType, infr
     }
 
     return (
-        <Modal title={infrastructureType ? 'Modifica Infrastruttura' : 'Crea Infrastruttura'} isOpen={true} onClose={onClose}>
+        <Modal title={infrastructureType ? t('infrastructures.edit_infrastructure') : t('infrastructures.create_infrastructure')} isOpen={true} onClose={onClose}>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
-                    <label htmlFor="type">Nome dell'Infrastruttura</label>
+                    <label htmlFor="type">{t('infrastructures.name')}</label>
                     <input type="text" id="type" value={type} onChange={(e) => setType(e.target.value)} required />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="description">Descrizione</label>
+                    <label htmlFor="description">{t('infrastructures.description')}</label>
                     <ReactQuill
                         value={description}
                         onChange={setDescription}
@@ -67,19 +71,19 @@ const CreateInfrastructureModal = ({ onClose, onSubmit, infrastructureType, infr
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="price">Prezzo</label>
+                    <label htmlFor="price">{t('infrastructures.price')}</label>
                     <input type="number" id="price" value={price} onChange={(e) => setPrice(e.target.value)} required />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="headQuarter">Sede</label>
+                    <label htmlFor="headQuarter">{t('infrastructures.headquarter')}</label>
                     <select id="headQuarter" value={headQuarter} onChange={(e) => setHeadQuarter(e.target.value)} required>
-                        <option value="">Seleziona una sede</option>
+                        <option value="">{t('infrastructures.select_headquarter')}</option>
                         {headquarters.length > 0 ? (
                             headquarters.map((hq) => (
                                 <option key={hq.id} value={hq.id}>{hq.name}</option>
                             ))
                         ) : (
-                            <option value="" disabled>Caricamento...</option>
+                            <option value="" disabled>Loading...</option>
                         )}
                     </select>
                 </div>
@@ -87,7 +91,7 @@ const CreateInfrastructureModal = ({ onClose, onSubmit, infrastructureType, infr
                 {infrastructureType && (
                     <>
                         <div className="form-group">
-                            <label htmlFor="targets">Target Disponibili</label>
+                            <label htmlFor="targets">{t('infrastructures.available_targets')}</label>
                             {infrastructureType.targets.map((target) => (
                                 <div key={target.id} className="target-item">
                                     <input
@@ -103,7 +107,7 @@ const CreateInfrastructureModal = ({ onClose, onSubmit, infrastructureType, infr
                                 value={targetToAdd} 
                                 onChange={(e) => setTargetToAdd(e.target.value)}
                             >
-                                <option value="">Seleziona un target</option>
+                                <option value="">{t('infrastructures.select_target')}</option>
                                 {
                                     targets
                                         .filter(target => 
@@ -122,12 +126,12 @@ const CreateInfrastructureModal = ({ onClose, onSubmit, infrastructureType, infr
                                 className="add-button"
                                 onClick={() => handleAddTarget(targetToAdd)} 
                             >
-                                Aggiungi Target
+                                {t('infrastructures.add_target')}
                             </button>
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="infrastructures">Infrastrutture Collegate</label>
+                            <label htmlFor="infrastructures"> {t('infrastructures.linked_infrastructures')}</label>
                             {infrastructures.map((infrastructure) => (
                                 <div key={infrastructure.id} className="infrastructure-item">
                                     <input
@@ -136,16 +140,16 @@ const CreateInfrastructureModal = ({ onClose, onSubmit, infrastructureType, infr
                                         value={infrastructure.name}
                                         disabled={true}
                                     />
-                                    <button type="button" className="delete-button" onClick={() => onDeleteInfrastructure(infrastructure.id)}>Rimuovi</button>
+                                    <button type="button" className="delete-button" onClick={() => onDeleteInfrastructure(infrastructure.id)}>{t('infrastructures.delete')}</button>
                                 </div>
                             ))}
 
-                            <button type="button" className="add-button" onClick={onCreateInfrastructure}>Aggiungi Infrastruttura</button>
+                            <button type="button" className="add-button" onClick={onCreateInfrastructure}>{t('infrastructures.add_infrastructure')}</button>
                         </div>
                     </>
                 )}
                 
-                <button type="submit" className="submit-button">{infrastructureType ? "Modifica" : "Crea"}</button>
+                <button type="submit" className="submit-button">{infrastructureType ? t('infrastructures.edit_infrastructure') : t('infrastructures.create_infrastructure')}</button>
             </form>
         </Modal>
     );

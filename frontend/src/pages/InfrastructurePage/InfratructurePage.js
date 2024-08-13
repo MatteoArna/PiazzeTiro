@@ -15,6 +15,8 @@ import ReservationModal from "../../components/Infrastructures/ReservationModal/
 
 import { showAlert } from "../../components/Alert";
 
+import { useTranslation } from 'react-i18next';
+
 const InfrastructurePage = ({ userData }) => {
     const [editMode, setEditMode] = useState(false);
 
@@ -53,29 +55,36 @@ const InfrastructurePage = ({ userData }) => {
         error
     } = useBooker(infrastructureTypes);
 
+    const { t } = useTranslation();
+
     const handleCreateInfrastractureType = async (data) => {
         try{
             await createInfrastructureType(data);
             await loadInfrastructureTypes();
-            showAlert('success', 'Tipo di infrastruttura creato con successo');
+            showAlert('success', t('infrastructures.creation_success'));
         }catch(err){
-            showAlert('error', err);
+            showAlert('error', t('infrastructures.creation_error'));
         }
         
     };
 
     const handleUpdateInfrastructureType = async (data) => {
-        await updateInfrastructureType(data);
-        await loadInfrastructureTypes();
-        showAlert('success', 'Tipo di infrastruttura aggiornato con successo');
+        try{
+            await updateInfrastructureType(data);
+            await loadInfrastructureTypes();
+            showAlert('success', t('infrastructures.edit_success'));
+        }catch(err){
+            showAlert('error', t('edit_error'));
+        }
+        
     };
 
     const handleCreateReservation = async (data) => {
         try{
             await createReservation(data);
-            showAlert('success', 'Prenotazione effettuata con successo');
+            showAlert('success', t('infrastructures.reservation_created_success'));
         }catch(err){
-            showAlert('error', err);
+            showAlert('error', t('infrastructures.reservation_created_error'));
         }
     };
 
@@ -85,14 +94,14 @@ const InfrastructurePage = ({ userData }) => {
         else if (userData.status === 4)
             handleShowReservationModal(elementId);
         else
-            showAlert('error', 'Non hai i permessi per prenotare');
+            showAlert('error', t('ifnrastructures.no_allowment'));
     };
 
     return (
         <div className="infrastructure-page">
             <div className="filter-menus">
                 <FilterMenu 
-                    title={'Headquarter'}
+                    title={t('infrastructures.headquarter')}
                     options={headquarters}
                     activeOption={selectedHeadQuarter}
                     onSelect={(id) => selectHeadquarter(id)}
@@ -105,13 +114,13 @@ const InfrastructurePage = ({ userData }) => {
                             checked={editMode}
                             onChange={(e) => setEditMode(e.target.checked)}
                         />
-                        <label htmlFor="editMode">Edit Mode</label>
+                        <label htmlFor="editMode">{t('infrastructures.edit_mode')}</label>
                     </div>
                 )}
                 
             </div>
             {userData.roleId === 'admin' && (
-                <button onClick={showCreateModal}>Crea Infrastruttura</button>   
+                <button onClick={showCreateModal}>{t('infrastructures.create_infrastructure')}</button>   
             )}
             
             <GeneralList
