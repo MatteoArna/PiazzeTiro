@@ -4,11 +4,15 @@ import useUser from "../../useUser";
 
 import { getStatus } from "../../../utils/userUtil";
 
+import { useTranslation } from "react-i18next";
+
 const useUserApproval = (email) => {
     const {users, loading, error, changeRole} = useUser();
 
     const [selectedUser, setSelectedUser] = useState(null);
     const [elements, setElements] = useState([]);
+
+    const {t} = useTranslation();
 
     useEffect(() => {
         //Remove the user that is currently logged in
@@ -18,8 +22,8 @@ const useUserApproval = (email) => {
                 id: user.email,
                 title: user.society,
                 subtitle: user.firstName + " " + user.lastName,
-                description: user.UserRole.role,
-                more: getStatus(user.status)
+                description: t('profile.'+user.UserRole.role),
+                more: getStatus(user.status, t)
             };
         });
 

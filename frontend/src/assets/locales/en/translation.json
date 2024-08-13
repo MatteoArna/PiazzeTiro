@@ -52,7 +52,48 @@
       "reservation_created_error": "Error during the reservation request",
       "no_allowment": "You can not reserve an infrastructure",
       "select_headquarter": "Select a headquarter"
+    },
+    "profile": {
+      "never_approved": "Never Approved",
+      "waiting_first": "Waiting for First Approval",
+      "expired": "Approval Expired",
+      "waiting": "Waiting for Approval",
+      "approved": "Approved",
+      "role": "Role",
+      "firstname": "First Name",
+      "lastname": "Last Name",
+      "society": "Society",
+      "admin": "Admin",
+      "civilian": "Civilian",
+      "bluelights": "Blue Lights",
+      "army": "Army"
+    },
+
+    "documents": {
+        "documents": "Documents",
+        "formulary": "Formulary",
+        "insurance": "Insurance",
+        "decision": "Decision",
+        "document": "Document",
+        "send_documents": "Send Documents",
+        "load": "Load"
+    },
+
+    "user_approval": {
+      "no_data": "Select a user to see the details",
+      "attual_role": "Current Role"
+    },
+
+    "settings": {
+      "settings": "Settings",
+      "targets": "Targets",
+      "headquarters": "Head Quarters",
+      "name": "Name",
+      "address": "Address",
+      "price": "Price",
+      "submit": "Submit"
     }
+
 
 
 }

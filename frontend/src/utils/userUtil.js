@@ -29,16 +29,16 @@ export const getColor = (status) => {
   }
 }
 
-export const getDocumentName = (index) => {
+export const getDocumentName = (index, t) => {
   switch (index) {
       case 0:
-          return 'Formulario';
+          return t('documents.formulary');
       case 1:
-          return 'Assicurazione';
+          return t('documents.insurance');
       case 2:
-          return 'Decisione'
+          return t('documents.decision');
       default:
-          return 'Documento';
+          return t('documents.document');
   }
 } 
 

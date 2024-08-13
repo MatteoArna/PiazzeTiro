@@ -21,9 +21,11 @@ const NavBar = ({ user, handleLogout, navigateTo, selectedPage }) => {
             <li className={selectedPage === 'infrastructures' ? 'selected' : ''} onClick={() => navigateTo('infrastructures')}>{t('navigation.infrastructure')}</li>
           )}
           <li className={selectedPage === 'profile' ? 'selected' : ''} onClick={() => navigateTo('profile')}>{t('navigation.profile')}</li>
-          <li className={selectedPage === 'settings' ? 'selected' : ''} onClick={() => navigateTo('settings')}>Impostazioni</li>
           {user.roleId === 'admin' && (
-            <li className={selectedPage === 'userApproval' ? 'selected' : ''} onClick={() => navigateTo('userApproval')}>{t('navigation.user_approval')}</li>
+            <>
+              <li className={selectedPage === 'userApproval' ? 'selected' : ''} onClick={() => navigateTo('userApproval')}>{t('navigation.user_approval')}</li>
+              <li className={selectedPage === 'settings' ? 'selected' : ''} onClick={() => navigateTo('settings')}>Impostazioni</li>
+            </>
           )}
           {user.status === 4 && (
             <li className={selectedPage === 'reservations' ? 'selected' : ''} onClick={() => navigateTo('reservations')}>{t('navigation.reservations')}</li>

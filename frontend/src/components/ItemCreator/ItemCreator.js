@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import "./ItemCreator.css"; // Importa il CSS
 
+import { useTranslation } from "react-i18next";
+
 const ItemCreator = ({ input1, input2 = null, input2Type = "text", onCreate }) => {
     const [input1Value, setInput1Value] = useState("");
     const [input2Value, setInput2Value] = useState(input2 ? "" : null);
+
+    const {t} = useTranslation();
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -30,7 +34,7 @@ const ItemCreator = ({ input1, input2 = null, input2Type = "text", onCreate }) =
                     {...(input2Type === "number" && { min: "0", step: "any" })}
                 />
             )}
-            <button type="submit">Submit</button>
+            <button type="submit">{t('settings.submit')}</button>
         </form>
     );
 };

@@ -8,7 +8,11 @@ import useDocumentHelper from '../../../hooks/custom/userApprovalPage/useDocumen
 
 import { getDocumentName } from '../../../utils/userUtil';
 
+import { useTranslation } from 'react-i18next';
+
 const UserDetails = ({ user, onChangeRole }) => { 
+
+  const {t} = useTranslation();
 
   const { society, name, email, status: userStatus, roles} = useDetailPage(user);
 
@@ -27,7 +31,7 @@ const UserDetails = ({ user, onChangeRole }) => {
 
   if(!user){
     return(
-      <h1>Seleziona un utente per vederne i dettagli</h1>
+      <h1>{t('user_approval.no_data')}</h1>
     )
   }
   return (
@@ -40,7 +44,7 @@ const UserDetails = ({ user, onChangeRole }) => {
       <hr />
 
 
-      <p className='user-info'>Ruolo attuale</p>
+      <p className='user-info'>{t('user_approval.attual_role')}</p>
       <select 
         className="role-select" 
         value={selectedRole}
@@ -50,14 +54,14 @@ const UserDetails = ({ user, onChangeRole }) => {
       >
         {roles.map(role => (
           <option className="role-select-option" key={role.id} value={role.id}>
-            {role.role}
+            {t('profile.' + role.role)}
           </option>
         ))}
       </select>
 
       <hr />
 
-      <p className='user-info'>Documenti</p>
+      <p className='user-info'>{t('documents.documents')}</p>
 
       {
   selectedRole === 0 && (
@@ -69,7 +73,7 @@ const UserDetails = ({ user, onChangeRole }) => {
             file={doc.filePath}
             fileType={'application/pdf'}
             initialState={status}
-            fileName={getDocumentName(index)}
+            fileName={getDocumentName(index, t)}
             onDownload={() => downloadFile(doc.filePath)}
             onDelete={() => deleteDocument(doc.filePath)}
             onUpload={uploadDocument}
@@ -81,14 +85,14 @@ const UserDetails = ({ user, onChangeRole }) => {
           file={documents[2] && documents[2].filePath}
           fileType={'application/pdf'}
           initialState={status === 'accepted' ? 'accepted' : 'toLoad'}
-          fileName={getDocumentName(2)}
+          fileName={getDocumentName(2, t)}
           onDownload={downloadFile}
           onDelete={deleteDocument}
           onUpload={uploadDocument}
         />
       )}
       {status !== 'accepted' && documents.length > 1 && (
-        <button className="submit-button" onClick={submitDocuments}>Invia File</button>
+        <button className="submit-button" onClick={submitDocuments}>{t('documents.send_documents')}</button>
       )}
     </>
   )

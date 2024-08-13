@@ -2,12 +2,14 @@ import { useCallback, useEffect, useState } from "react";
 import { getStatus } from '../../../utils/userUtil';
 import { fetchAllRoles } from "../../../services/userRoleService";
 
+import { useTranslation } from "react-i18next";
 
 const useDetailPage = (user) => {
   const [name, setName] = useState("");
   const [status, setStatus] = useState("");
   const [roles, setRoles] = useState([]);
 
+  const {t} = useTranslation();
 
     const handleFetchAllRoles = async () => {
         try {
@@ -21,7 +23,7 @@ const useDetailPage = (user) => {
     useEffect(() => {
         if (user) {
             setName(`${user.firstName} ${user.lastName}`);
-            setStatus(getStatus(user.status));
+            setStatus(getStatus(user.status, t));
             handleFetchAllRoles();
         }
     }, [user], handleFetchAllRoles);

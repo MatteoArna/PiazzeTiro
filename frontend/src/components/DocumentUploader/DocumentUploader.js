@@ -12,6 +12,7 @@ import FileContainer from '../FileContainer/FileContainer';
 //Utils
 import { getDocumentName } from '../../utils/userUtil';
 
+import { useTranslation } from 'react-i18next';
 
 const DocumentUploader = ({ userData, adminFile }) => {
   const { 
@@ -24,6 +25,8 @@ const DocumentUploader = ({ userData, adminFile }) => {
     downloadFile,
     submitDocuments
   } = useDocumentHelper(userData.email);
+
+  const {t} = useTranslation();
 
   if (loading) {
     return <div>Loading...</div>;
@@ -41,13 +44,14 @@ const DocumentUploader = ({ userData, adminFile }) => {
 
   return (
     <div className='document-uploader'>
+      <h1>{t('documents.documents')}</h1>
       {[0, 1].map((index) => (
         <FileContainer
           key={index}
           file={documents[index]?.filePath}
           fileType={'application/pdf'}
           initialState={status}
-          fileName={getDocumentName(index)}
+          fileName={getDocumentName(index, t)}
           onDownload={() => downloadFile(documents[index]?.filePath)}
           onDelete={() => deleteDocument(documents[index]?.filePath)}
           onUpload={uploadDocument}
@@ -60,7 +64,7 @@ const DocumentUploader = ({ userData, adminFile }) => {
             file={documents[2]?.filePath}
             fileType={'application/pdf'}
             initialState={status}
-            fileName={getDocumentName(2)}
+            fileName={getDocumentName(2, t)}
             onDownload={() => downloadFile(documents[2]?.filePath)}
             onDelete={() => deleteDocument(documents[2]?.filePath)}
             onUpload={uploadDocument}
@@ -69,7 +73,7 @@ const DocumentUploader = ({ userData, adminFile }) => {
       }
       {
         (userData.status === 0 || userData.status === 2) && (
-          <button className="submit-button" onClick={handleSubmitDocuments}>Invia File</button>
+          <button className="submit-button" onClick={handleSubmitDocuments}>{t('documents.send_documents')}</button>
         )
       }
     </div>

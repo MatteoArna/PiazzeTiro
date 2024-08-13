@@ -62,8 +62,36 @@
         "role": "Ruolo",
         "firstname": "Nome",
         "lastname": "Cognome",
-        "society": "Società"
+        "society": "Società",
+        "admin": "Amministratore",
+        "civilian": "Civile",
+        "bluelights": "Luci Blu",
+        "army": "Esercito"
+    },
 
+    "documents":{
+      "documents": "Documenti",
+      "formulary": "Formulario",
+      "insurance": "Assicurazione",
+      "decision": "Decisione",
+      "document": "Document",
+      "send_documents": "Invia Documenti",
+      "load": "Carica"
+    },
+    
+    "user_approval": {
+      "no_data": "Seleziona un utente per vederne i dettagli",
+      "attual_role": "Ruolo attuale"
+    },
+
+    "settings": {
+      "settings": "Impostazioni",
+      "targets": "Bersagli",
+      "headquarters": "Sedi",
+      "name": "Nome",
+      "address": "Indirizzo",
+      "price": "Prezzo",
+      "submit": "Aggiungi"
     }
 
     

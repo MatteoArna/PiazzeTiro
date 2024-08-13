@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './FileContainer.css';
 
+import { useTranslation } from 'react-i18next';
+
 const FileContainer = ({ file, fileName, initialState, fileType, onUpload, onDelete, onDownload }) => {
   const [status, setStatus] = useState(initialState);
+
+  const {t} = useTranslation();
 
   useEffect(() => {
     if (file && initialState === 'toLoad') {
@@ -39,7 +43,7 @@ const FileContainer = ({ file, fileName, initialState, fileType, onUpload, onDel
     <div className={`file-container ${status}`}>
       {status === 'toLoad' && (
         <>
-          <div className="file-info">Carica <i>{fileName}</i></div>
+          <div className="file-info">{t('documents.load')} <i>{fileName}</i></div>
           <input
             type="file"
             accept={fileType}

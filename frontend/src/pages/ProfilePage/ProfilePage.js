@@ -28,7 +28,7 @@ const ProfilePage = ({ userData }) => {
           </div>
         </div>
         <div className="profile-details">
-          <p><strong>{t('profile.role')}:</strong> {userData.roleId}</p>
+          <p><strong>{t('profile.role')}:</strong> {t('profile.' + userData.roleId)}</p>
           <p><strong>{t('profile.firstname')}:</strong> {userData.firstName}</p>
           <p><strong>{t('profile.lastname')}:</strong> {userData.lastName}</p>
           <p><strong>E-mail:</strong> {userData.email}</p>
