@@ -1,0 +1,103 @@
+{
+    "navigation": {
+        "news_page": "Page des Nouvelles",
+        "infrastructure": "Infrastructures",
+        "profile": "Profil",
+        "settings": "Paramètres",
+        "user_approval": "Approbation des Utilisateurs",
+        "reservations": "Réservations",
+        "logout": "Déconnexion"
+    },
+    "news_page": {
+        "info": "Information",
+        "warning": "Avertissement",
+        "more_info": "Plus d'informations",
+        "edit": "Modifier",
+        "delete": "Supprimer",
+        "summary": "Résumé",
+        "content": "Description",
+        "type": "Type",
+        "choose_type": "Choisissez le type",
+        "create_news": "Créer des Nouvelles",
+        "edit_news": "Modifier les Nouvelles",
+        "creation_success": "Nouvelles créées avec succès",
+        "creation_error": "Erreur lors de la création des Nouvelles",
+        "edit_success": "Nouvelles modifiées avec succès",
+        "edit_error": "Erreur lors de la modification des Nouvelles",
+        "delete_success": "Nouvelles supprimées avec succès",
+        "delete_error": "Erreur lors de la suppression des Nouvelles"
+    },
+    "infrastructures": {
+        "headquarter": "Siège",
+        "edit_mode": "Modifier",
+        "create_infrastructure": "Créer une Infrastructure",
+        "name": "Nom",
+        "description": "Description",
+        "price": "Prix",
+        "create": "Créer",
+        "available_targets": "Cibles Disponibles",
+        "select_target": "Sélectionner des Cibles",
+        "add_target": "Ajouter une cible",
+        "add_infrastructure": "Ajouter une Infrastructure",
+        "linked_infrastructures": "Infrastructures Liées",
+        "delete": "Supprimer",
+        "edit_infrastructure": "Modifier l'Infrastructure",
+        "creation_success": "Infrastructure créée avec succès",
+        "creation_error": "Erreur lors de la création de l'Infrastructure",
+        "edit_success": "Infrastructure modifiée avec succès",
+        "edit_error": "Erreur lors de la modification de l'Infrastructure",
+        "reservation_created_success": "Réservation créée avec succès",
+        "reservation_created_error": "Erreur lors de la demande de réservation",
+        "no_allowment": "Vous ne pouvez pas réserver une infrastructure",
+        "select_headquarter": "Sélectionner un siège"
+    },
+    "profile": {
+        "never_approved": "Jamais Approuvé",
+        "waiting_first": "En attente de la première approbation",
+        "expired": "Approbation Expirée",
+        "waiting": "En attente d'approbation",
+        "approved": "Approuvé",
+        "role": "Rôle",
+        "firstname": "Prénom",
+        "lastname": "Nom de famille",
+        "society": "Société",
+        "admin": "Administrateur",
+        "civilian": "Civil",
+        "bluelights": "Forces de l'ordre",
+        "army": "Armée"
+    },
+    "documents": {
+        "documents": "Documents",
+        "formulary": "Formulaire",
+        "insurance": "Assurance",
+        "decision": "Décision",
+        "document": "Document",
+        "send_documents": "Envoyer les Documents",
+        "load": "Charger"
+    },
+    "user_approval": {
+        "no_data": "Sélectionnez un utilisateur pour voir les détails",
+        "attual_role": "Rôle Actuel"
+    },
+    "settings": {
+        "settings": "Paramètres",
+        "targets": "Cibles",
+        "headquarters": "Sièges",
+        "name": "Nom",
+        "address": "Adresse",
+        "price": "Prix",
+        "submit": "Soumettre"
+    },
+    "reservations": {
+    "contact": "Contact",
+    "infrastructure": "Infrastructure",
+    "period": "Horaires",
+    "participants": "Nombre de personnes",
+    "target": "Cible",
+    "price": "Prix",
+    "cancel_reservation": "Annuler la réservation",
+    "motivation": "Motif",
+    "delete": "Supprimer"
+}
+
+}

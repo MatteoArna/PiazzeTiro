@@ -4,12 +4,15 @@ import axios from 'axios';
 import { AuthContext } from '../../context/AuthContext';
 import './Login.css';
 
+import { useTranslation } from 'react-i18next';
+
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -50,7 +53,7 @@ const Login = () => {
           />
         </div>
         <div className="button-container">
-          <a href="/register">registrati</a>
+          <a href="/register">register</a>
           <button type="submit">Login</button>
         </div>
         {error && <p className="error">{error}</p>}

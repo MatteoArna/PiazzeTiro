@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { fetchAllUsers, fetchUserById, setUserToNextStatus, changeUserRole, removeUserApproval, approveUser } from '../services/userService';
+import { fetchAllUsers, fetchUserById, setUserToNextStatus, changeUserRole, removeUserApproval, approveUser, changeLanguage } from '../services/userService';
 
 const useUser = (email = null) => {
   const [user, setUser] = useState(null);
@@ -33,7 +33,6 @@ const useUser = (email = null) => {
     try {
       const response = await fetchUserById(email);
       if(checkIfUserIsExpired(response.data)){
-        console.log("User is expired");
         removeUserApproval(email);
       }
       setUser(response.data);
@@ -66,15 +65,25 @@ const useUser = (email = null) => {
     }
   }, []);
 
+  const handleChangeLanguage = useCallback(async (language) => {
+    setLoading(true);
+    setError(null);
+    try {
+      await changeLanguage(email, language);
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
   const handleChangeRole = useCallback(async (email = null, roleId) => {
-    console.log("Changing role to " + roleId);
     setLoading(true);
     setError(null);
     try {
       await changeUserRole(email, roleId);
 
       if(roleId === '0'){
-        console.log("Removing approval");
         removeUserApproval(email);
       }else{
         approveUser(email);
@@ -96,7 +105,8 @@ const useUser = (email = null) => {
     loadAllUsers,
     loadUserById,
     setUserToNextStatus: handleSetUserToNextStatus,
-    changeRole: handleChangeRole
+    changeRole: handleChangeRole,
+    changeLanguage: handleChangeLanguage
   };
 };
 

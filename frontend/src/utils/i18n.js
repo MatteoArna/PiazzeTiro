@@ -4,6 +4,8 @@ import { initReactI18next } from 'react-i18next';
 // Importa i file di traduzione
 import translationEN from '../assets/locales/en/translation.json';
 import translationIT from '../assets/locales/it/translation.json';
+import translationFR from '../assets/locales/fr/translation.json';
+import translationDE from '../assets/locales/de/translation.json';
 
 // Definisci le risorse
 const resources = {
@@ -13,6 +15,12 @@ const resources = {
   it: {
     translation: translationIT,
   },
+  fr: {
+    translation: translationFR,
+  },
+  de: {
+    translation: translationDE,
+  }
 };
 
 i18n

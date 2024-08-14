@@ -22,7 +22,7 @@ class UserController extends BaseController {
         try {
             const user = await User.findOne({
                 where: { email: req.params.id },
-                attributes: { include: ['createdAt', 'updatedAt'] },
+                attributes: { include: ['createdAt', 'updatedAt', 'language'] },
                 include: [{ model: UserRole, attributes: ['role'] }]
             });
 
@@ -30,7 +30,6 @@ class UserController extends BaseController {
 
             res.status(200).json(user);
         } catch (error) {
-            console.log(error)
             res.status(500).json({ message: 'Errore nel recuperare gli utenti', error });
         }
     }
@@ -66,6 +65,18 @@ class UserController extends BaseController {
                 where: { email: req.params.email }
             });
             await user.update({ roleId: req.body.roleId });
+            res.status(200).json(user);
+        }catch (error) {
+            res.status(500).json({ message: 'Errore nel recuperare gli utenti', error });
+        }
+    }
+
+    changeLanguage = async (req, res) => {
+        try{
+            const user = await User.findOne({
+                where: {email: req.params.email}
+            })
+            await user.update({ language: req.body.language })
             res.status(200).json(user);
         }catch (error) {
             res.status(500).json({ message: 'Errore nel recuperare gli utenti', error });

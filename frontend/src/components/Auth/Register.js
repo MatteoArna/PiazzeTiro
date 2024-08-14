@@ -46,7 +46,7 @@ const Register = () => {
         <div className="form-group">
           <input
             type="text"
-            placeholder="Nome"
+            placeholder="Name"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             required
@@ -55,7 +55,7 @@ const Register = () => {
         <div className="form-group">
           <input
             type="text"
-            placeholder="Cognome"
+            placeholder="Last name"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             required

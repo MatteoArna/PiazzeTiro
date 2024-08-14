@@ -1,0 +1,103 @@
+{
+    "navigation": {
+        "news_page": "Nachrichtenseite",
+        "infrastructure": "Infrastrukturen",
+        "profile": "Profil",
+        "settings": "Einstellungen",
+        "user_approval": "Benutzergenehmigung",
+        "reservations": "Reservierungen",
+        "logout": "Abmelden"
+    },
+    "news_page": {
+        "info": "Information",
+        "warning": "Warnung",
+        "more_info": "Mehr Informationen",
+        "edit": "Bearbeiten",
+        "delete": "Löschen",
+        "summary": "Kurze Zusammenfassung",
+        "content": "Beschreibung",
+        "type": "Typ",
+        "choose_type": "Wählen Sie den Typ",
+        "create_news": "Nachrichten Erstellen",
+        "edit_news": "Nachrichten Bearbeiten",
+        "creation_success": "Nachrichten erfolgreich erstellt",
+        "creation_error": "Fehler beim Erstellen der Nachrichten",
+        "edit_success": "Nachrichten erfolgreich bearbeitet",
+        "edit_error": "Fehler beim Bearbeiten der Nachrichten",
+        "delete_success": "Nachrichten erfolgreich gelöscht",
+        "delete_error": "Fehler beim Löschen der Nachrichten"
+    },
+    "infrastructures": {
+        "headquarter": "Hauptsitz",
+        "edit_mode": "Bearbeiten",
+        "create_infrastructure": "Infrastruktur Erstellen",
+        "name": "Name",
+        "description": "Beschreibung",
+        "price": "Preis",
+        "create": "Erstellen",
+        "available_targets": "Verfügbare Ziele",
+        "select_target": "Ziele Auswählen",
+        "add_target": "Ziel hinzufügen",
+        "add_infrastructure": "Infrastruktur Hinzufügen",
+        "linked_infrastructures": "Verknüpfte Infrastrukturen",
+        "delete": "Löschen",
+        "edit_infrastructure": "Infrastruktur Bearbeiten",
+        "creation_success": "Infrastruktur erfolgreich erstellt",
+        "creation_error": "Fehler beim Erstellen der Infrastruktur",
+        "edit_success": "Infrastruktur erfolgreich bearbeitet",
+        "edit_error": "Fehler beim Bearbeiten der Infrastruktur",
+        "reservation_created_success": "Reservierung erfolgreich erstellt",
+        "reservation_created_error": "Fehler bei der Reservierungsanfrage",
+        "no_allowment": "Sie können keine Infrastruktur reservieren",
+        "select_headquarter": "Wählen Sie einen Hauptsitz"
+    },
+    "profile": {
+        "never_approved": "Nie Genehmigt",
+        "waiting_first": "Warten auf erste Genehmigung",
+        "expired": "Genehmigung Abgelaufen",
+        "waiting": "Warten auf Genehmigung",
+        "approved": "Genehmigt",
+        "role": "Rolle",
+        "firstname": "Vorname",
+        "lastname": "Nachname",
+        "society": "Gesellschaft",
+        "admin": "Admin",
+        "civilian": "Zivilist",
+        "bluelights": "Blaulichtorganisationen",
+        "army": "Armee"
+    },
+    "documents": {
+        "documents": "Dokumente",
+        "formulary": "Formular",
+        "insurance": "Versicherung",
+        "decision": "Entscheidung",
+        "document": "Dokument",
+        "send_documents": "Dokumente Senden",
+        "load": "Laden"
+    },
+    "user_approval": {
+        "no_data": "Wählen Sie einen Benutzer, um die Details zu sehen",
+        "attual_role": "Aktuelle Rolle"
+    },
+    "settings": {
+        "settings": "Einstellungen",
+        "targets": "Ziele",
+        "headquarters": "Hauptsitze",
+        "name": "Name",
+        "address": "Adresse",
+        "price": "Preis",
+        "submit": "Absenden"
+    },
+    "reservations": {
+    "contact": "Kontakt",
+    "infrastructure": "Infrastruktur",
+    "period": "Zeitfenster",
+    "participants": "Anzahl der Teilnehmer",
+    "target": "Ziel",
+    "price": "Preis",
+    "cancel_reservation": "Reservierung stornieren",
+    "motivation": "Grund",
+    "delete": "Löschen"
+}
+
+}

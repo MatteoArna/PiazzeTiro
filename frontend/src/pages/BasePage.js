@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Calendar from '../components/Calendar/Calendar';
 import DocumentUploader from '../components/DocumentUploader/DocumentUploader';
 import NavBar from '../components/NavBar/NavBar';
@@ -13,6 +13,7 @@ import InfratructurePage from './InfrastructurePage/InfratructurePage';
 import ReservationPage from './ReservationPage/ReservationPage';
 import SettingsPage from './SettingsPage/SettingsPage';
 
+import { useTranslation } from 'react-i18next';
 
 import './BasePage.css';
 
@@ -20,6 +21,14 @@ const BasePage = () => {
   const { auth, logout } = useAuth();
   const { user, loading, error } = useUser(auth.email);
   const { selectedPage, navigateTo } = useNavigation('profile');
+
+  const { i18n } = useTranslation();
+
+  useEffect(() => {
+    if (user && user.language) {
+      i18n.changeLanguage(user.language);
+    }
+  }, [user, i18n]);
 
   if (loading) {
     return <div className="base-page">Loading...</div>;
@@ -46,6 +55,7 @@ const BasePage = () => {
         {selectedPage === 'reservations' && <ReservationPage showUserReservation={user.roleId !== 'admin'} />}
         {selectedPage === 'settings' && <SettingsPage />}
       </div>
+
 
       <div>
         {(selectedPage === 'news' || selectedPage === 'infrastructures') && <Calendar userData={user} />}

@@ -13,6 +13,7 @@ import './ProfilePage.css';
 
 const ProfilePage = ({ userData }) => {
 
+
   const {t} = useTranslation();
 
   return (
@@ -36,7 +37,7 @@ const ProfilePage = ({ userData }) => {
         </div>
 
         <div className="profile-actions">
-          <LanguageSwitcher />
+          <LanguageSwitcher email={userData.email}/>
         </div>
       </div>
     </div>

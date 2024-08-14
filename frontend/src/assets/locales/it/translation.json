@@ -92,9 +92,18 @@
       "address": "Indirizzo",
       "price": "Prezzo",
       "submit": "Aggiungi"
+    },
+
+    "reservations": {
+        "contact": "Contatto",
+        "infrastructure": "Infrastruttura",
+        "period": "Orari",
+        "participants": "N. di persone",
+        "target": "Bersaglio",
+        "price": "Prezzo",
+        "cancel_reservation": "Cancella riservazione",
+        "motivation": "Motivazione",
+        "delete": "Cancella"
     }
-
-    
-
   }
   

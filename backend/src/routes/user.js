@@ -9,6 +9,7 @@ router.get('/:email', (req, res) => userController.getUserById(req, res));
 router.put('/nextStatus/:email', (req, res) => userController.setUserToNextStatus(req, res));
 
 router.put('/changeRole/:email', (req, res) => userController.changeRole(req, res));
+router.put('/changeLanguage/:email', (req, res) => userController.changeLanguage(req, res));
 
 router.put('/approve/:email', (req, res) => userController.approveUser(req, res));
 router.put('/removeApproval/:email', (req, res) => userController.removeApproval(req, res));

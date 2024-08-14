@@ -40,6 +40,11 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  language:{
+    type: DataTypes.STRING,
+    allowNull: false,
+    defaultValue: 'en',
+  }
 }, {
   timestamps: true,
   tableName: 'users',

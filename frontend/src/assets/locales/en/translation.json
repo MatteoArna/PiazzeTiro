@@ -92,7 +92,19 @@
       "address": "Address",
       "price": "Price",
       "submit": "Submit"
-    }
+    },
+    "reservations": {
+    "contact": "Contact",
+    "infrastructure": "Infrastructure",
+    "period": "Time Slots",
+    "participants": "Number of Participants",
+    "target": "Target",
+    "price": "Price",
+    "cancel_reservation": "Cancel Reservation",
+    "motivation": "Reason",
+    "delete": "Delete"
+}
+
 
 
 

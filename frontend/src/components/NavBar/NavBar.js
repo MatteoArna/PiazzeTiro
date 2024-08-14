@@ -24,7 +24,7 @@ const NavBar = ({ user, handleLogout, navigateTo, selectedPage }) => {
           {user.roleId === 'admin' && (
             <>
               <li className={selectedPage === 'userApproval' ? 'selected' : ''} onClick={() => navigateTo('userApproval')}>{t('navigation.user_approval')}</li>
-              <li className={selectedPage === 'settings' ? 'selected' : ''} onClick={() => navigateTo('settings')}>Impostazioni</li>
+              <li className={selectedPage === 'settings' ? 'selected' : ''} onClick={() => navigateTo('settings')}>{t('navigation.settings')}</li>
             </>
           )}
           {user.status === 4 && (
