@@ -14,7 +14,7 @@ const useInfrastructurePage = () => {
             id: element.id,
             title: element.type,
             subtitle: element.HeadQuarter.name,
-            more: element.price + " chf",
+            //more: element.price + " chf",
         }));
         setElements(elements);
     }, [infrastructureTypes]);

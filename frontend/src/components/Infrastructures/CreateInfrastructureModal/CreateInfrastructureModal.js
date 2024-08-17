@@ -9,9 +9,9 @@ import { useTranslation } from "react-i18next";
 const CreateInfrastructureModal = ({ onClose, onSubmit, infrastructureType, infrastructures = [], headquarters = [], targets = [], onCreateInfrastructure, onDeleteInfrastructure, onAddTarget }) => {
     const [type, setType] = useState('');
     const [description, setDescription] = useState('');
-    const [price, setPrice] = useState('');
     const [headQuarter, setHeadQuarter] = useState('');
     const [targetToAdd, setTargetToAdd] = useState('');
+    const [price, setPrice] = useState(0);
 
     const [targetsToAvoid, setTargetsToAvoid] = useState([]);
 
@@ -69,10 +69,6 @@ const CreateInfrastructureModal = ({ onClose, onSubmit, infrastructureType, infr
                         }}
                         required
                     />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="price">{t('infrastructures.price')}</label>
-                    <input type="number" id="price" value={price} onChange={(e) => setPrice(e.target.value)} required />
                 </div>
                 <div className="form-group">
                     <label htmlFor="headQuarter">{t('infrastructures.headquarter')}</label>

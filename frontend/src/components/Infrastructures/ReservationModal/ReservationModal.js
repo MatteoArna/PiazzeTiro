@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Modal from '../../Modal/Modal';
 
+import { useTranslation } from 'react-i18next';
+
 const ReservationModal = ({ onClose, onSubmit, userData, infrastructureType, infrastructures, users = [] }) => {
   const [date, setDate] = useState('');
   const [hourStart, setHourStart] = useState('');
@@ -9,7 +11,7 @@ const ReservationModal = ({ onClose, onSubmit, userData, infrastructureType, inf
   const [user, setUser] = useState('');
   const [target, setTarget] = useState('');
 
-  console.log(infrastructureType);
+  const { t } = useTranslation();
 
   //Only for civilians
   const [nPartecipants, setNPartecipants] = useState(0);
@@ -26,7 +28,7 @@ const ReservationModal = ({ onClose, onSubmit, userData, infrastructureType, inf
     const targetPrice = infrastructureType.targets.find(t => t.targetId === Number(target)).Target.price;
   
 
-    const finalPrice = (targetPrice * nPartecipants) + (infrastructureType.price * totalHours);
+    const finalPrice = (targetPrice * totalHours);
 
     const reservationData = {
       idCustomer: user ? user : userData.email,
@@ -46,26 +48,26 @@ const ReservationModal = ({ onClose, onSubmit, userData, infrastructureType, inf
   };
 
   return (
-    <Modal title="Crea Prenotazione" isOpen={true} onClose={onClose}>
+    <Modal title={t('infrastructures.create_reservation')} isOpen={true} onClose={onClose}>
       <div className='form-group'>
-        <label htmlFor='date'>Data</label>
+        <label htmlFor='date'>{t('infrastructures.date')}</label>
         <input type='date' id='date' value={date} onChange={(e) => setDate(e.target.value)} required />
       </div>
 
       <div className='form-group'>
-        <label htmlFor='hours'>Orario di inizio</label>
+        <label htmlFor='hours'>{t('infrastructures.start_time')}</label>
         <input type='time' id='hourStart' value={hourStart} onChange={(e) => setHourStart(e.target.value)} step='900' required />
       </div>
 
       <div className='form-group'>
-        <label htmlFor='hours'>Orario di fine</label>
+        <label htmlFor='hours'>{t('infrastructures.end_time')}</label>
         <input type='time' id='hourEnd' value={hourEnd} onChange={(e) => setHourEnd(e.target.value)} step='900' required />
       </div>
 
       <div className='form-group'>
-        <label htmlFor='infrastructure'>Infrastruttura</label>
+        <label htmlFor='infrastructure'>{t('infrastructures.infrastructure')}</label>
         <select id='infrastructure' value={infrastructure} onChange={(e) => setInfrastructure(e.target.value)} required>
-          <option value=''>Seleziona un'infrastruttura</option>
+          <option value=''>{t('infrastructures.select_infrastructure')}</option>
           {infrastructures.map((infrastructure) => (
             <option key={infrastructure.id} value={infrastructure.id}>{infrastructure.name}</option>
           ))}
@@ -76,7 +78,7 @@ const ReservationModal = ({ onClose, onSubmit, userData, infrastructureType, inf
         userData.roleId === 'civilian' && (
           <>
             <div className='form-group'>
-              <label htmlFor='nPartecipants'>Numero Partecipanti</label>
+              <label htmlFor='nPartecipants'>{t('infrastructures.nParticipants')}</label>
               <input type='number' id='nPartecipants' value={nPartecipants} onChange={(e) => setNPartecipants(e.target.value)} required />
             </div>
           </>
@@ -85,7 +87,7 @@ const ReservationModal = ({ onClose, onSubmit, userData, infrastructureType, inf
 
       <div className='form-group'>
         <select id='target' value={target} onChange={(e) => setTarget(e.target.value)} required>
-          <option value=''>Seleziona un target</option>
+          <option value=''>{t('infrastructures.select_target')}</option>
         {
           infrastructureType.targets.map((target) => (
             <option key={target.targetId} value={target.targetId}>{target.target}</option>
@@ -97,9 +99,9 @@ const ReservationModal = ({ onClose, onSubmit, userData, infrastructureType, inf
       {
         userData.roleId === 'admin' && (
           <div className='form-group'>
-            <label htmlFor='user'>Utenti</label>
+            <label htmlFor='user'>{t('infrastructures.user')}</label>
             <select id='user' value={user} onChange={(e) => setUser(e.target.value)} required>
-              <option value=''>Seleziona un utente</option>
+              <option value=''>{t('infrastructures.select_user')}</option>
               {users.map((user) => (
                 <option key={user.email} value={user.email}>
                   {user.society + " (" + user.firstName + " " + user.lastName + ")"}
@@ -112,7 +114,7 @@ const ReservationModal = ({ onClose, onSubmit, userData, infrastructureType, inf
         )}
 
      
-      <button onClick={handleReservation}>Crea Prenotazione</button>
+      <button onClick={handleReservation}>{t('infrastructures.book')}</button>
     </Modal>
   );
 };

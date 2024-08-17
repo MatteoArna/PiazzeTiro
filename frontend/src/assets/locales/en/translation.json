@@ -51,7 +51,17 @@
       "reservation_created_success": "Reservation created succesfully",
       "reservation_created_error": "Error during the reservation request",
       "no_allowment": "You can not reserve an infrastructure",
-      "select_headquarter": "Select a headquarter"
+      "select_headquarter": "Select a headquarter",
+      "select_infrastructure": "Select an infrastructure",
+      "select_user": "Select a user",
+        "date": "Date",
+        "start_time": "Start time",
+        "end_time": "End time",
+        "infrastructure": "Infrastructure",
+        "user": "User",
+        "book": "Book",
+        "create_reservation": "Create reservation",
+        "nParticipants": "Number of participants"
     },
     "profile": {
       "never_approved": "Never Approved",

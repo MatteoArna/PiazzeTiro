@@ -49,7 +49,18 @@
         "reservation_created_success": "Reservierung erfolgreich erstellt",
         "reservation_created_error": "Fehler bei der Reservierungsanfrage",
         "no_allowment": "Sie können keine Infrastruktur reservieren",
-        "select_headquarter": "Wählen Sie einen Hauptsitz"
+        "select_headquarter": "Wählen Sie einen Hauptsitz",
+        
+        "select_infrastructure": "Wählen Sie eine Infrastruktur",
+        "select_user": "Wählen Sie einen Benutzer",
+        "date": "Datum",
+        "start_time": "Startzeit",
+        "end_time": "Endzeit",
+        "infrastructure": "Infrastruktur",
+        "user": "Benutzer",
+        "book": "Buchen",
+        "create_reservation": "Reservierung Erstellen",
+        "nParticipants": "Anzahl der Teilnehmer"
     },
     "profile": {
         "never_approved": "Nie Genehmigt",

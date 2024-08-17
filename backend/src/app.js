@@ -1,11 +1,21 @@
 // app.js
+console.log("app.js");
 const express = require('express');
+console.log("express importato");
 const bodyParser = require('body-parser');
+console.log("body-parser importato");
 const cors = require('cors');
+console.log("cors importato");
 const sequelize = require('./config/database');
+console.log("sequelize importato");
 const path = require('path');
+console.log("path importato");
 const { authenticate } = require('./middleware/authMiddleware');
+console.log("authMiddleware importato");
 const app = express();
+console.log("express configurato");
+
+console.log("app.js");
 
 // Configura CORS
 app.use(cors({

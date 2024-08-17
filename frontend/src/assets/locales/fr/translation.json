@@ -49,7 +49,17 @@
         "reservation_created_success": "Réservation créée avec succès",
         "reservation_created_error": "Erreur lors de la demande de réservation",
         "no_allowment": "Vous ne pouvez pas réserver une infrastructure",
-        "select_headquarter": "Sélectionner un siège"
+        "select_headquarter": "Sélectionner un siège",
+        "select_infrastructure": "Sélectionner une infrastructure",
+        "select_user": "Sélectionnez un utilisateur",
+        "date": "Date",
+        "start_time": "Heure de début",
+        "end_time": "Heure de fin",
+        "infrastructure": "Infrastructure",
+        "user": "Utilisateur",
+        "book": "Réserver",
+        "create_reservation": "Créer une réservation",
+        "nParticipants": "Nombre de participants"
     },
     "profile": {
         "never_approved": "Jamais Approuvé",
@@ -63,7 +73,7 @@
         "society": "Société",
         "admin": "Administrateur",
         "civilian": "Civil",
-        "bluelights": "Forces de l'ordre",
+        "blueligths": "Forces de l'ordre",
         "army": "Armée"
     },
     "documents": {

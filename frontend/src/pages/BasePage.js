@@ -15,6 +15,16 @@ import SettingsPage from './SettingsPage/SettingsPage';
 
 import { useTranslation } from 'react-i18next';
 
+/*
+CadeBox: CadeBox con o senza bersagli (50 e 60)
+Piazze: Bersaglio ora * tipo (senza prezzo infrastruttura)
+
+-> Date
+-> Mail
+
+-> Mappa Interattiva
+*/
+
 import './BasePage.css';
 
 const BasePage = () => {
@@ -24,10 +34,12 @@ const BasePage = () => {
 
   const { i18n } = useTranslation();
 
+
   useEffect(() => {
     if (user && user.language) {
       i18n.changeLanguage(user.language);
     }
+    console.log('user', user);
   }, [user, i18n]);
 
   if (loading) {
@@ -52,7 +64,7 @@ const BasePage = () => {
         {selectedPage === 'userApproval' && <UserApproval userData={user}/>}
         {selectedPage === 'profile' && <ProfilePage userData={user} />}
         {selectedPage === 'infrastructures' && <InfratructurePage userData={user} />}
-        {selectedPage === 'reservations' && <ReservationPage showUserReservation={user.roleId !== 'admin'} />}
+        {selectedPage === 'reservations' && <ReservationPage showUserReservation={user && user.roleId !== 'admin'} />}
         {selectedPage === 'settings' && <SettingsPage />}
       </div>
 

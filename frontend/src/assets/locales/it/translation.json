@@ -43,6 +43,7 @@
         "add_target": "Aggiungi bersaglio",
         "add_infrastructure": "Aggiungi Infrastruttura",
         "linked_infrastructures": "Infrastrutture collegate",
+        "select_infrastructure": "Seleziona un'infrastruttura",
         "delete": "Elimina",
         "edit_infrastructure": "Modifica Infrastruttura",
         "creation_success": "Infrastruttura creata con successo",
@@ -51,7 +52,16 @@
         "edit_error": "Errore nella modifica dell'infrastruttura",
         "reservation_created_success": "Prenotazione creata con successo",
         "reservation_created_error": "Errore durante la richiesta di prenotazione",
-        "no_allowment": "Non puoi prenotare un'infrastruttura"
+        "no_allowment": "Non puoi prenotare un'infrastruttura",
+        "select_user": "Seleziona un utente",
+        "date": "Data",
+        "start_time": "Ora di inizio",
+        "end_time": "Ora di fine",
+        "infrastructure": "Infrastruttura",
+        "user": "Utente",
+        "book": "Prenotare",
+        "create_reservation": "Crea una prenotazione",
+        "nParticipants": "Numero di partecipanti"
     },
     "profile":{
         "never_approved": "Mai Approvato",
