@@ -4,8 +4,8 @@ import './ReservationPage.css';
 import GeneralList from '../../components/GeneralList/GeneralList';
 import useReservationPage from '../../hooks/custom/useReservationPage';
 
-const ReservationPage = ({showUserReservation = false}) => {
-  const { listElements, loading, error, onReservationSelected, selectedReservation, deleteReservation } = useReservationPage(showUserReservation);
+const ReservationPage = ({user}) => {
+  const { listElements, loading, error, onReservationSelected, selectedReservation, deleteReservation } = useReservationPage(user);
 
   if (loading) {
     return <div>Loading...</div>;

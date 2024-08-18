@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import useBooking from "../useBooking";
 
-const useReservationPage = (showUserReservation) => {
+const useReservationPage = (user) => {
   const [selectedReservation, setSelectedReservation] = useState(null);
   const { bookings, loading, error, deleteBooking } = useBooking();
 
@@ -14,12 +14,11 @@ const useReservationPage = (showUserReservation) => {
 
 
   useEffect(() => {
-    console.log(bookings);
     if (bookings.length > 0) {
-      const elements = bookings.map((element) => ({
+      const elements = bookings.filter((element) => user.roleId === 'admin' || element.idCustomer === user.email).map((element) => ({
         id: element.id,
-        title: showUserReservation ? element.Infrastructure.name : element.User.society,
-        subtitle: showUserReservation ? "Target: " + element.Target.name : element.User.firstName + " " + element.User.lastName,
+        title: user.roleId === 'admin' ? element.User.society : element.Infrastructure.name,
+        subtitle: user.roleId === 'admin' ? element.User.firstName + " " + element.User.lastName : "Target: " + element.Target.name,
         description: element.InfrastructureType.HeadQuarter.name,
         more: translateDate(element.date),
         isRed: element.status === 0,

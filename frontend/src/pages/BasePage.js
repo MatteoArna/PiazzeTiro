@@ -64,7 +64,7 @@ const BasePage = () => {
         {selectedPage === 'userApproval' && <UserApproval userData={user}/>}
         {selectedPage === 'profile' && <ProfilePage userData={user} />}
         {selectedPage === 'infrastructures' && <InfratructurePage userData={user} />}
-        {selectedPage === 'reservations' && <ReservationPage showUserReservation={user && user.roleId !== 'admin'} />}
+        {selectedPage === 'reservations' && <ReservationPage user={user} />}
         {selectedPage === 'settings' && <SettingsPage />}
       </div>
 
