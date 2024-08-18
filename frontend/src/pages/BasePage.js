@@ -70,7 +70,7 @@ const BasePage = () => {
 
 
       <div>
-        {(selectedPage === 'news' || selectedPage === 'infrastructures') && <Calendar userData={user} />}
+        {(selectedPage === 'news' || selectedPage === 'infrastructures') && user.roleId !== 'admin' && <Calendar userData={user} />}
         {selectedPage === 'profile' && user.roleId === 'civilian' && <DocumentUploader userData={user} />}
       </div>
     </div>
