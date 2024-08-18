@@ -29,7 +29,7 @@ const ReservationPage = ({user}) => {
           <ReservationDetails 
             reservation={selectedReservation} 
             onDeleteReservation={deleteReservation}
-            isAdmin={true}
+            isAdmin={user.roleId === 'admin'}
           />
         }
       </div>
