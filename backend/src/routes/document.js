@@ -10,7 +10,6 @@ router.get('/title/:title', (req, res) => DocumentController.getDocumentByTitle(
 
 router.post('/create', uploadFile, (req, res) => DocumentController.create(req, res));
 
-
 router.put('/update/:id', uploadFile, (req, res) => DocumentController.update(req, res));
 
 module.exports = router;

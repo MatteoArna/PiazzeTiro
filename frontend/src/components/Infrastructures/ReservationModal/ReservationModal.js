@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Markdown from 'markdown-to-jsx';
 import Modal from '../../Modal/Modal';
 
 import { useTranslation } from 'react-i18next';
@@ -49,6 +50,11 @@ const ReservationModal = ({ onClose, onSubmit, userData, infrastructureType, inf
 
   return (
     <Modal title={t('infrastructures.create_reservation')} isOpen={true} onClose={onClose}>
+
+      <div className='form-group'>
+        <Markdown>{infrastructureType.description}</Markdown>
+      </div>
+
       <div className='form-group'>
         <label htmlFor='date'>{t('infrastructures.date')}</label>
         <input type='date' id='date' value={date} onChange={(e) => setDate(e.target.value)} required />
