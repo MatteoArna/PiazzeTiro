@@ -8,6 +8,8 @@ const Register = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [society, setSociety] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -16,12 +18,18 @@ const Register = () => {
     setError('');
 
     try {
+
+      if (password !== confirmPassword) {
+        setError('Le password non coincidono');
+        return;
+      }
+
       await axios.post(`${process.env.REACT_APP_API_URL}/auth/register`, {
         email,
         firstName,
         lastName,
         roleId: 0, // Set roleId to 1 arbitrarily
-        society: '', // Set society to an empty string
+        society,
         password,
       });
       navigate('/login');
@@ -32,12 +40,12 @@ const Register = () => {
 
   return (
     <div className="register-container">
-      <h2>Registrati</h2>
+      <h2>Sign up</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <input
             type="email"
-            placeholder="e-mail"
+            placeholder="E-mail"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -70,8 +78,27 @@ const Register = () => {
             required
           />
         </div>
+        <div className="form-group">
+          <input
+            type="password"
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <input
+            type="text"
+            placeholder="Society"
+            value={society}
+            onChange={(e) => setSociety(e.target.value)}
+            required
+          />
+        </div>
         {error && <p className="error">{error}</p>}
-        <button type="submit">Registrati</button>
+        <button type="submit">Register</button>
       </form>
     </div>
   );
