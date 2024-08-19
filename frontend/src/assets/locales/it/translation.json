@@ -113,7 +113,9 @@
         "price": "Prezzo",
         "cancel_reservation": "Cancella riservazione",
         "motivation": "Motivazione",
-        "delete": "Cancella"
+        "delete": "Cancella",
+        "date": "Data",
+      "update": "Aggiorna"
     }
   }
   

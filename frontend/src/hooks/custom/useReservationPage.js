@@ -3,7 +3,7 @@ import useBooking from "../useBooking";
 
 const useReservationPage = (user) => {
   const [selectedReservation, setSelectedReservation] = useState(null);
-  const { bookings, loading, error, deleteBooking } = useBooking();
+  const { bookings, loading, error, deleteBooking, updateBooking } = useBooking();
 
   const [listElements, setListElements] = useState([]);
 
@@ -49,6 +49,22 @@ const useReservationPage = (user) => {
     setSelectedReservation(null);
   }
 
+  const handleUpdateReservation = (data) => {
+    updateBooking(data.id, data);
+    //Find the interested element in the listElements list, set the new date and update the list of bookings
+    const element = listElements.find((element) => element.id === data.id);
+    element.more = translateDate(data.date);
+    setListElements([...listElements]);
+
+    bookings.forEach((element) => {
+      if (element.id === data.id) {
+        element.date = data.date;
+        element.start = data.start;
+        element.end = data.end;
+      }
+    });  
+  }
+
   return {
     listElements,
     onReservationSelected,
@@ -56,6 +72,7 @@ const useReservationPage = (user) => {
     loading,
     error,
     deleteReservation: handleDeleteBooking,
+    updateReservation: handleUpdateReservation,
   };
 };
 

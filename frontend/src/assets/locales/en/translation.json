@@ -112,7 +112,9 @@
     "price": "Price",
     "cancel_reservation": "Cancel Reservation",
     "motivation": "Reason",
-    "delete": "Delete"
+    "delete": "Delete",
+    "date": "Date",
+    "update": "Update"
 }
 
 

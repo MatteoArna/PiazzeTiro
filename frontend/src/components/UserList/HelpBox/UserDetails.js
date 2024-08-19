@@ -97,68 +97,6 @@ const UserDetails = ({ user, onChangeRole }) => {
     </>
   )
 }
-
-
-
-
-    {/*}
-      <div className="document-boxes">
-
-        { user.status === 0 &&
-        
-          <h1>Waiting for documents</h1>
-        
-        }
-
-        { user.status >= 1 &&
-          <>
-            <FileContainer 
-              file={documents[0] && documents[0].filePath}
-              userEmail={user.email}
-              fileName="Formulario"
-              initialState={'waiting'}
-              fileType={'application/pdf'}
-            />
-
-            <FileContainer 
-              file={documents[1] && documents[1].filePath}
-              userEmail={user.email}
-              fileName="Polizza Assicurativa"
-              initialState={'waiting'}
-              fileType={'application/pdf'}
-            />
-
-            <FileContainer
-              file={documents[2] && documents[2].filePath}
-              userEmail={user.email}
-              fileName="Decisione"
-              initialState={(user.status === 2 ? 'accepted' : (documents[2] === null ? 'waiting' : 'toLoad'))}
-              fileType={'application/pdf'}
-              onUpload={(file) => handleOnUpload(file)}
-              onDelete={(file) => handleOnDelete(file)}
-            />
-
-
-            {
-              user.status < 2 &&
-              <button
-              className="submit-button"
-              disabled={user.status !== 1}
-              onClick={activateUser}
-              >
-                Approva Utente
-              </button>
-            }
-
-            
-          </>
-
-
-
-        }
-
-      </div>
-      {*/}
     </div>
   );
 };

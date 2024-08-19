@@ -5,7 +5,7 @@ import GeneralList from '../../components/GeneralList/GeneralList';
 import useReservationPage from '../../hooks/custom/useReservationPage';
 
 const ReservationPage = ({user}) => {
-  const { listElements, loading, error, onReservationSelected, selectedReservation, deleteReservation } = useReservationPage(user);
+  const { listElements, loading, error, onReservationSelected, selectedReservation, deleteReservation, updateReservation } = useReservationPage(user);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -29,6 +29,7 @@ const ReservationPage = ({user}) => {
           <ReservationDetails 
             reservation={selectedReservation} 
             onDeleteReservation={deleteReservation}
+            onUpdateReservation={updateReservation}
             isAdmin={user.roleId === 'admin'}
           />
         }

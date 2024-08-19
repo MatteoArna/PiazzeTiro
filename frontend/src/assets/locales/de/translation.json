@@ -108,7 +108,9 @@
     "price": "Preis",
     "cancel_reservation": "Reservierung stornieren",
     "motivation": "Grund",
-    "delete": "Löschen"
+    "delete": "Löschen",
+    "date": "Datum",
+    "update": "Aktualisieren"
 }
 
 }

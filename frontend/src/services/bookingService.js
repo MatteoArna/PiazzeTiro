@@ -5,3 +5,4 @@ export const fetchAllBookings = () => api.get('/bookings');
 export const createBooking = (data) => api.post('/bookings', data);
 export const fetchBookingsByCustomer = (customerId) => api.get(`/bookings/user/${customerId}`);
 export const deleteBooking = (id, motivation) => api.delete(`/bookings/${id}`, {data: {motivation}});
+export const updateBooking = (id, data) => api.put(`/bookings/${id}`, data);
