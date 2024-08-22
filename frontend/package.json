@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@testing-library/react": "^12.1.5",
     "axios": "^0.21.1",
     "cross-spawn": "^7.0.3",
     "file-saver": "^2.0.5",
     "i18next": "^23.12.3",
+    "isexe": "^3.1.1",
     "jszip": "^3.10.1",
     "markdown-to-jsx": "^7.4.7",
     "pdf-lib": "^1.17.1",
@@ -21,7 +23,7 @@
   "scripts": {
     "start": "export NODE_OPTIONS=--openssl-legacy-provider && PORT=3001 react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -41,5 +43,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.3",
+    "@babel/preset-react": "^7.24.7",
+    "babel-jest": "^26.6.0"
   }
 }

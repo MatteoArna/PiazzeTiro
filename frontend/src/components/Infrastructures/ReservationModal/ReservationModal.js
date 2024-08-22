@@ -11,6 +11,7 @@ const ReservationModal = ({ onClose, onSubmit, userData, infrastructureType, inf
   const [infrastructure, setInfrastructure] = useState('');
   const [user, setUser] = useState('');
   const [target, setTarget] = useState('');
+  const [nTarget, setNTarget] = useState(0);
 
   const { t } = useTranslation();
 
@@ -29,7 +30,7 @@ const ReservationModal = ({ onClose, onSubmit, userData, infrastructureType, inf
     const targetPrice = infrastructureType.targets.find(t => t.targetId === Number(target)).Target.price;
   
 
-    const finalPrice = (targetPrice * totalHours);
+    const finalPrice = (targetPrice * totalHours * nTarget);
 
     const reservationData = {
       idCustomer: user ? user : userData.email,
@@ -84,14 +85,15 @@ const ReservationModal = ({ onClose, onSubmit, userData, infrastructureType, inf
         userData.roleId === 'civilian' && (
           <>
             <div className='form-group'>
-              <label htmlFor='nPartecipants'>{t('infrastructures.nParticipants')}</label>
-              <input type='number' id='nPartecipants' value={nPartecipants} onChange={(e) => setNPartecipants(e.target.value)} required />
+              <label htmlFor='nPartecipants'>{t('infrastructures.nParticipants') + ' (max. 25)'}</label>
+              <input type='number' id='nPartecipants' max={25} value={nPartecipants} onChange={(e) => setNPartecipants(e.target.value)} required />
             </div>
           </>
         )
       }
 
       <div className='form-group'>
+        <label htmlFor='target'>{t('infrastructures.target')}</label>
         <select id='target' value={target} onChange={(e) => setTarget(e.target.value)} required>
           <option value=''>{t('infrastructures.select_target')}</option>
         {
@@ -101,6 +103,13 @@ const ReservationModal = ({ onClose, onSubmit, userData, infrastructureType, inf
         }
         </select>
       </div>
+
+      <div className='form-group'>
+        <label htmlFor='nTarget'>{t('infrastructures.nTarget')}</label>
+        <input type='number' id='nTarget' min={0} max={25} value={nTarget} onChange={(e) => setNTarget(e.target.value)} required />
+      </div>
+
+
         
       {
         userData.roleId === 'admin' && (

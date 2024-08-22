@@ -49,8 +49,8 @@ const useBooking = (initialLoading = true) => {
             throw new Error("Start time is after end time");
 
         //Check if data.nPartecipants is more or equal to 1
-        if(data.nPartecipants < 0)
-            throw new Error("Number of partecipants must be more or equal to 1");
+        if(data.nPartecipants < 0 || data.nPartecipants > 25)
+            throw new Error("Number of partecipants must be more or equal to 1 and less than 25");
 
     }
 
