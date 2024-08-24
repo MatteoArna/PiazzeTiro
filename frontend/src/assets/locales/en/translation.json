@@ -6,6 +6,7 @@
       "settings": "Settings",
       "user_approval": "User Approval",
       "reservations": "Reservations",
+      "maps": "Maps",
       "logout": "Logout"
     },
     "news_page": {
@@ -115,10 +116,10 @@
     "delete": "Delete",
     "date": "Date",
     "update": "Update"
-}
+    },
 
-
-
-
+    "maps": {
+      "ceneriMap": "Ceneri Map"
+    }
 }
   

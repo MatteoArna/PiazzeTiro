@@ -6,6 +6,7 @@
         "settings": "Paramètres",
         "user_approval": "Approbation des Utilisateurs",
         "reservations": "Réservations",
+        "maps": "Cartes",
         "logout": "Déconnexion"
     },
     "news_page": {
@@ -110,6 +111,10 @@
     "delete": "Supprimer",
     "date": "Date",
     "update": "Mettre à jour"
-}
+    },
+
+    "maps": {
+      "ceneriMap": "Carte de Ceneri"
+    }
 
 }

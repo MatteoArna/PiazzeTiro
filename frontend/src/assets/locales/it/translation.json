@@ -6,7 +6,8 @@
       "settings": "Impostazioni",
       "user_approval": "Approvazione Utenti",
       "reservations": "Prenotazioni",
-        "logout": "Esci"
+      "maps": "Mappe",
+      "logout": "Esci"
     },
 
     "news_page": {
@@ -116,6 +117,10 @@
         "delete": "Cancella",
         "date": "Data",
       "update": "Aggiorna"
+    },
+
+    "maps": {
+      "ceneriMap": "Mappa del Monte Ceneri"
     }
   }
   
