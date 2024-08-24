@@ -5,6 +5,7 @@
   "dependencies": {
     "@testing-library/react": "^12.1.5",
     "axios": "^0.21.1",
+    "common-tags": "^1.8.2",
     "cross-spawn": "^7.0.3",
     "file-saver": "^2.0.5",
     "i18next": "^23.12.3",
@@ -23,7 +24,6 @@
   "scripts": {
     "start": "export NODE_OPTIONS=--openssl-legacy-provider && PORT=3001 react-scripts start",
     "build": "react-scripts build",
-    "test": "jest",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

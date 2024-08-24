@@ -30,6 +30,7 @@ const NavBar = ({ user, handleLogout, navigateTo, selectedPage }) => {
           {user.status === 4 && (
             <li className={selectedPage === 'reservations' ? 'selected' : ''} onClick={() => navigateTo('reservations')}>{t('navigation.reservations')}</li>
           )}
+          <li className={selectedPage === 'maps' ? 'selected' : ''} onClick={() => navigateTo('maps')}>{t('navigation.maps')}</li>
           <li><button onClick={handleLogout} className="logout-button">{t('navigation.logout')}</button></li>
         </ul>
       </nav>

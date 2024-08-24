@@ -12,6 +12,7 @@ import ProfilePage from './ProfilePage/ProfilePage'
 import InfratructurePage from './InfrastructurePage/InfratructurePage';
 import ReservationPage from './ReservationPage/ReservationPage';
 import SettingsPage from './SettingsPage/SettingsPage';
+import MapsPage from './MapsPage/MapsPage';
 
 import { useTranslation } from 'react-i18next';
 
@@ -55,6 +56,7 @@ const BasePage = () => {
         {selectedPage === 'infrastructures' && <InfratructurePage userData={user} />}
         {selectedPage === 'reservations' && <ReservationPage user={user} />}
         {selectedPage === 'settings' && <SettingsPage />}
+        {selectedPage === 'maps' && <MapsPage />}
       </div>
 
 
